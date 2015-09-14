@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
      *
      */
     public void aa(){
-
+        // 注释要这样写，每个变量都要标明
+        int k;
     }
 }
