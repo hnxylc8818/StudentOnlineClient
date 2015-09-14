@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--孙卫星：自定义TitleView的属性（开始）-->
+    <declare-styleable name="TitleView">
+        <attr name="left_src" format="reference" />
+        <attr name="centent_text_Size" format="dimension" />
+        <attr name="centent_text_Color" format="color" />
+        <attr name="centent_text" format="string" />
+
+        <attr name="right_text_Size" format="dimension" />
+        <attr name="right_text_Color" format="color" />
+        <attr name="right_text" format="string" />
+        <attr name="right_src" format="reference" />
+        <attr name="right_visibility" format="enum">
+            <enum name="visible" value="1" />
+            <enum name="gone" value="0" />
+        </attr>
+        <attr name="right_text_visibility" format="enum">
+        <enum name="visible" value="1" />
+        <enum name="gone" value="0" />
+        </attr>
+
+        <attr name="left_visibility" format="enum">
+            <enum name="visible" value="1" />
+            <enum name="gone" value="0" />
+        </attr>
+    </declare-styleable>
+    <!--孙卫星：自定义TitleView的属性（结束）-->
     <!-- 孙继爽：自定义EditText的属性（开始）-->
     <declare-styleable name="CustomerEditText">
         <attr name="text_size" format="dimension" />
