@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * ËïÎÀĞÇ
+     * å­™å«æ˜Ÿ
      *
      */
     public void aa(){
