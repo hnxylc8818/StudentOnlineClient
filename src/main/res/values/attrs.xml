@@ -1,2 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <declare-styleable name="TitleView">
+        <attr name="left_src" format="reference" />
+
+        <attr name="centent_text_Size" format="dimension" />
+        <attr name="centent_text_Color" format="color" />
+        <attr name="centent_text" format="string" />
+
+        <attr name="right_text_Size" format="dimension" />
+        <attr name="right_text_Color" format="color" />
+        <attr name="right_text" format="string" />
+        <attr name="title_right_src" format="reference" />
+
+        <attr name="title_right_text_visibility" format="enum">
+            <enum name="visible" value="1" />
+            <enum name="gone" value="0" />
+        </attr>
+
+        <attr name="title_right_src_visibility" format="enum">
+            <enum name="visible" value="1" />
+            <enum name="gone" value="0" />
+        </attr>
+
+        <attr name="left_visibility" format="enum">
+            <enum name="visible" value="1" />
+            <enum name="gone" value="0" />
+        </attr>
+
+    </declare-styleable>
+</resources>
