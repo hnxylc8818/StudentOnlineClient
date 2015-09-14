@@ -1,0 +1,42 @@
+
+一、命名规范
+包名：	adapters	存放适配器
+      	views		自定义视图
+      	https		网络访问
+      	utils		工具类
+      	entity    	实体类
+      	fragments 	碎片
+
+类名:   Activity	XxxActivity	actity_xxx.xml
+	Fragment	XxxFragment	fragment_xxx.xml
+	Adapter		XxxAdapter	layout_xxx_item.xml
+	Views		XxxView		XxxView.xml
+	utils		XxxUtil
+
+变量：	1.要能表达该变量的作用
+	2.全局变量要以mXx开头	如全局Context	mContext;
+
+方法：	1.方法名小写开头，要能表达出该方法作用
+
+二、注释
+
+类、方法、变量 谁写的标明自己的名字，并且说明该注释的作用
+
+三、Git操作
+
+变红色的文件  	说明该类未添加
+变蓝色的文件	说明该类被修改
+每次提交前必须测试功能完善，并且没有Bug才可以提交
+修改别人写的类、方法、变量等需要和该人商量，确定后才可以修改提交
+每天打开项目后必须要从服务器端更新下最新版本后再进行编程
+
+四、其他
+测试自己的功能和别人的功能有冲突时，必须及时告知该人
+如果大范围修改项目，需要和小组成员讨论
+导入图片需要和小组成员讨论
+集成第三方类库，导入jar包需要和小组成员讨论
+功能测试完毕后，所涉及的中文必须放入string.xml中，dp,sp等要放入dimens中
+
+有什么建议，可以和小组成员一起讨论
+
+以上操作必须在和小组成员讨论后，得到确认答复后才可进行

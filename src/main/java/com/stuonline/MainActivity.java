@@ -11,14 +11,4 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
-    /**
-     * 孙卫星
-     *
-     *
-     */
-    public void aa(){
-        // 注释要这样写，每个变量都要标明
-        int k;
-    }
 }
