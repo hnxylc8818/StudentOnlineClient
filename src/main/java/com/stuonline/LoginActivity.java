@@ -30,6 +30,7 @@ public class LoginActivity extends BaseActivity {
     @ViewInject(R.id.login_pwd)
     private CustomerEditText etPwd;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +40,18 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick({R.id.login_login, R.id.login_reg, R.id.login_reset})
     public void onClick(View v) {
+        Intent intent = new Intent(LoginActivity.this, ValidateActivity.class);
         switch (v.getId()) {
             case R.id.login_login:
                 //登录按钮
                 login();
                 break;
             case R.id.login_reset:
+                startActivity(intent);
                 //找回密码
                 break;
             case R.id.login_reg:
+                startActivity(intent);
                 //注册账号
                 break;
         }
@@ -80,9 +84,9 @@ public class LoginActivity extends BaseActivity {
                     });
                     Result<Muser> result = jsonUtil.parse(responseInfo.result);
                     XUtils.showToast(result.desc);
-                    if (result.state==Result.STATE_SUC){
-                        MyApp.user=result.data;
-                        Intent intent = new Intent(LoginActivity.this,PersonalCenterActivity.class);
+                    if (result.state == Result.STATE_SUC) {
+                        MyApp.user = result.data;
+                        Intent intent = new Intent(LoginActivity.this, PersonalCenterActivity.class);
                         startActivity(intent);
                         finish();
                     }
