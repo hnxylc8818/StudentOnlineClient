@@ -3,7 +3,7 @@
 
     <!--孙卫星：自定义TitleView的属性（开始）-->
     <declare-styleable name="TitleView">
-        <attr name="left_src" format="reference" />
+        <attr name="left_src" format="reference|color" />
         <attr name="centent_text_Size" format="dimension" />
         <attr name="centent_text_Color" format="color" />
         <attr name="centent_text" format="string" />
@@ -11,7 +11,7 @@
         <attr name="right_text_Size" format="dimension" />
         <attr name="right_text_Color" format="color" />
         <attr name="right_text" format="string" />
-        <attr name="right_src" format="reference" />
+        <attr name="right_src" format="reference|color" />
         <attr name="right_visibility" format="enum">
             <enum name="visible" value="1" />
             <enum name="gone" value="0" />
@@ -48,5 +48,5 @@
 
 
     <!-- 徐宾：换肤属性 -->
-    <attr name="bg" format="color|reference" />
+    <attr name="bg" format="reference|color" />
 </resources>

@@ -1,0 +1,58 @@
+package com.stuonline;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.Toast;
+
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.event.OnCompoundButtonCheckedChange;
+import com.stuonline.https.XUtils;
+import com.stuonline.utils.SharedUtil;
+
+/**
+ * Created by Xubin on 2015/9/15.
+ */
+public class SettingActivity extends BaseActivity {
+
+    private RadioButton rbSmall;
+    private RadioButton rbMiddle;
+    private RadioButton rbBig;
+    private CheckBox cbNight;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        init();
+
+    }
+    private void init() {
+        if (SharedUtil.getModel(this)){
+            setTheme(R.style.night);
+        }else{
+            setTheme(R.style.def);
+        }
+        setContentView(R.layout.activity_setting);
+        cbNight= (CheckBox) findViewById(R.id.setting_model);
+        rbSmall= (RadioButton) findViewById(R.id.setting_font_small);
+        rbMiddle= (RadioButton) findViewById(R.id.setting_font_middle);
+        rbBig= (RadioButton) findViewById(R.id.setting_font_big);
+        cbNight.setChecked(SharedUtil.getModel(this));
+        cbNight.setOnCheckedChangeListener(checkedChangeListener);
+    }
+
+    private CompoundButton.OnCheckedChangeListener checkedChangeListener=new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            SharedUtil.saveModel(SettingActivity.this,isChecked);
+            init();
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+}

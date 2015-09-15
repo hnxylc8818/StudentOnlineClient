@@ -5,11 +5,11 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="night" parent="android:style/Theme">
+    <style name="night" parent="@android:style/Theme">
         <item name="bg">#FF2B2B2B</item>
     </style>
 
-    <style name="def" parent="android:style/Theme">
+    <style name="def" parent="@android:style/Theme">
         <item name="bg">#eeeeee</item>
     </style>
 </resources>

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.TitleView;
 
 /**
@@ -31,12 +32,17 @@ public class PersonalCenterActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
+
+    }
+
+    private void init() {
         setContentView(R.layout.activity_personal_center);
         ViewUtils.inject(this);
         if (null != MyApp.user){
-            personAccount.setText(MyApp.user.getAccount());
-            personNick.setText(MyApp.user.getNick());
-            personSchool.setText(MyApp.user.getSchool());
+            personAccount.setText(String.format("账号：%s",MyApp.user.getAccount()));
+            personNick.setText(String.format("昵称：%s",MyApp.user.getNick()));
+            personSchool.setText(String.format("学校：%s",MyApp.user.getSchool()));
         }
     }
 
@@ -58,7 +64,8 @@ public class PersonalCenterActivity extends BaseActivity {
                 break;
             case R.id.personal_center_setting:
                 // 跳转系统设置
-
+                intent=new Intent(PersonalCenterActivity.this,SettingActivity.class);
+                startActivity(intent);
                 break;
             case R.id.personal_center_feedback:
                 // 跳转意见反馈
@@ -72,5 +79,17 @@ public class PersonalCenterActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean isNight= SharedUtil.getModel(this);
+        if (isNight){
+            setTheme(R.style.night);
+        } else {
+            setTheme(R.style.def);
+        }
+        init();
     }
 }
