@@ -13,7 +13,7 @@
         app:centent_text_Size="@dimen/font_22"
         app:right_text_Size="@dimen/font_18"/>
     <com.stuonline.views.CustomerEditText
-        android:id="@+id/register_emial"
+        android:id="@+id/register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/register_margerleft"
