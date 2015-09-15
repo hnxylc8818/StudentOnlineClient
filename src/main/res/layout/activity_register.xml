@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         app:centent_text="注册"
         app:right_text="确定"
-        app:centent_text_Size="20sp"
-        app:right_text_Size="15sp"/>
+        app:centent_text_Size="22sp"
+        app:right_text_Size="18sp"/>
     <com.stuonline.views.CustomerEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
