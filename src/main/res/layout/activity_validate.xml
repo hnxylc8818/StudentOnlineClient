@@ -23,7 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:button_src="@mipmap/error"
-        app:hint_text="请输入手机号" />
+        app:hint_text="请输入手机号"
+        app:input_type="normal"
+        app:maxlenght="11" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,7 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:button_src="@mipmap/error"
-            app:hint_text="验证码" />
+            app:hint_text="验证码"
+            app:input_type="number"
+            app:maxlenght="4" />
 
         <Button
             android:id="@+id/validate_send_code"

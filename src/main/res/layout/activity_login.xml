@@ -23,14 +23,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:button_src="@mipmap/error"
-        app:hint_text="请输入手机号" />
+        app:input_type="normal"
+        app:hint_text="请输入手机号"
+        app:maxlenght="11" />
 
     <com.stuonline.views.CustomerEditText
         android:id="@+id/login_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:button_src="@mipmap/error"
-        app:hint_text="密码" />
+        app:hint_text="密码"
+        app:input_type="password"
+        app:maxlenght="20" />
 
     <Button
         android:id="@+id/login_login"
