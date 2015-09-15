@@ -15,7 +15,7 @@
         app:left_src="@mipmap/back"
         app:left_visibility="visible"
         app:right_text="确定"
-        app:right_text_Size="@dimen/font_18"
+        app:right_text_Size="@dimen/font_16"
         app:right_text_visibility="visible"
         app:right_visibility="gone" />
 
