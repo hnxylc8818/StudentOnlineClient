@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:button_src="@mipmap/error"
+        app:text_color="?attr/text_color_model"
         app:hint_text="请输入手机号"
         app:input_type="normal"
         app:maxlenght="11" />
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/validate_send_code"
             app:button_src="@mipmap/error"
+            app:text_color="?attr/text_color_model"
             app:hint_text="验证码"
             app:input_type="number"
             app:maxlenght="4" />

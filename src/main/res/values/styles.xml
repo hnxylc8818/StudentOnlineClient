@@ -7,9 +7,11 @@
 
     <style name="night" parent="@android:style/Theme">
         <item name="bg">#FF2B2B2B</item>
+        <item name="text_color_model">#cfd5e3</item>
     </style>
 
     <style name="def" parent="@android:style/Theme">
         <item name="bg">#eeeeee</item>
+        <item name="text_color_model">#848484</item>
     </style>
 </resources>

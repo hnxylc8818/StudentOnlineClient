@@ -1,16 +1,10 @@
 package com.stuonline;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
-import android.widget.Toast;
-
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.event.OnCompoundButtonCheckedChange;
-import com.stuonline.https.XUtils;
 import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.TitleView;
 
@@ -67,5 +61,12 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        boolean isNight = SharedUtil.getModel(this);
+        if (isNight) {
+            setTheme(R.style.night);
+        } else {
+            setTheme(R.style.def);
+        }
+        init();
     }
 }

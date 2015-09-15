@@ -49,4 +49,5 @@
 
     <!-- 徐宾：换肤属性 -->
     <attr name="bg" format="reference|color" />
+    <attr name="text_color_model" format="color"/>
 </resources>
