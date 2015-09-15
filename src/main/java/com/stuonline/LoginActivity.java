@@ -1,7 +1,9 @@
 package com.stuonline;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 
 import com.alibaba.fastjson.TypeReference;
@@ -29,13 +31,19 @@ public class LoginActivity extends BaseActivity {
     private CustomerEditText etAccount;
     @ViewInject(R.id.login_pwd)
     private CustomerEditText etPwd;
-
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ViewUtils.inject(this);
+        sp = getSharedPreferences("user_data", MODE_PRIVATE);
+        String account = sp.getString("account", "");
+        String pwd = sp.getString("pwd", "");
+        //读取本地保存的用户信息并进行解密
+        etAccount.setText(new String(Base64.decode(account, Base64.NO_WRAP)));
+        etPwd.setText(new String(Base64.decode(pwd, Base64.NO_WRAP)));
     }
 
     @OnClick({R.id.login_login, R.id.login_reg, R.id.login_reset})
@@ -86,6 +94,13 @@ public class LoginActivity extends BaseActivity {
                     XUtils.showToast(result.desc);
                     if (result.state == Result.STATE_SUC) {
                         MyApp.user = result.data;
+                        String encodeAccount = Base64.encodeToString(MyApp.user.getAccount().getBytes(), Base64.NO_WRAP);
+                        String encodePwd = Base64.encodeToString(MyApp.user.getPwd().getBytes(), Base64.NO_WRAP);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.clear();//清除之前的数据
+                        editor.putString("account", encodeAccount);
+                        editor.putString("pwd", encodePwd);
+                        editor.commit();
                         Intent intent = new Intent(LoginActivity.this, PersonalCenterActivity.class);
                         startActivity(intent);
                         finish();

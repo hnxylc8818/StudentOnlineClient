@@ -98,7 +98,6 @@ public class RegisterActivity extends BaseActivity {
                                 Log.i("aaa","======="+result);
                                 XUtils.showToast(result.desc);
                                     finish();
-
                             }
                         }
                     });
