@@ -1,6 +1,7 @@
 package com.stuonline;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -83,6 +84,12 @@ public class LoginActivity extends BaseActivity {
                     });
                     Result<Muser> result = jsonUtil.parse(responseInfo.result);
                     XUtils.showToast(result.desc);
+                    if (result.state==Result.STATE_SUC){
+                        MyApp.user=result.data;
+                        Intent intent = new Intent(LoginActivity.this,PersonalInfoActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         });
