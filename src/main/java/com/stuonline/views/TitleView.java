@@ -16,7 +16,7 @@ import com.stuonline.R;
 
 /**
  * 孙卫星
- * 自定义头部控件
+ * 自定义Title控件
  * Created by Administrator on 2015/9/14.
  */
 public class TitleView extends RelativeLayout {
