@@ -13,6 +13,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.CustomerEditText;
 import com.stuonline.views.TitleView;
 
@@ -55,14 +56,7 @@ public class ValidateActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SMSSDK.initSDK(this, "a659ba5e877d", "72f1a4c705eb2e64c09aa13c9cbe3f89");
-//        SMSSDK.initSDK(this, "a444b4578e20", "8cdd0658f98ebd0cb51dcb42a5a23b69");
-        setContentView(R.layout.activity_validate);
-        ViewUtils.inject(this);
-        title.setOnRightTextclickListener(onClickListener);
-        title.setOnLeftclickListener(onClickListener);
-        SMSSDK.registerEventHandler(eventHandler);
-        timer = new Timer();
+        init();
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -144,4 +138,26 @@ public class ValidateActivity extends BaseActivity {
             }
         }
     };
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean isNight= SharedUtil.getModel(this);
+        if (isNight){
+            setTheme(R.style.night);
+        } else {
+            setTheme(R.style.def);
+        }
+        init();
+    }
+
+    private void init() {
+        SMSSDK.initSDK(this, "a659ba5e877d", "72f1a4c705eb2e64c09aa13c9cbe3f89");
+//        SMSSDK.initSDK(this, "a444b4578e20", "8cdd0658f98ebd0cb51dcb42a5a23b69");
+        setContentView(R.layout.activity_validate);
+        ViewUtils.inject(this);
+        title.setOnRightTextclickListener(onClickListener);
+        title.setOnLeftclickListener(onClickListener);
+        SMSSDK.registerEventHandler(eventHandler);
+        timer = new Timer();
+    }
 }
