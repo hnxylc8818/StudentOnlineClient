@@ -94,7 +94,7 @@ public class RegisterActivity extends BaseActivity {
                     params.addBodyParameter("u.pwd", password);
                     params.addBodyParameter("u.email", email);
                     DialogUtil.showWaitting(this);
-                    XUtils.send(XUtils.LOGIN, params, new MyCallBack<String>() {
+                    XUtils.send(XUtils.REG, params, new MyCallBack<String>() {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
                             DialogUtil.hiddenWaitting();
@@ -103,8 +103,9 @@ public class RegisterActivity extends BaseActivity {
                                 });
                                 Result<Boolean> result = jsonUtil.parse(responseInfo.result);
                                 XUtils.showToast(result.desc);
-                               finish();
-
+                                if (result.state==Result.STATE_SUC){
+                                    finish();
+                                }
                             }
                         }
                     });
@@ -114,11 +115,12 @@ public class RegisterActivity extends BaseActivity {
         }
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        boolean isNight= SharedUtil.getModel(this);
-        if (isNight){
+        boolean isNight = SharedUtil.getModel(this);
+        if (isNight) {
             setTheme(R.style.night);
         } else {
             setTheme(R.style.def);
