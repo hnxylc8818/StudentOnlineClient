@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.stuonline.views.TitleView
+        android:id="@+id/register_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centent_text="注册"
+        app:right_text="确定"
+        app:centent_text_Size="20sp"
+        app:right_text_Size="15sp"/>
+    <com.stuonline.views.CustomerEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:hint_text="邮箱用于找回密码"
+        app:button_src="@drawable/selector_edit_bg"/>
+    <com.stuonline.views.CustomerEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:hint_text="密码"
+        app:button_src="@drawable/selector_edit_bg"/>
+    <com.stuonline.views.CustomerEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:hint_text="重复密码"
+        app:button_src="@drawable/selector_edit_bg"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:id="@+id/register_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="注册表示您同意"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="《中国大学生在线服务条款》"
+            android:layout_toRightOf="@+id/register_tv"
+            android:textColor="@android:color/holo_red_dark"/>
+    </RelativeLayout>
+
+
+
+</LinearLayout>
