@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.stuonline.views.TitleView
+        android:id="@+id/aas_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centent_text="中国大学生在线"
+        app:right_text_visibility="gone"/>
+
+    <com.stuonline.views.CustomerEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/register_margerleft"
+        android:layout_marginRight="@dimen/register_margerright"
+        app:hint_text="手机号     131231"
+        app:button_src="@mipmap/selected"
+        app:button_visibility="visible"
+        android:id="@+id/aas_account" />
+    <com.stuonline.views.CustomerEditText
+        android:id="@+id/aas_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/register_margerleft"
+        android:layout_marginRight="@dimen/register_margerright"
+        app:button_src="@mipmap/selected"
+        app:button_visibility="visible"
+        app:hint_text="邮箱  aaa@qq.com"
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="10dp"
+        android:background="#eeeeee"/>
+    <com.stuonline.views.CustomerEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/register_margerleft"
+        android:layout_marginRight="@dimen/register_margerright"
+        app:hint_text="修改密码"
+        app:button_src="@mipmap/selected"
+        app:button_visibility="visible"
+        />
+
+</LinearLayout>
