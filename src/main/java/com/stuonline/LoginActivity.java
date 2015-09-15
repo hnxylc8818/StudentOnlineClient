@@ -66,7 +66,7 @@ public class LoginActivity extends BaseActivity {
             XUtils.showToast("账号格式错误，请重新输入");
             return;
         }
-        if (!pwd.matches("\"^\\\\w{6,20}$\"")) {
+        if (!pwd.matches("^\\w{6,20}$")) {
             XUtils.showToast("密码格式错误，请重新输入");
             return;
         }
