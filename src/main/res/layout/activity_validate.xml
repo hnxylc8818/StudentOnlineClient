@@ -33,15 +33,16 @@
 
         <com.stuonline.views.CustomerEditText
             android:id="@+id/validate_code"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/validate_send_code"
             app:button_src="@mipmap/error"
             app:hint_text="验证码"
             app:input_type="number"
             app:maxlenght="4" />
 
         <Button
-            android:id="@+id/validate_send_code"
+            android:id="@id/validate_send_code"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"

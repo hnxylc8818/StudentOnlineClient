@@ -22,7 +22,7 @@ import com.stuonline.views.TitleView;
 public class RegisterActivity extends BaseActivity {
     @ViewInject(R.id.register_title)
     private TitleView mTitle;
-    @ViewInject(R.id.register_emial)
+    @ViewInject(R.id.register_email)
     private CustomerEditText mEmail;
     @ViewInject(R.id.register_pwd)
     private CustomerEditText mPassword;

@@ -55,11 +55,12 @@ public class ValidateActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        SMSSDK.initSDK(this, "a659ba5e877d", "72f1a4c705eb2e64c09aa13c9cbe3f89");
-        SMSSDK.initSDK(this, "a444b4578e20", "8cdd0658f98ebd0cb51dcb42a5a23b69");
+        SMSSDK.initSDK(this, "a659ba5e877d", "72f1a4c705eb2e64c09aa13c9cbe3f89");
+//        SMSSDK.initSDK(this, "a444b4578e20", "8cdd0658f98ebd0cb51dcb42a5a23b69");
         setContentView(R.layout.activity_validate);
         ViewUtils.inject(this);
         title.setOnRightTextclickListener(onClickListener);
+        title.setOnLeftclickListener(onClickListener);
         SMSSDK.registerEventHandler(eventHandler);
         timer = new Timer();
     }
@@ -69,8 +70,15 @@ public class ValidateActivity extends BaseActivity {
         public void onClick(View v) {
             code = etCode.getText().toString().trim();
             account = etAccount.getText().toString().trim();
-            if (code.length() == 4) {
-                SMSSDK.submitVerificationCode("86", account, code);
+            switch (v.getId()) {
+                case R.id.title_left:
+                    finish();
+                    break;
+                case R.id.title_right:
+                    if (code.length() == 4) {
+                        SMSSDK.submitVerificationCode("86", account, code);
+                    }
+                    break;
             }
         }
     };
@@ -84,7 +92,6 @@ public class ValidateActivity extends BaseActivity {
                     Intent intent = new Intent(ValidateActivity.this, RegisterActivity.class);
                     intent.putExtra("account", account);
                     startActivity(intent);
-
                 }
             } else {
                 if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
@@ -104,7 +111,6 @@ public class ValidateActivity extends BaseActivity {
         account = etAccount.getText().toString().trim();
         if (account.matches("^1(3|4|5|6|7|8)\\d{9}$")) {
             SMSSDK.getVerificationCode("86", account);
-//                    btGetCode.setEnabled(false);
         } else {
             XUtils.showToast("手机号码格式错误");
         }
@@ -137,5 +143,4 @@ public class ValidateActivity extends BaseActivity {
             }
         }
     };
-
 }
