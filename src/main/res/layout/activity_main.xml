@@ -1,18 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
+<com.stuonline.views.TitleView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:right_text_visibility="gone"
+    app:right_src="@mipmap/aa"
+    app:right_visibility="visible"
+    ></com.stuonline.views.TitleView>
     <com.stuonline.views.CustomerEditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:button_src="@mipmap/error"
         app:hint_text="aa" />
-</RelativeLayout>
+</LinearLayout>
