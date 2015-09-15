@@ -1,7 +1,9 @@
 package com.stuonline;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
+import android.view.Window;
 
 import com.lidroid.xutils.http.HttpHandler;
 import com.stuonline.utils.DialogUtil;
@@ -12,6 +14,12 @@ import com.stuonline.utils.DialogUtil;
 public class BaseActivity extends FragmentActivity {
 
     protected HttpHandler httpHandler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
