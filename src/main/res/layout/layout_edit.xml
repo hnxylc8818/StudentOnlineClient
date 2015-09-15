@@ -3,7 +3,7 @@
     android:id="@+id/edit_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/selector_edit_bg"
+    android:background="@drawable/selector_edit_bg_night"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
