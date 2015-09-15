@@ -6,12 +6,12 @@
 
     <EditText
         android:id="@+id/feedback_edit"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="280dp"
+        android:layout_height="150dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:background="@color/font_light_gray"
+        android:background="@android:drawable/edit_text"
         android:gravity="top"
         android:hint="这里是意见反馈内容"
         android:paddingBottom="10dp"
@@ -19,7 +19,8 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:textColorHint="@color/text_color"
-        android:textSize="@dimen/font_16" />
+        android:textSize="@dimen/font_14" />
+
 
     <Button
         android:id="@+id/feedback_bt"
