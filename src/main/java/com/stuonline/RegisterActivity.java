@@ -97,6 +97,7 @@ public class RegisterActivity extends BaseActivity {
                                 Result<Boolean> result = jsonUtil.parse(responseInfo.result);
                                 Log.i("aaa","======="+result);
                                 XUtils.showToast(result.desc);
+                                    finish();
 
                             }
                         }
