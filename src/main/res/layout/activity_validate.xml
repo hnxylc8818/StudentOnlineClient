@@ -50,6 +50,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="@drawable/selector_code_bg"
+            android:enabled="false"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="获取验证码"

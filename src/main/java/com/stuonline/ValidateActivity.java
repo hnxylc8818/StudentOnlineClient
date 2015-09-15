@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 
@@ -138,11 +140,12 @@ public class ValidateActivity extends BaseActivity {
             }
         }
     };
+
     @Override
     protected void onResume() {
         super.onResume();
-        boolean isNight= SharedUtil.getModel(this);
-        if (isNight){
+        boolean isNight = SharedUtil.getModel(this);
+        if (isNight) {
             setTheme(R.style.night);
         } else {
             setTheme(R.style.def);
@@ -159,5 +162,25 @@ public class ValidateActivity extends BaseActivity {
         title.setOnLeftclickListener(onClickListener);
         SMSSDK.registerEventHandler(eventHandler);
         timer = new Timer();
+        etAccount.setEtChangeLis(textWatcher);
     }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (s.length() == 11 && etAccount.getText().matches("^1(3|4|5|7|8)\\d{9}$")) {
+                btSendCode.setEnabled(true);
+            }
+        }
+    };
 }

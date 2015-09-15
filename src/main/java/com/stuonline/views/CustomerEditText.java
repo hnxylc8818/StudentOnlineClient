@@ -18,7 +18,6 @@ import com.stuonline.R;
 
 /**
  * Created by SunJiShuang on 2015/9/14.
- *
  */
 public class CustomerEditText extends RelativeLayout {
     private EditText input;
@@ -172,5 +171,9 @@ public class CustomerEditText extends RelativeLayout {
 
     public boolean isPassword() {
         return isPwd;
+    }
+
+    public void setEtChangeLis(TextWatcher textWatcher) {
+        input.addTextChangedListener(textWatcher);
     }
 }
