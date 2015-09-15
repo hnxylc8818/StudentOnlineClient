@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<color name="red">#df3333</color>
+    <color name="red">#df3333</color>
+    <color name="text_color">#444444</color>
+    <color name="black_half">#a0000000</color>
+    <color name="light_gray">#ddd</color>
 </resources>
