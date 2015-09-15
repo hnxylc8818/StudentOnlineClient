@@ -34,11 +34,12 @@
         <activity android:name=".ValidateActivity" />
         <activity android:name=".PersonalCenterActivity" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".SplashActivity" />
         <activity
             android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>
