@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ValidateActivity" />
-        <activity android:name=".PersonalInfoActivity" />
+        <activity android:name=".PersonalCenterActivity" />
         <activity android:name=".RegisterActivity" />
     </application>
 

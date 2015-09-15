@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 /**
  * Created by SunJiShuang on 2015/9/15.
  */
-public class PersonalInfoActivity extends BaseActivity {
+public class PersonalCenterActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
