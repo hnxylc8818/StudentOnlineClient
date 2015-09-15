@@ -95,6 +95,7 @@ public class RegisterActivity extends BaseActivity {
         } else {
             setTheme(R.style.def);
         }
+        init();
     }
 
 }
