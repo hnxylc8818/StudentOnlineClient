@@ -7,10 +7,10 @@ import android.view.View;
 import com.stuonline.views.TitleView;
 
 /**
- * ËïÎÀÐÇ£º×¢²áActivity
+ * ï¿½ï¿½ï¿½ï¿½ï¿½Ç£ï¿½×¢ï¿½ï¿½Activity
  * Created by Administrator on 2015/9/15.
  */
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends BaseActivity {
     private TitleView mTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

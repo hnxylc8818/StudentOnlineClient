@@ -20,7 +20,7 @@ import com.stuonline.views.TitleView;
 /**
  * Created by SunJiShuang on 2015/9/15.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
     @ViewInject(R.id.login_title)
     private TitleView title;
     @ViewInject(R.id.login_account)
