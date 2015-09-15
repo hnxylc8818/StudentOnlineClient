@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.stuonline.views.TitleView
+        android:id="@+id/personal_center_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centent_text="中国大学生在线"
+        app:centent_text_Size="@dimen/font_22"
+        app:right_text_visibility="gone"
+        app:right_visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/personal_center_person_info"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/shape_personal_center_bg">
+
+        <com.stuonline.views.CircleImage
+            android:id="@+id/personal_center_photo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/aa" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="100dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/personal_center_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昵称：Alice"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:id="@+id/personal_center_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账号：queen"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:id="@+id/personal_center_school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="学校：北京理工大学"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_16" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/is_authentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:drawableLeft="@drawable/gou"
+            android:drawablePadding="5dp"
+            android:text="已认证"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="@dimen/font_18" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/msg" />
+
+            <TextView
+                android:id="@+id/personal_center_school_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="校内信息"
+                android:textColor="@color/font_dark_gray"
+                android:textSize="@dimen/font_18" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/font_dark_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/safe" />
+
+            <TextView
+                android:id="@+id/personal_center_safe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="账号与安全"
+                android:textColor="@color/font_dark_gray"
+                android:textSize="@dimen/font_18" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/font_dark_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/setting" />
+
+            <TextView
+                android:id="@+id/personal_center_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="系统设置"
+                android:textColor="@color/font_dark_gray"
+                android:textSize="@dimen/font_18" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/font_dark_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/feedback" />
+
+            <TextView
+                android:id="@+id/personal_center_feedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="意见反馈"
+                android:textColor="@color/font_dark_gray"
+                android:textSize="@dimen/font_18" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/font_dark_gray" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/personal_center_exit"
+        android:text="退出登录"
+        android:textColor="@color/selector_bg_text_color"
+        android:background="@drawable/selector_code_bg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>
