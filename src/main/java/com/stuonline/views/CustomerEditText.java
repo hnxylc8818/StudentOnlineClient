@@ -173,5 +173,4 @@ public class CustomerEditText extends RelativeLayout {
     public boolean isPassword() {
         return isPwd;
     }
-
 }
