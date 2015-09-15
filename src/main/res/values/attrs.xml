@@ -45,4 +45,8 @@
         <attr name="maxlenght" format="integer" />
     </declare-styleable>
     <!-- 孙继爽：自定义EditText的属性（结束）-->
+
+
+    <!-- 徐宾：换肤属性 -->
+    <attr name="bg" format="color|reference" />
 </resources>
