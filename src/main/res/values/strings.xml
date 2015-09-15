@@ -10,4 +10,7 @@
     <string name="register_repeate_password">重复密码</string>
     <string name="register_tv_text">注册表示您同意</string>
     <string name="register_tv2_text">《中国大学生在线服务条款》</string>
+    <string name="code_send_suc">发送成功</string>
+    <string name="code_send_fail">发送失败</string>
+    <string name="code_error">验证码错误</string>
 </resources>
