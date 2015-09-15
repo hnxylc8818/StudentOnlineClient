@@ -94,7 +94,7 @@ public class RegisterActivity extends BaseActivity {
                     params.addBodyParameter("u.pwd", password);
                     params.addBodyParameter("u.email", email);
                     DialogUtil.showWaitting(this);
-                    XUtils.send(XUtils.LOGIN, params, new MyCallBack<String>() {
+                    XUtils.send(XUtils.REG, params, new MyCallBack<String>() {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
                             DialogUtil.hiddenWaitting();
@@ -103,7 +103,10 @@ public class RegisterActivity extends BaseActivity {
                                 });
                                 Result<Boolean> result = jsonUtil.parse(responseInfo.result);
                                 XUtils.showToast(result.desc);
-                               finish();
+                                if (result.data){
+                                    finish();
+                                }
+
 
                             }
                         }
