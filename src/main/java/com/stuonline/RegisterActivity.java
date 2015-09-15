@@ -2,16 +2,25 @@ package com.stuonline;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.entity.Muser;
+import com.stuonline.entity.Result;
+import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.JsonUtil;
 import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.CustomerEditText;
 import com.stuonline.views.TitleView;
@@ -52,6 +61,7 @@ public class RegisterActivity extends BaseActivity {
                 break;
             case R.id.title_right:
                 //注册
+                getRegisterEditText();
                 break;
         }
 
@@ -79,7 +89,25 @@ public class RegisterActivity extends BaseActivity {
                 if (!password.equals(repeatPassword)) {
                     XUtils.showToast("密码不一致！");
                 } else {
+                    RequestParams params = new RequestParams();
+                    params.addBodyParameter("u.account", account);
+                    params.addBodyParameter("u.pwd", password);
+                    params.addBodyParameter("u.email", email);
+                    DialogUtil.showWaitting(this);
+                    XUtils.send(XUtils.LOGIN, params, new MyCallBack<String>() {
+                        @Override
+                        public void onSuccess(ResponseInfo<String> responseInfo) {
+                            DialogUtil.hiddenWaitting();
+                            if (responseInfo != null) {
+                                JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+                                });
+                                Result<Boolean> result = jsonUtil.parse(responseInfo.result);
+                                XUtils.showToast(result.desc);
+                               finish();
 
+                            }
+                        }
+                    });
                 }
             }
 
