@@ -92,6 +92,7 @@ public class ValidateActivity extends BaseActivity {
                     Intent intent = new Intent(ValidateActivity.this, RegisterActivity.class);
                     intent.putExtra("account", account);
                     startActivity(intent);
+                    finish();
                 }
             } else {
                 if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
