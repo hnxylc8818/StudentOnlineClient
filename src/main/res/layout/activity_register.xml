@@ -8,51 +8,54 @@
         android:id="@+id/register_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:centent_text="注册"
-        app:right_text="确定"
-        app:centent_text_Size="22sp"
-        app:right_text_Size="18sp"/>
+        app:centent_text="@string/register_centent"
+        app:right_text="@string/register_right_text"
+        app:centent_text_Size="@dimen/font_22"
+        app:right_text_Size="@dimen/font_18"/>
     <com.stuonline.views.CustomerEditText
+        android:id="@+id/register_emial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:hint_text="邮箱用于找回密码"
+        android:layout_marginLeft="@dimen/register_margerleft"
+        android:layout_marginRight="@dimen/register_margerright"
+        app:hint_text="@string/register_eamli"
         />
     <com.stuonline.views.CustomerEditText
+        android:id="@+id/register_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:hint_text="密码"
+        android:layout_marginLeft="@dimen/register_margerleft"
+        android:layout_marginRight="@dimen/register_margerright"
+        app:hint_text="@string/register_password"
         />
     <com.stuonline.views.CustomerEditText
+        android:id="@+id/register_repeatepwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:hint_text="重复密码"
+        android:layout_marginLeft="@dimen/register_margerleft"
+        android:layout_marginRight="@dimen/register_margerright"
+        app:hint_text="@string/register_repeate_password"
         />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/register_margerleft"
+        android:layout_marginRight="@dimen/register_margerright"
+        android:layout_marginTop="@dimen/register_margertop"
         >
         <TextView
             android:id="@+id/register_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="注册表示您同意"
+            android:textSize="@dimen/register_text_size"
+            android:text="@string/register_tv_text"
             android:layout_alignParentLeft="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="《中国大学生在线服务条款》"
+            android:textSize="@dimen/register_text_size"
+            android:text="@string/register_tv2_text"
             android:layout_toRightOf="@+id/register_tv"
             android:textColor="@android:color/holo_red_dark"/>
     </RelativeLayout>
