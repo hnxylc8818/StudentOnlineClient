@@ -6,4 +6,16 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+<com.stuonline.views.TitleView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:right_text_visibility="gone"
+    app:right_src="@mipmap/aa"
+    app:right_visibility="visible"
+    ></com.stuonline.views.TitleView>
+    <com.stuonline.views.CustomerEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:button_src="@mipmap/error"
+        app:hint_text="aa" />
 </LinearLayout>
