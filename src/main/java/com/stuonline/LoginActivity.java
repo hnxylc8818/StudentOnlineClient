@@ -117,11 +117,12 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        boolean isNight= SharedUtil.getModel(this);
-        if (isNight){
+        boolean isNight = SharedUtil.getModel(this);
+        if (isNight) {
             setTheme(R.style.night);
         } else {
             setTheme(R.style.def);

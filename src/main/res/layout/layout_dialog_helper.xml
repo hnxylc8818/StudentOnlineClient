@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/select_dialog_helper_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:text="修改密码的邮件发送,有效\n期3天"
-        android:textSize="@dimen/font_18" />
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/font_16" />
 
     <Button
         android:id="@+id/select_dialog_helper_bt"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_below="@id/select_dialog_helper_tv"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
         android:background="@drawable/selector_bt_bg"
         android:text="确定"
         android:textColor="@color/selector_bg_text_color" />
 
-</RelativeLayout>
+</LinearLayout>

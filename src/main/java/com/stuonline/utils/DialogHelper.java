@@ -3,6 +3,9 @@ package com.stuonline.utils;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -24,7 +27,10 @@ public class DialogHelper {
             waitting.setCanceledOnTouchOutside(false);  // 触摸边缘不消失
             waitting.show();
             Window window = waitting.getWindow();
-            window.setContentView(R.layout.layout_dialog_helper);
+            View v = LayoutInflater.from(context).inflate(R.layout.layout_dialog_helper, null);
+            v.setBackgroundColor(Color.WHITE);
+            v.setPadding(30, 30, 30, 30);
+            window.setContentView(v);
             Button button = (Button) waitting.findViewById(R.id.select_dialog_helper_bt);
             button.setOnClickListener(onClickListener);
         } else {
