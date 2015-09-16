@@ -60,4 +60,12 @@ public class BaseActivity extends FragmentActivity {
             setTheme(R.style.def);
         }
     }
+
+    protected void startIntentAnim(){
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+    protected void endIntentAnim(){
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
 }

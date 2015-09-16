@@ -64,10 +64,12 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.login_reset:
                 startActivity(intent);
+                startIntentAnim();
                 //找回密码
                 break;
             case R.id.login_reg:
                 startActivity(intent);
+                startIntentAnim();
                 //注册账号
                 break;
         }
@@ -112,6 +114,7 @@ public class LoginActivity extends BaseActivity {
                         Intent intent = new Intent(LoginActivity.this, PersonalCenterActivity.class);
                         startActivity(intent);
                         finish();
+                        startIntentAnim();
                     }
                 }
             }

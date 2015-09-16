@@ -58,6 +58,7 @@ public class RegisterActivity extends BaseActivity {
             case R.id.title_left:
                 //返回上一个页面
                 finish();
+                endIntentAnim();
                 break;
             case R.id.title_right:
                 //注册
@@ -105,6 +106,7 @@ public class RegisterActivity extends BaseActivity {
                                 XUtils.showToast(result.desc);
                                 if (result.data){
                                     finish();
+                                    endIntentAnim();
                                 }
 
                             }

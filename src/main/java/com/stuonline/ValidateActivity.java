@@ -69,6 +69,7 @@ public class ValidateActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.title_left:
                     finish();
+                    endIntentAnim();
                     break;
                 case R.id.title_right:
                     if (code.length() == 4) {
@@ -89,6 +90,7 @@ public class ValidateActivity extends BaseActivity {
                     intent.putExtra("account", account);
                     startActivity(intent);
                     finish();
+                    startIntentAnim();
                 }
             } else {
                 if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {

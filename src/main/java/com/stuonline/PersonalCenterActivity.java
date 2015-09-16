@@ -68,6 +68,7 @@ public class PersonalCenterActivity extends BaseActivity {
                 // 跳转系统设置
                 intent = new Intent(PersonalCenterActivity.this, SettingActivity.class);
                 startActivity(intent);
+                startIntentAnim();
                 break;
             case R.id.personal_center_feedback:
                 // 跳转意见反馈
@@ -79,6 +80,7 @@ public class PersonalCenterActivity extends BaseActivity {
                 intent = new Intent(PersonalCenterActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+                endIntentAnim();
                 break;
         }
     }
