@@ -7,6 +7,7 @@ import android.view.Window;
 
 import com.lidroid.xutils.http.HttpHandler;
 import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.SharedUtil;
 
 /**
  * Created by Xubin on 2015/9/8.
@@ -49,5 +50,14 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    public void changeTheme(){
+        boolean isNight = SharedUtil.getModel(this);
+        if (isNight) {
+            setTheme(R.style.night);
+        } else {
+            setTheme(R.style.def);
+        }
     }
 }
