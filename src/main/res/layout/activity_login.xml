@@ -24,10 +24,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:button_src="@mipmap/error"
-        app:input_type="normal"
-        app:text_color="?attr/text_color_model"
         app:hint_text="请输入手机号"
-        app:maxlenght="11" />
+        app:input_type="normal"
+        app:maxlenght="11"
+        app:text_color="?attr/text_color_model" />
 
     <com.stuonline.views.CustomerEditText
         android:id="@+id/login_pwd"
@@ -35,9 +35,9 @@
         android:layout_height="wrap_content"
         app:button_src="@mipmap/error"
         app:hint_text="密码"
-        app:text_color="?attr/text_color_model"
         app:input_type="password"
-        app:maxlenght="20" />
+        app:maxlenght="20"
+        app:text_color="?attr/text_color_model" />
 
     <Button
         android:id="@+id/login_login"
@@ -46,7 +46,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/selector_bt_bg"
+        android:background="@drawable/selector_code_bg"
         android:text="登录"
         android:textColor="@color/selector_bg_text_color"
         android:textSize="@dimen/font_20" />
