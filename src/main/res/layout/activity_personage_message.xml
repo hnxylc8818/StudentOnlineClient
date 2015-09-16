@@ -27,6 +27,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="头像"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <com.stuonline.views.CircleImage
@@ -56,6 +57,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="姓名"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <EditText
@@ -67,6 +69,7 @@
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
             android:hint="未填写"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <ImageView
@@ -88,6 +91,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="昵称"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <EditText
@@ -99,6 +103,7 @@
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
             android:hint="cattle"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <ImageView
@@ -120,9 +125,10 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="性别"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
-        <EditText
+        <TextView
             android:id="@+id/pgemge_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -130,7 +136,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
-            android:hint="男"
+            android:text="未选择"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <ImageView

@@ -11,6 +11,8 @@ import android.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -42,9 +44,11 @@ public class PersonageMessageActivity extends BaseActivity{
     @ViewInject(R.id.pgemge_nick)
     private EditText mPersonNick;
     @ViewInject(R.id.pgemge_sex)
-    private EditText mPersonSex;
+    private TextView mPersonSex;
     @ViewInject(R.id.pgemge_save)
     private Button mPersonSave;
+
+    private Bitmap bmp;
 
     private String[] items = { "拍照", "相册" };
     private String title = "选择照片";
@@ -70,7 +74,15 @@ public class PersonageMessageActivity extends BaseActivity{
     private void init() {
         setContentView(R.layout.activity_personage_message);
         ViewUtils.inject(this);
-
+        if (MyApp.user != null){
+            XUtils.bitmapUtils.display(mPersonPhoto,XUtils.BURL+MyApp.user.getPhotoUrl());
+            mPersonName.setText(MyApp.user.getUname()==null?"未填写":MyApp.user.getUname());
+            mPersonNick.setText(MyApp.user.getNick()==null?"未填写":MyApp.user.getNick());
+            mPersonSex.setText(MyApp.user.getGender()==0?"女":"男");
+        }
+        if (null != bmp){
+            mPersonPhoto.setImageBitmap(bmp);
+        }
     }
     @OnClick({R.id.pgemge_photo,R.id.pgemge_save,R.id.title_left})
     public void onclick(View v){
@@ -182,8 +194,7 @@ public class PersonageMessageActivity extends BaseActivity{
     private void setPicToView(Intent data) {
         Bundle bundle = data.getExtras();
         if (null != bundle) {
-            final Bitmap bmp = bundle.getParcelable("data");
-            mPersonPhoto.setImageBitmap(bmp);
+            bmp = bundle.getParcelable("data");
             saveCropPic(bmp);
         }
     }
