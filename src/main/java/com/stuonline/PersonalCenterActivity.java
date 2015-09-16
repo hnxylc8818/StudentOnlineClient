@@ -111,13 +111,13 @@ public class PersonalCenterActivity extends BaseActivity {
         switch (position) {
             case 1:
                 // 跳转校内信息
-                Intent intent = new Intent(PersonalCenterActivity.this, ThuInfoActivity.class);
+                intent = new Intent(PersonalCenterActivity.this, ThuInfoActivity.class);
                 startActivity(intent);
                 startIntentAnim();
                 break;
             case 2:
                 // 跳转账号与安全
-                startActivity(new Intent(PersonalCenterActivity.this,AccountAndSecurityActivity.class));
+                startActivity(new Intent(PersonalCenterActivity.this, AccountAndSecurityActivity.class));
                 startIntentAnim();
                 break;
             case 3:
