@@ -54,7 +54,8 @@ public class PersonalCenterActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.personal_center_person_info:
                 // 跳转个人信息
-
+                startActivity(new Intent(PersonalCenterActivity.this,PersonageMessageActivity.class));
+                startIntentAnim();
                 break;
             case R.id.personal_center_school_msg:
                 // 跳转校内信息

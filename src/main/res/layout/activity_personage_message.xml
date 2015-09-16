@@ -3,51 +3,148 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="?attr/bg"
     android:layout_height="match_parent">
     <com.stuonline.views.TitleView
-        android:id="@+id/psgemge_title"
+        android:id="@+id/pgemge_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="个人信息"
         app:right_text_visibility="gone"
         />
-    <com.stuonline.views.CustomerEditText
-        android:id="@+id/pgemge_photo"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:button_src="@mipmap/personage_message"
-        app:hint_text="头像"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/font_20"
+        android:layout_marginRight="@dimen/font_20">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="头像"
+            android:textSize="@dimen/font_20"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            />
+        <com.stuonline.views.CircleImage
+            android:id="@+id/pgemge_photo"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@mipmap/personage_message"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#eeeeee"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/font_20"
+        android:layout_marginRight="@dimen/font_20">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名"
+            android:textSize="@dimen/font_20"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            />
+        <EditText
+            android:id="@+id/pgemge_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="未填写"
+            android:textSize="@dimen/font_20"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#eeeeee"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/font_20"
+        android:layout_marginRight="@dimen/font_20">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昵称"
+            android:textSize="@dimen/font_20"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            />
+        <EditText
+            android:id="@+id/pgemge_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="cattle"
+            android:textSize="@dimen/font_20"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#eeeeee"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/font_20"
+        android:layout_marginRight="@dimen/font_20">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="性别"
+            android:textSize="@dimen/font_20"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            />
+        <EditText
+            android:id="@+id/pgemge_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="男"
+            android:layout_marginRight="10dp"
+            android:textSize="@dimen/font_20"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#eeeeee"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
 
-        />
-    <com.stuonline.views.CustomerEditText
-        android:id="@+id/pgemge_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:button_src="@mipmap/personage_message"
-        app:hint_text="姓名"
-        />
-    <com.stuonline.views.CustomerEditText
-        android:id="@+id/pgemge_nick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:button_src="@mipmap/personage_message"
-        app:hint_text="昵称"
-        />
-    <com.stuonline.views.CustomerEditText
-        android:id="@+id/pgemge_sex"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:button_src="@mipmap/personage_message"
-        app:hint_text="性别"
-        />
+
     <Button
         android:id="@+id/pgemge_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="@dimen/register_margerleft"
         android:layout_marginRight="@dimen/register_margerright"
         android:text="保存"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:textSize="20sp"
         android:textColor="@color/selector_bg_text_color"
         android:background="@drawable/selector_bt_bg"/>

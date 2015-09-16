@@ -37,6 +37,7 @@
             android:name=".PersonalCenterActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".SettingActivity" />
+        <activity android:name=".PersonageMessageActivity"/>
 
         <!-- SMSSDK -->
         <activity
