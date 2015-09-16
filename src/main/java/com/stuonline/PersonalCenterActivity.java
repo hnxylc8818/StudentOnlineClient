@@ -60,8 +60,20 @@ public class PersonalCenterActivity extends BaseActivity {
         lv.addHeaderView(header);
         if (null != MyApp.user) {
             personAccount.setText(String.format("账号：%s", MyApp.user.getAccount()));
-            personNick.setText(String.format("昵称：%s", MyApp.user.getNick()));
-            personSchool.setText(String.format("学校：%s", MyApp.user.getSchool()));
+            String nick="";
+            String school="";
+            if (MyApp.user.getNick() == null){
+                nick="未填写";
+            }else {
+                nick=MyApp.user.getNick();
+            }
+            if (MyApp.user.getSchool() == null){
+                school="未填写";
+            }else {
+                school=MyApp.user.getSchool();
+            }
+            personNick.setText(String.format("昵称：%s",nick));
+            personSchool.setText(String.format("学校：%s", school));
         }
         loadData();
         String[] from = new String[]{"img", "text"};
