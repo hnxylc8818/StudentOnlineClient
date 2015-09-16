@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.entity.Feedback;
+import com.stuonline.utils.FeedbackDialog;
 import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.TitleView;
 
@@ -39,17 +41,17 @@ public class PersonalCenterActivity extends BaseActivity {
     private void init() {
         setContentView(R.layout.activity_personal_center);
         ViewUtils.inject(this);
-        if (null != MyApp.user){
-            personAccount.setText(String.format("账号：%s",MyApp.user.getAccount()));
-            personNick.setText(String.format("昵称：%s",MyApp.user.getNick()));
-            personSchool.setText(String.format("学校：%s",MyApp.user.getSchool()));
+        if (null != MyApp.user) {
+            personAccount.setText(String.format("账号：%s", MyApp.user.getAccount()));
+            personNick.setText(String.format("昵称：%s", MyApp.user.getNick()));
+            personSchool.setText(String.format("学校：%s", MyApp.user.getSchool()));
         }
     }
 
-    @OnClick({R.id.personal_center_person_info,R.id.personal_center_school_msg,R.id.personal_center_safe,
-    R.id.personal_center_setting,R.id.personal_center_feedback,R.id.personal_center_exit})
-    private void click(View v){
-        switch (v.getId()){
+    @OnClick({R.id.personal_center_person_info, R.id.personal_center_school_msg, R.id.personal_center_safe,
+            R.id.personal_center_setting, R.id.personal_center_feedback, R.id.personal_center_exit})
+    private void click(View v) {
+        switch (v.getId()) {
             case R.id.personal_center_person_info:
                 // 跳转个人信息
 
@@ -64,17 +66,17 @@ public class PersonalCenterActivity extends BaseActivity {
                 break;
             case R.id.personal_center_setting:
                 // 跳转系统设置
-                intent=new Intent(PersonalCenterActivity.this,SettingActivity.class);
+                intent = new Intent(PersonalCenterActivity.this, SettingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.personal_center_feedback:
                 // 跳转意见反馈
-
+                FeedbackDialog.showWaitting(this);
                 break;
             case R.id.personal_center_exit:
                 // 退出登录，跳转登录页面,并注销当前账号
                 MyApp.release();
-                intent=new Intent(PersonalCenterActivity.this,LoginActivity.class);
+                intent = new Intent(PersonalCenterActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
                 break;

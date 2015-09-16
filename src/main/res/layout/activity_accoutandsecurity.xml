@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/register_margerleft"
         android:layout_marginRight="@dimen/register_margerright"
-        app:hint_text="手机号     131231"
+        app:hint_text="手机号"
         app:text_color="?attr/text_color_model"
         app:button_src="@mipmap/selected"
         app:button_visibility="visible"
@@ -30,7 +30,7 @@
         app:text_color="?attr/text_color_model"
         app:button_src="@mipmap/selected"
         app:button_visibility="visible"
-        app:hint_text="邮箱  aaa@qq.com"
+        app:hint_text="邮箱"
         />
     <ImageView
         android:layout_width="match_parent"
