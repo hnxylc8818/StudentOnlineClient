@@ -16,7 +16,7 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="10dp"
-        android:textSize="@dimen/font_18" />
+        android:textSize="?attr/text_size_18" />
 
     <ImageView
         android:id="@+id/edit_bt"

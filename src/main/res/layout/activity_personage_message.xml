@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="个人信息"
-        app:centent_text_Size="@dimen/font_22"
         app:right_text_visibility="gone" />
 
     <RelativeLayout
@@ -28,7 +27,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="头像"
-            android:textSize="@dimen/font_20" />
+            android:textSize="?attr/text_size_20" />
 
         <com.stuonline.views.CircleImage
             android:id="@+id/pgemge_photo"
@@ -57,7 +56,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="姓名"
-            android:textSize="@dimen/font_20" />
+            android:textSize="?attr/text_size_20" />
 
         <EditText
             android:id="@+id/pgemge_name"
@@ -68,7 +67,7 @@
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
             android:hint="未填写"
-            android:textSize="@dimen/font_20" />
+            android:textSize="?attr/text_size_20" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -89,7 +88,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="昵称"
-            android:textSize="@dimen/font_20" />
+            android:textSize="?attr/text_size_20" />
 
         <EditText
             android:id="@+id/pgemge_nick"
@@ -100,7 +99,7 @@
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
             android:hint="cattle"
-            android:textSize="@dimen/font_20" />
+            android:textSize="?attr/text_size_20" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -121,7 +120,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="性别"
-            android:textSize="@dimen/font_20" />
+            android:textSize="?attr/text_size_20" />
 
         <EditText
             android:id="@+id/pgemge_sex"
@@ -132,7 +131,7 @@
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
             android:hint="男"
-            android:textSize="@dimen/font_20" />
+            android:textSize="?attr/text_size_20" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -154,5 +153,5 @@
         android:gravity="center"
         android:text="保存"
         android:textColor="@color/selector_bg_text_color"
-        android:textSize="20sp" />
+        android:textSize="?attr/text_size_20" />
 </LinearLayout>

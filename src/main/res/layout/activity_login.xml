@@ -11,11 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="中国大学生在线"
-        app:centent_text_Size="@dimen/font_22"
         app:left_src="@mipmap/back"
         app:left_visibility="visible"
         app:right_text="切换账号"
-        app:right_text_Size="@dimen/font_16"
         app:right_text_visibility="visible"
         app:right_visibility="gone" />
 
@@ -49,7 +47,7 @@
         android:background="@drawable/selector_code_bg"
         android:text="登录"
         android:textColor="@color/selector_bg_text_color"
-        android:textSize="@dimen/font_20" />
+        android:textSize="?attr/text_size_20" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -63,6 +61,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
             android:text="注册账号"
+            android:textSize="?attr/text_size_16"
             android:textColor="@color/dark_grey" />
 
         <TextView
@@ -72,6 +71,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
+            android:textSize="?attr/text_size_16"
             android:text="找回密码"
             android:textColor="@color/dark_grey" />
     </RelativeLayout>

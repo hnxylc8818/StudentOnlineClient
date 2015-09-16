@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="中国大学生在线"
-        app:centent_text_Size="@dimen/font_22"
         app:right_text_visibility="gone"
         app:right_visibility="gone" />
 
@@ -32,6 +31,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/selector_code_bg"
         android:text="退出登录"
+        android:textSize="?attr/text_size_20"
         android:textColor="@color/selector_bg_text_color" />
 
 </LinearLayout>

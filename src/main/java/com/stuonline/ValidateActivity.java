@@ -146,7 +146,6 @@ public class ValidateActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        changeTheme();
         init();
     }
 

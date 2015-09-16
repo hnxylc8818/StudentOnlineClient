@@ -63,7 +63,6 @@ public class PersonageMessageActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        changeTheme();
         init();
     }
 }

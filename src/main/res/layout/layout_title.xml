@@ -18,7 +18,7 @@
         android:layout_centerInParent="true"
         android:text="centent"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="30sp" />
+        android:textSize="?attr/text_size_22" />
     <TextView
         android:id="@+id/title_right"
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
         android:layout_marginRight="10dp"
         android:text="right"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="20sp" />
+        android:textSize="?attr/text_size_16" />
     <com.stuonline.views.CircleImage
         android:id="@+id/title_right_src"
         android:layout_width="30dp"

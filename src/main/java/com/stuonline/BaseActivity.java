@@ -20,6 +20,7 @@ public class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        changeTheme();
     }
 
     @Override
@@ -50,6 +51,7 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        changeTheme();
     }
 
     public void changeTheme(){
@@ -58,6 +60,18 @@ public class BaseActivity extends FragmentActivity {
             setTheme(R.style.night);
         } else {
             setTheme(R.style.def);
+        }
+        int font=SharedUtil.getFont(this);
+        switch (font){
+            case 1:
+                setTheme(R.style.small_size);
+                break;
+            case 2:
+                setTheme(R.style.middle_size);
+                break;
+            case 3:
+                setTheme(R.style.big_size);
+                break;
         }
     }
 

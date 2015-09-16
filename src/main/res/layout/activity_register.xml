@@ -10,9 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="@string/register_centent"
-        app:right_text="@string/register_right_text"
-        app:centent_text_Size="@dimen/font_22"
-        app:right_text_Size="@dimen/font_18"/>
+        app:right_text="@string/register_right_text"/>
     <com.stuonline.views.CustomerEditText
         android:id="@+id/register_email"
         app:input_type="normal"
@@ -55,13 +53,13 @@
             android:id="@+id/register_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/register_text_size"
+            android:textSize="?attr/text_size_16"
             android:text="@string/register_tv_text"
             android:layout_alignParentLeft="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/register_text_size"
+            android:textSize="?attr/text_size_16"
             android:text="@string/register_tv2_text"
             android:layout_toRightOf="@+id/register_tv"
             android:textColor="@android:color/holo_red_dark"/>

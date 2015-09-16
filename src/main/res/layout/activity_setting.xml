@@ -9,7 +9,6 @@
     <com.stuonline.views.TitleView
         android:id="@+id/setting_title"
         app:centent_text="系统设置"
-        app:centent_text_Size="@dimen/font_22"
         app:right_text_visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -33,7 +32,7 @@
                 android:text="字号"
                 android:layout_centerVertical="true"
                 android:textColor="@color/font_dark_gray"
-                android:textSize="@dimen/font_18" />
+                android:textSize="?attr/text_size_18" />
             <RadioGroup
                 android:id="@+id/setting_rg"
                 android:background="@drawable/shape_rg_stroke"
@@ -52,19 +51,18 @@
                     android:layout_margin="2dp"
                     android:background="@drawable/selector_rg_bg"
                     android:textColor="@color/selector_rg_font_color"
-                    android:textSize="@dimen/font_18"
+                    android:textSize="?attr/text_size_18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <RadioButton
                     android:id="@+id/setting_font_middle"
                     android:button="@null"
                     android:text="中"
-                    android:checked="true"
                     android:padding="5dp"
                     android:layout_margin="2dp"
                     android:background="@drawable/selector_rg_bg"
                     android:textColor="@color/selector_rg_font_color"
-                    android:textSize="@dimen/font_18"
+                    android:textSize="?attr/text_size_18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <RadioButton
@@ -75,7 +73,7 @@
                     android:text="大"
                     android:background="@drawable/selector_rg_bg"
                     android:textColor="@color/selector_rg_font_color"
-                    android:textSize="@dimen/font_18"
+                    android:textSize="?attr/text_size_18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -108,7 +106,7 @@
                 android:text="夜间模式"
                 android:layout_centerVertical="true"
                 android:textColor="@color/font_dark_gray"
-                android:textSize="@dimen/font_18" />
+                android:textSize="?attr/text_size_18" />
 
             <CheckBox
                 android:id="@+id/setting_model"
@@ -149,10 +147,10 @@
                 android:layout_centerVertical="true"
                 android:text="检查更新"
                 android:textColor="@color/font_dark_gray"
-                android:textSize="@dimen/font_18" />
+                android:textSize="?attr/text_size_18" />
             <TextView
                 android:id="@+id/setting_version"
-                android:textSize="@dimen/font_18"
+                android:textSize="?attr/text_size_18"
                 android:textColor="@color/dark_grey"
                 android:layout_alignParentRight="true"
                 android:text="V1.0"

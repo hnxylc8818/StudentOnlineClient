@@ -23,7 +23,6 @@ public class UpdatePasswordActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        changeTheme();
         init();
     }
     private void init() {

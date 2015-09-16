@@ -121,7 +121,6 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        changeTheme();
         init();
     }
 

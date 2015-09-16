@@ -171,7 +171,6 @@ public class PersonalCenterActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        changeTheme();
         init();
     }
 }

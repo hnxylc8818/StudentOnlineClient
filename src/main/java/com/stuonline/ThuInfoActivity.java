@@ -35,7 +35,6 @@ public class ThuInfoActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        changeTheme();
         init();
     }
 }

@@ -50,4 +50,8 @@
     <!-- 徐宾：换肤属性 -->
     <attr name="bg" format="reference|color" />
     <attr name="text_color_model" format="color"/>
+    <attr name="text_size_22" format="dimension|integer"/>
+    <attr name="text_size_20" format="dimension|integer"/>
+    <attr name="text_size_18" format="dimension|integer"/>
+    <attr name="text_size_16" format="dimension|integer"/>
 </resources>

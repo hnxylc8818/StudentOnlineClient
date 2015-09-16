@@ -25,7 +25,7 @@
             android:layout_marginLeft="15dp"
             android:text="校内信息"
             android:textColor="@color/font_dark_gray"
-            android:textSize="@dimen/font_18" />
+            android:textSize="?attr/text_size_18" />
 
     </LinearLayout>
 
