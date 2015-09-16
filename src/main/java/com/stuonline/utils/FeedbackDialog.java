@@ -23,7 +23,7 @@ public class FeedbackDialog {
     public static void showWaitting(Context context) {
         if (waitting == null) {
             waitting = new AlertDialog.Builder(context).create();
-            waitting.setCanceledOnTouchOutside(false);  // 触摸边缘不消失
+            waitting.setCanceledOnTouchOutside(true);  // 触摸边缘不消失
             waitting.show();
             Window window = waitting.getWindow();
             View v = LayoutInflater.from(context).inflate(R.layout.layout_dialog_feedback, null);
