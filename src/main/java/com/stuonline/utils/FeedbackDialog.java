@@ -7,13 +7,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.internal.widget.ViewUtils;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.http.RequestParams;
@@ -30,13 +35,18 @@ import com.stuonline.https.XUtils;
  * Created by SunJiShuang on 2015/9/15.
  */
 public class FeedbackDialog {
-    public static Dialog waitting;
-    private static EditText mFeedEdit;
+    public Dialog waitting;
+    private EditText mFeedEdit;
+    private TextView hasnum;// 用来显示剩余字数
+    int num = 140;//限制的最大字数
+    private CharSequence temp;
+    private int selectionStart;
+    private int selectionEnd;
 
     /**
      * 显示对话框
      */
-    public static void showWaitting(Context context) {
+    public void showWaitting(Context context) {
         if (waitting == null) {
             waitting = new AlertDialog.Builder(context).create();
             waitting.setCanceledOnTouchOutside(true);  // 触摸边缘不消失
@@ -48,13 +58,19 @@ public class FeedbackDialog {
             window.setContentView(v);
             Button button = (Button) waitting.findViewById(R.id.feedback_bt);
             mFeedEdit = (EditText) v.findViewById(R.id.feedback_edit);
+            hasnum = (TextView) v.findViewById(R.id.feedback_num);
+            hasnum.setText(num + "");
+            mFeedEdit.requestFocus();
+            InputMethodManager imm = (InputMethodManager) mFeedEdit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
             button.setOnClickListener(onClickListener);
+            mFeedEdit.addTextChangedListener(textWatcher);
         } else {
             waitting.show();
         }
     }
 
-    private static View.OnClickListener onClickListener = new View.OnClickListener() {
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             String content = mFeedEdit.getText().toString().trim();
@@ -85,7 +101,7 @@ public class FeedbackDialog {
     /**
      * 隐藏
      */
-    public static void hiddenWaitting() {
+    public void hiddenWaitting() {
         if (null != waitting && waitting.isShowing()) {
             waitting.dismiss();
         }
@@ -94,15 +110,42 @@ public class FeedbackDialog {
     /**
      * 销毁
      */
-    public static void destoryWaitting() {
+    public void destoryWaitting() {
         hiddenWaitting();
         waitting = null;
     }
 
-    public static boolean isWaittingShowed() {
+    public boolean isWaittingShowed() {
         if (null != waitting && waitting.isShowing()) {
             return true;
         }
         return false;
     }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            temp = s;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            int number = num - s.length();
+            hasnum.setText("" + number);
+            selectionStart = mFeedEdit.getSelectionStart();
+            selectionEnd = mFeedEdit.getSelectionEnd();
+            if (temp.length() > num) {
+                s.delete(selectionStart - 1, selectionEnd);
+                int tempSelection = selectionEnd;
+                mFeedEdit.setText(s);
+                mFeedEdit.setSelection(tempSelection);//设置光标在最后
+            }
+        }
+
+    };
 }

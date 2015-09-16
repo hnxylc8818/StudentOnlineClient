@@ -145,7 +145,7 @@ public class PersonalCenterActivity extends BaseActivity {
                 break;
             case 4:
                 // 跳转意见反馈
-                FeedbackDialog.showWaitting(this);
+                new FeedbackDialog().showWaitting(this);
                 break;
         }
     }

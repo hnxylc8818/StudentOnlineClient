@@ -4,26 +4,43 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/feedback_edit"
-        android:layout_width="280dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
-        android:background="@android:drawable/edit_text"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="top"
-        android:hint="这里是意见反馈内容"
-        android:paddingBottom="10dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:textColor="@color/font_dark_gray"
-        android:textColorHint="@color/text_color"
-        android:textSize="?attr/text_size_16" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/feedback_edit"
+            android:layout_width="280dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@android:drawable/edit_text"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="top"
+            android:hint="这里是意见反馈内容"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/font_dark_gray"
+            android:textColorHint="@color/text_color"
+            android:textSize="?attr/text_size_16" />
+
+        <TextView
+            android:id="@+id/feedback_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/feedback_edit"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="20dp"
+            android:paddingRight="50dp"
+            android:text="11"
+            android:textColor="@color/font_dark_gray"
+            android:textSize="?attr/text_size_16" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/feedback_bt"
