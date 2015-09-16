@@ -108,26 +108,27 @@ public class PersonalCenterActivity extends BaseActivity {
 
     @OnItemClick(R.id.personal_center_lv)
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (position){
+        switch (position) {
             case 1:
                 // 跳转校内信息
-                XUtils.showToast("跳转校内信息");
+                Intent intent = new Intent(PersonalCenterActivity.this, ThuInfoActivity.class);
+                startActivity(intent);
+                startIntentAnim();
                 break;
             case 2:
                 // 跳转账号与安全
-                XUtils.showToast("跳转账号与安全");
                 startActivity(new Intent(PersonalCenterActivity.this,AccountAndSecurityActivity.class));
                 startIntentAnim();
                 break;
             case 3:
                 // 跳转系统设置
-                intent=new Intent(PersonalCenterActivity.this,SettingActivity.class);
+                intent = new Intent(PersonalCenterActivity.this, SettingActivity.class);
                 startActivity(intent);
                 startIntentAnim();
                 break;
             case 4:
                 // 跳转意见反馈
-                XUtils.showToast("跳转意见反馈");
+                FeedbackDialog.showWaitting(this);
                 break;
         }
     }

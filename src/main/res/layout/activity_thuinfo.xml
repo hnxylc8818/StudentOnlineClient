@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/bg"
     android:orientation="vertical">
 
     <com.stuonline.views.TitleView
-        android:id="@+id/login_title"
+        android:id="@+id/thuinfo_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="中国大学生在线"
