@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +16,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.entity.Muser;
+import com.stuonline.entity.Result;
+import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.JsonUtil;
 import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.CircleImage;
 import com.stuonline.views.SelectPicPopupWindow;
@@ -50,9 +58,13 @@ public class PersonageMessageActivity extends BaseActivity {
     @ViewInject(R.id.pgemge_save)
     private Button mPersonSave;
 
+    private String uname;
+    private String nick;
+
     private Bitmap bmp;
     private int type;
-    private int sex;
+    private Integer sex = null;
+    private boolean isPhoto=false;
 
     private static final int PHOTO_CARMERA = 1;
     private static final int PHOTO_PICK = 2;
@@ -88,9 +100,23 @@ public class PersonageMessageActivity extends BaseActivity {
         if (null != bmp) {
             mPersonPhoto.setImageBitmap(bmp);
         }
+        if (!TextUtils.isEmpty(uname)) {
+            mPersonName.setText(uname);
+        }
+        if (!TextUtils.isEmpty(nick)) {
+            mPersonNick.setText(nick);
+        }
+        if (sex != null) {
+            if (sex == 1) {
+                mPersonSex.setText("男");
+            } else {
+                mPersonSex.setText("女");
+            }
+        }
+
     }
 
-    @OnClick({R.id.pgemge_photo, R.id.pgemge_save, R.id.title_left, R.id.pgemge_sex,R.id.btn_top,R.id.btn_bottom})
+    @OnClick({R.id.pgemge_photo, R.id.pgemge_save, R.id.title_left, R.id.pgemge_sex, R.id.btn_top, R.id.btn_bottom})
     public void onclick(View v) {
         switch (v.getId()) {
             case R.id.title_left:
@@ -99,7 +125,7 @@ public class PersonageMessageActivity extends BaseActivity {
                 endIntentAnim();
                 break;
             case R.id.pgemge_photo:
-                type=MyApp.PHOTO;
+                type = MyApp.PHOTO;
                 //更改头像
                 //实例化SelectPicPopupWindow
                 menuWindow = new SelectPicPopupWindow(PersonageMessageActivity.this, itemsOnClick, MyApp.PHOTO);
@@ -107,7 +133,7 @@ public class PersonageMessageActivity extends BaseActivity {
                 menuWindow.showAtLocation(PersonageMessageActivity.this.findViewById(R.id.pgemge_root), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
                 break;
             case R.id.pgemge_sex:
-                type=MyApp.SEX;
+                type = MyApp.SEX;
                 //实例化SelectPicPopupWindow
                 menuWindow = new SelectPicPopupWindow(PersonageMessageActivity.this, itemsOnClick, MyApp.SEX);
                 //显示窗口
@@ -115,8 +141,58 @@ public class PersonageMessageActivity extends BaseActivity {
                 break;
             case R.id.pgemge_save:
                 //保存
+                updatePersonInfo();
                 break;
         }
+    }
+
+    private void updatePersonInfo() {
+        if (checkInfo()) {
+            RequestParams params = new RequestParams();
+            params.addBodyParameter("u.uid", String.valueOf(MyApp.user.getUid()));
+            if (isPhoto) {
+                params.addBodyParameter("photo", tempFile);
+            }
+            params.addBodyParameter("u.uname", uname);
+            params.addBodyParameter("u.nick", nick);
+            params.addBodyParameter("u.gender", String.valueOf(sex));
+            XUtils.send(XUtils.UPHOTO, params, new MyCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    if (null != responseInfo) {
+                        JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
+                        });
+                        Result<Muser> result = jsonUtil.parse(responseInfo.result);
+                        XUtils.showToast(result.desc);
+                        if (result.state == Result.STATE_SUC) {
+                            MyApp.user = result.data;
+                            uname = null;
+                            nick = null;
+                            sex = null;
+                            finish();
+                            endIntentAnim();
+
+                        }
+                    } else {
+                        XUtils.showToast("发生错误");
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean checkInfo() {
+        uname = mPersonName.getText().toString().trim();
+        nick = mPersonNick.getText().toString().trim();
+        if (TextUtils.isEmpty(uname)) {
+            XUtils.showToast("请输入姓名");
+            return false;
+        }
+        if (TextUtils.isEmpty(nick)) {
+            XUtils.showToast("请输入昵称");
+            return false;
+        }
+        return true;
     }
 
     //为弹出窗口实现监听类
@@ -126,17 +202,19 @@ public class PersonageMessageActivity extends BaseActivity {
             menuWindow.dismiss();
             switch (v.getId()) {
                 case R.id.btn_top:
-                    if (type == MyApp.PHOTO){
+                    if (type == MyApp.PHOTO) {
                         startCamera();
-                    }else if (type == MyApp.SEX){
+                    } else if (type == MyApp.SEX) {
                         mPersonSex.setText("男");
+                        sex = 1;
                     }
                     break;
                 case R.id.btn_bottom:
-                    if (type == MyApp.PHOTO){
+                    if (type == MyApp.PHOTO) {
                         startPick();
-                    }else if (type == MyApp.SEX){
+                    } else if (type == MyApp.SEX) {
                         mPersonSex.setText("女");
+                        sex = 0;
                     }
                     break;
                 default:
@@ -235,6 +313,7 @@ public class PersonageMessageActivity extends BaseActivity {
         FileOutputStream fis = null;
         bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
         try {
+            isPhoto=true;
             fis = new FileOutputStream(tempFile);
             fis.write(baos.toByteArray());
             fis.flush();
