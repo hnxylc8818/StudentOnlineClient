@@ -79,7 +79,8 @@ public class PersonageMessageActivity extends BaseActivity {
     private String getPhotoFileName() {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("'PNG'_yyyyMMdd_HHmmss");
-        return sdf.format(date) + ".png";
+//        return sdf.format(date) + ".png";
+        return "temp.png";
     }
 
     @Override
@@ -156,9 +157,11 @@ public class PersonageMessageActivity extends BaseActivity {
             params.addBodyParameter("u.uname", uname);
             params.addBodyParameter("u.nick", nick);
             params.addBodyParameter("u.gender", String.valueOf(sex));
+            DialogUtil.showWaitting(this);
             XUtils.send(XUtils.UPHOTO, params, new MyCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
+                    DialogUtil.hiddenWaitting();
                     if (null != responseInfo) {
                         JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
                         });
@@ -171,7 +174,6 @@ public class PersonageMessageActivity extends BaseActivity {
                             sex = null;
                             finish();
                             endIntentAnim();
-
                         }
                     } else {
                         XUtils.showToast("发生错误");
@@ -184,6 +186,12 @@ public class PersonageMessageActivity extends BaseActivity {
     private boolean checkInfo() {
         uname = mPersonName.getText().toString().trim();
         nick = mPersonNick.getText().toString().trim();
+        String gender=mPersonSex.getText().toString().trim();
+        if (gender.equals("男")){
+            sex=1;
+        }else if (gender.equals("女")){
+            sex=0;
+        }
         if (TextUtils.isEmpty(uname)) {
             XUtils.showToast("请输入姓名");
             return false;
@@ -200,6 +208,8 @@ public class PersonageMessageActivity extends BaseActivity {
 
         public void onClick(View v) {
             menuWindow.dismiss();
+            uname=mPersonName.getText().toString().trim();
+            nick=mPersonNick.getText().toString().trim();
             switch (v.getId()) {
                 case R.id.btn_top:
                     if (type == MyApp.PHOTO) {
@@ -314,6 +324,11 @@ public class PersonageMessageActivity extends BaseActivity {
         bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
         try {
             isPhoto=true;
+            if (tempFile.exists()) {
+                tempFile.delete();
+                tempFile=new File(Environment.getExternalStorageDirectory(),
+                        getPhotoFileName());
+            }
             fis = new FileOutputStream(tempFile);
             fis.write(baos.toByteArray());
             fis.flush();
