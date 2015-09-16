@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="个人信息"
+        app:centent_text_Size="@dimen/font_22"
         app:right_text_visibility="gone" />
 
     <RelativeLayout
