@@ -38,7 +38,7 @@ public class FeedbackDialog {
     public Dialog waitting;
     private EditText mFeedEdit;
     private TextView hasnum;// 用来显示剩余字数
-    int num = 140;//限制的最大字数
+    private int num = 140;//限制的最大字数
     private CharSequence temp;
     private int selectionStart;
     private int selectionEnd;
