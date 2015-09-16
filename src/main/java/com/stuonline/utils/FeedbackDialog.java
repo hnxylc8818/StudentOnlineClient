@@ -3,13 +3,26 @@ package com.stuonline.utils;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.alibaba.fastjson.TypeReference;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.stuonline.MyApp;
+import com.stuonline.PersonalCenterActivity;
 import com.stuonline.R;
+import com.stuonline.entity.Muser;
+import com.stuonline.entity.Result;
+import com.stuonline.https.MyCallBack;
+import com.stuonline.https.XUtils;
 
 /**
  * Created by SunJiShuang on 2015/9/15.
@@ -36,10 +49,30 @@ public class FeedbackDialog {
             waitting.show();
         }
     }
+
     private static View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            hiddenWaitting();
+
+            EditText mFeedEdit = (EditText) v.findViewById(R.id.feedback_edit);
+            String content = mFeedEdit.getText().toString();
+            RequestParams params = new RequestParams();
+            params.addBodyParameter("f.content", content);
+            params.addBodyParameter("f.uid", String.valueOf(MyApp.user.getUid()));
+            XUtils.send(XUtils.SFB, params, new MyCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    if (responseInfo != null) {
+                        JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+                        });
+                        Result<Boolean> result = jsonUtil.parse(responseInfo.result);
+                        XUtils.showToast(result.desc);
+                        if (result.state == Result.STATE_SUC) {
+                            hiddenWaitting();
+                        }
+                    }
+                }
+            });
         }
     };
 
