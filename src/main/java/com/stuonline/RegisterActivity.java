@@ -104,7 +104,7 @@ public class RegisterActivity extends BaseActivity {
                                 });
                                 Result<Boolean> result = jsonUtil.parse(responseInfo.result);
                                 XUtils.showToast(result.desc);
-                                if (result.data){
+                                if (result.state == Result.STATE_SUC) {
                                     finish();
                                     endIntentAnim();
                                 }
@@ -118,6 +118,7 @@ public class RegisterActivity extends BaseActivity {
         }
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();

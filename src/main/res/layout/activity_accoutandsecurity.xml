@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="?attr/bg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/bg"
+    android:orientation="vertical">
+
     <com.stuonline.views.TitleView
         android:id="@+id/aas_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="中国大学生在线"
-        app:right_text_visibility="gone"/>
+        app:right_text_visibility="gone" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -24,6 +26,7 @@
             android:layout_centerVertical="true"
             android:text="手机号"
             android:textSize="?attr/text_size_20" />
+
         <ImageView
             android:id="@+id/aas_photo"
             android:layout_width="20dp"
@@ -31,14 +34,15 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/selected" />
+
         <TextView
             android:id="@+id/aas_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/aas_photo"
             android:text="18888888888"
-            android:layout_marginRight="5dp"
             android:textSize="?attr/text_size_20" />
 
         <ImageView
@@ -47,6 +51,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/font_dark_gray" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -60,6 +65,7 @@
             android:layout_centerVertical="true"
             android:text="邮箱"
             android:textSize="?attr/text_size_20" />
+
         <ImageView
             android:id="@+id/aas_email_photo"
             android:layout_width="20dp"
@@ -67,16 +73,16 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/selected" />
+
         <TextView
             android:id="@+id/aas_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/aas_email_photo"
             android:text="aaaaa@qq.com"
-            android:layout_marginRight="5dp"
             android:textSize="?attr/text_size_20" />
-
 
 
         <ImageView
@@ -92,8 +98,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
-        android:background="@color/font_dark_gray"/>
+        android:background="@color/font_dark_gray" />
+
     <RelativeLayout
+        android:id="@+id/aas_update_pwd"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="20dp"
@@ -106,6 +114,7 @@
             android:layout_centerVertical="true"
             android:text="修改密码"
             android:textSize="?attr/text_size_20" />
+
         <ImageView
             android:id="@+id/aas_pwd_photo"
             android:layout_width="20dp"
@@ -113,16 +122,18 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/selected" />
+
         <TextView
             android:id="@+id/aas_pwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:inputType="textPassword"
-            android:layout_toLeftOf="@id/aas_pwd_photo"
-            android:text=""
             android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/aas_pwd_photo"
+            android:inputType="textPassword"
+            android:text=""
             android:textSize="?attr/text_size_20" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"

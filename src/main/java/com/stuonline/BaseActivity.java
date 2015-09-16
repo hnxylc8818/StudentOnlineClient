@@ -1,11 +1,14 @@
 package com.stuonline;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Window;
 
 import com.lidroid.xutils.http.HttpHandler;
+import com.stuonline.controller.ActivityController;
+import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
 import com.stuonline.utils.SharedUtil;
 
@@ -13,7 +16,8 @@ import com.stuonline.utils.SharedUtil;
  * Created by Xubin on 2015/9/8.
  */
 public class BaseActivity extends FragmentActivity {
-
+    private boolean isExit;
+    private Handler handler = new Handler();
     protected HttpHandler httpHandler;
 
     @Override
@@ -21,6 +25,7 @@ public class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         changeTheme();
+        ActivityController.addActivity(this);
     }
 
     @Override
@@ -34,6 +39,10 @@ public class BaseActivity extends FragmentActivity {
             }
 
         }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return true;
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -41,6 +50,7 @@ public class BaseActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         DialogUtil.destoryWaitting();
+        ActivityController.removeActivity(this);
     }
 
     @Override
@@ -54,15 +64,15 @@ public class BaseActivity extends FragmentActivity {
         changeTheme();
     }
 
-    public void changeTheme(){
+    public void changeTheme() {
         boolean isNight = SharedUtil.getModel(this);
         if (isNight) {
             setTheme(R.style.night);
         } else {
             setTheme(R.style.def);
         }
-        int font=SharedUtil.getFont(this);
-        switch (font){
+        int font = SharedUtil.getFont(this);
+        switch (font) {
             case 1:
                 setTheme(R.style.small_size);
                 break;
@@ -75,11 +85,32 @@ public class BaseActivity extends FragmentActivity {
         }
     }
 
-    protected void startIntentAnim(){
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    protected void startIntentAnim() {
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    protected void endIntentAnim(){
-        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    protected void endIntentAnim() {
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
+
+    /**
+     * 退出程序，关闭所有活动
+     */
+    public void exit() {
+        if (!isExit) {
+            isExit = true;
+            XUtils.showToast("双击Back键退出程序");
+            handler.postDelayed(runnable, 1500);
+        } else {
+            ActivityController.exit();
+        }
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            isExit = false;
+        }
+    };
+
 }
