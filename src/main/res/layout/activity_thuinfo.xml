@@ -17,6 +17,7 @@
         app:right_visibility="gone" />
 
     <RelativeLayout
+        android:id="@+id/huinfo_role"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
@@ -45,7 +46,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/thuinfo_role_img"
-            android:text="教师"
+            android:text="未选择"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <ImageView
@@ -56,6 +58,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/thuinfo_school"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
@@ -84,7 +87,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/thuinfo_school_img"
-            android:text="北京联合大学"
+            android:text="未选择"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <ImageView
@@ -95,6 +99,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/thuinfo_faculty"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
@@ -116,14 +121,16 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/selected" />
 
-        <TextView
+        <EditText
             android:id="@+id/thuinfo_faculty_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/thuinfo_faculty_img"
-            android:text="计算机"
+            android:background="@android:color/transparent"
+            android:text="未填写"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <ImageView
@@ -134,6 +141,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/thuinfo_class"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
@@ -155,14 +163,16 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/selected" />
 
-        <TextView
+        <EditText
             android:id="@+id/thuinfo_class_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/thuinfo_class_img"
-            android:text="1班"
+            android:background="@android:color/transparent"
+            android:text="未填写"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <ImageView
@@ -173,6 +183,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/thuinfo_date"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
@@ -201,7 +212,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/thuinfo_date_img"
-            android:text="2014年"
+            android:text="未选择"
+            android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
         <ImageView

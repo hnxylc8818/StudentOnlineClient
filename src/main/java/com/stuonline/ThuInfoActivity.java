@@ -3,6 +3,9 @@ package com.stuonline;
 import android.os.Bundle;
 import android.view.View;
 
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.https.XUtils;
 import com.stuonline.views.TitleView;
 
 /**
@@ -20,6 +23,7 @@ public class ThuInfoActivity extends BaseActivity {
 
     private void init() {
         setContentView(R.layout.activity_thuinfo);
+        ViewUtils.inject(this);
         title = (TitleView) findViewById(R.id.thuinfo_title);
         title.setOnLeftclickListener(onClickListener);
     }
@@ -36,5 +40,26 @@ public class ThuInfoActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         init();
+    }
+
+    @OnClick({R.id.huinfo_role, R.id.thuinfo_school, R.id.thuinfo_faculty, R.id.thuinfo_class, R.id.thuinfo_date})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.huinfo_role:
+                //角色z
+                break;
+            case R.id.thuinfo_school:
+                //学校
+                break;
+            case R.id.thuinfo_faculty:
+                //院系
+                break;
+            case R.id.thuinfo_class:
+                //班级
+                break;
+            case R.id.thuinfo_date:
+                //入学时间
+                break;
+        }
     }
 }

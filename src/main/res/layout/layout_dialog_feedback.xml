@@ -12,13 +12,15 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:background="@android:drawable/edit_text"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="top"
         android:hint="这里是意见反馈内容"
         android:paddingBottom="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="10dp"
-        android:textColor="@color/font_dark_gray"
         android:paddingTop="10dp"
+        android:textColor="@color/font_dark_gray"
         android:textColorHint="@color/text_color"
         android:textSize="?attr/text_size_16" />
 
@@ -30,6 +32,6 @@
         android:layout_margin="15dp"
         android:background="@drawable/selector_code_bg"
         android:text="发送"
-        android:textSize="?attr/text_size_20"
-        android:textColor="@color/selector_bg_text_color" />
+        android:textColor="@color/selector_bg_text_color"
+        android:textSize="?attr/text_size_20" />
 </LinearLayout>

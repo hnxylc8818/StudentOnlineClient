@@ -19,8 +19,7 @@ import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.CustomerEditText;
 
 /**
- * 孙卫星：修改密码
- * Created by Administrator on 2015/9/15.
+ * Created by SunJiShuang on 2015/9/16.
  */
 public class UpdatePasswordActivity extends BaseActivity {
     @ViewInject(R.id.uppwd_oldpassword)
@@ -90,8 +89,8 @@ public class UpdatePasswordActivity extends BaseActivity {
                     });
                     Result<Muser> result = jsonUtil.parse(responseInfo.result);
                     XUtils.showToast(result.desc);
-                    Log.i("pwd", responseInfo.result);
                     if (result.state == Result.STATE_SUC) {
+                        MyApp.user = result.data;
                         finish();
                         endIntentAnim();
                     }
