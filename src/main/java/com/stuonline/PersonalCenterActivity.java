@@ -116,6 +116,8 @@ public class PersonalCenterActivity extends BaseActivity {
             case 2:
                 // 跳转账号与安全
                 XUtils.showToast("跳转账号与安全");
+                startActivity(new Intent(PersonalCenterActivity.this,AccountAndSecurityActivity.class));
+                startIntentAnim();
                 break;
             case 3:
                 // 跳转系统设置

@@ -38,6 +38,7 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".PersonageMessageActivity"/>
+        <activity android:name=".AccountAndSecurityActivity"/>
 
         <!-- SMSSDK -->
         <activity

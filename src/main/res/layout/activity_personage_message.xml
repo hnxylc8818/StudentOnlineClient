@@ -18,8 +18,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginLeft="@dimen/font_20"
-        android:layout_marginRight="@dimen/font_20">
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,8 +47,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginLeft="@dimen/font_20"
-        android:layout_marginRight="@dimen/font_20">
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,8 +79,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginLeft="@dimen/font_20"
-        android:layout_marginRight="@dimen/font_20">
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -111,8 +111,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginLeft="@dimen/font_20"
-        android:layout_marginRight="@dimen/font_20">
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <TextView
             android:layout_width="wrap_content"
