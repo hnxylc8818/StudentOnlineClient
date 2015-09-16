@@ -42,7 +42,7 @@ public class PersonageMessageActivity extends BaseActivity{
 
     }
     @OnClick({R.id.pgemge_photo,R.id.pgemge_save,R.id.title_left})
-    public void Onclick(View v){
+    public void onclick(View v){
         switch (v.getId()){
             case R.id.title_left:
                 //返回上一层
