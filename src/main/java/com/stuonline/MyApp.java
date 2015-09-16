@@ -10,6 +10,9 @@ import com.stuonline.https.XUtils;
  */
 public class MyApp extends Application {
     public static Muser user;
+    public static final int SEX=1;
+    public static final int PHOTO=2;
+    public static final int ROLE=3;
 
     @Override
     public void onCreate() {

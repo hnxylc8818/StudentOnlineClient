@@ -18,6 +18,7 @@ import com.stuonline.entity.Feedback;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.FeedbackDialog;
 import com.stuonline.utils.SharedUtil;
+import com.stuonline.views.CircleImage;
 import com.stuonline.views.ParallaxListView;
 import com.stuonline.views.TitleView;
 
@@ -34,6 +35,7 @@ public class PersonalCenterActivity extends BaseActivity {
     private TextView personAccount;
     private TextView personNick;
     private TextView personSchool;
+    private CircleImage personPhoto;
     @ViewInject(R.id.personal_center_title)
     private TitleView personTitle;
     @ViewInject(R.id.personal_center_lv)
@@ -56,7 +58,9 @@ public class PersonalCenterActivity extends BaseActivity {
         personAccount = (TextView) header.findViewById(R.id.personal_center_account);
         personNick = (TextView) header.findViewById(R.id.personal_center_nick);
         personSchool = (TextView) header.findViewById(R.id.personal_center_school);
+        personPhoto= (CircleImage) header.findViewById(R.id.personal_center_photo);
         ImageView imgBg = (ImageView) header.findViewById(R.id.header_bg);
+
         lv.addHeaderView(header);
         if (null != MyApp.user) {
             personAccount.setText(String.format("账号：%s", MyApp.user.getAccount()));
@@ -74,6 +78,7 @@ public class PersonalCenterActivity extends BaseActivity {
             }
             personNick.setText(String.format("昵称：%s",nick));
             personSchool.setText(String.format("学校：%s", school));
+            XUtils.bitmapUtils.display(personPhoto,XUtils.BURL+MyApp.user.getPhotoUrl());
         }
         loadData();
         String[] from = new String[]{"img", "text"};

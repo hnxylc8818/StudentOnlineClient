@@ -15,7 +15,7 @@
 
 
         <Button
-            android:id="@+id/btn_take_photo"
+            android:id="@+id/btn_top"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="20dip"
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp" />
         <Button
-            android:id="@+id/btn_pick_photo"
+            android:id="@+id/btn_bottom"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="20dip"

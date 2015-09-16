@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pgemge_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/bg"
@@ -68,7 +69,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
-            android:hint="未填写"
             android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
@@ -102,7 +102,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
-            android:hint="cattle"
             android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
@@ -136,7 +135,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
-            android:text="未选择"
             android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 

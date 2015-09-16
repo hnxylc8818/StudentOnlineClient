@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.AlertDialog;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
 import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.CircleImage;
+import com.stuonline.views.SelectPicPopupWindow;
 import com.stuonline.views.TitleView;
 
 import java.io.ByteArrayOutputStream;
@@ -34,7 +36,7 @@ import java.util.Date;
  * 孙卫星：个人信息
  * Created by Administrator on 2015/9/15.
  */
-public class PersonageMessageActivity extends BaseActivity{
+public class PersonageMessageActivity extends BaseActivity {
     @ViewInject(R.id.pgemge_title)
     private TitleView mPersonTitle;
     @ViewInject(R.id.pgemge_photo)
@@ -49,9 +51,9 @@ public class PersonageMessageActivity extends BaseActivity{
     private Button mPersonSave;
 
     private Bitmap bmp;
+    private int type;
+    private int sex;
 
-    private String[] items = { "拍照", "相册" };
-    private String title = "选择照片";
     private static final int PHOTO_CARMERA = 1;
     private static final int PHOTO_PICK = 2;
     private static final int PHOTO_CUT = 3;
@@ -59,12 +61,15 @@ public class PersonageMessageActivity extends BaseActivity{
     private File tempFile = new File(Environment.getExternalStorageDirectory(),
             getPhotoFileName());
 
+    private SelectPicPopupWindow menuWindow;
+
     // 使用系统当前日期加以调整作为照片的名称
     private String getPhotoFileName() {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("'PNG'_yyyyMMdd_HHmmss");
         return sdf.format(date) + ".png";
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,65 +79,83 @@ public class PersonageMessageActivity extends BaseActivity{
     private void init() {
         setContentView(R.layout.activity_personage_message);
         ViewUtils.inject(this);
-        if (MyApp.user != null){
-            XUtils.bitmapUtils.display(mPersonPhoto,XUtils.BURL+MyApp.user.getPhotoUrl());
-            mPersonName.setText(MyApp.user.getUname()==null?"未填写":MyApp.user.getUname());
-            mPersonNick.setText(MyApp.user.getNick()==null?"未填写":MyApp.user.getNick());
-            mPersonSex.setText(MyApp.user.getGender()==0?"女":"男");
+        if (MyApp.user != null) {
+            XUtils.bitmapUtils.display(mPersonPhoto, XUtils.BURL + MyApp.user.getPhotoUrl());
+            mPersonName.setText(MyApp.user.getUname() == null ? "未填写" : MyApp.user.getUname());
+            mPersonNick.setText(MyApp.user.getNick() == null ? "未填写" : MyApp.user.getNick());
+            mPersonSex.setText(MyApp.user.getGender() == 0 ? "女" : "男");
         }
-        if (null != bmp){
+        if (null != bmp) {
             mPersonPhoto.setImageBitmap(bmp);
         }
     }
-    @OnClick({R.id.pgemge_photo,R.id.pgemge_save,R.id.title_left})
-    public void onclick(View v){
-        switch (v.getId()){
+
+    @OnClick({R.id.pgemge_photo, R.id.pgemge_save, R.id.title_left, R.id.pgemge_sex,R.id.btn_top,R.id.btn_bottom})
+    public void onclick(View v) {
+        switch (v.getId()) {
             case R.id.title_left:
                 //返回上一层
                 finish();
                 endIntentAnim();
                 break;
             case R.id.pgemge_photo:
+                type=MyApp.PHOTO;
                 //更改头像
-                AlertDialog.Builder dialog = DialogUtil.getListDialogBuilder
-                        (PersonageMessageActivity.this, items, title, dialogListener);
-                dialog.show();
+                //实例化SelectPicPopupWindow
+                menuWindow = new SelectPicPopupWindow(PersonageMessageActivity.this, itemsOnClick, MyApp.PHOTO);
+                //显示窗口
+                menuWindow.showAtLocation(PersonageMessageActivity.this.findViewById(R.id.pgemge_root), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+                break;
+            case R.id.pgemge_sex:
+                type=MyApp.SEX;
+                //实例化SelectPicPopupWindow
+                menuWindow = new SelectPicPopupWindow(PersonageMessageActivity.this, itemsOnClick, MyApp.SEX);
+                //显示窗口
+                menuWindow.showAtLocation(PersonageMessageActivity.this.findViewById(R.id.pgemge_root), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
                 break;
             case R.id.pgemge_save:
                 //保存
                 break;
-
-
         }
     }
-    private DialogInterface.OnClickListener dialogListener=new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-                case 0:
-                    // 调用拍照
-                    startCamera(dialog);
-                    break;
-                case 1:
-                    // 调用相册
-                    startPick(dialog);
-                    break;
 
+    //为弹出窗口实现监听类
+    private View.OnClickListener itemsOnClick = new View.OnClickListener() {
+
+        public void onClick(View v) {
+            menuWindow.dismiss();
+            switch (v.getId()) {
+                case R.id.btn_top:
+                    if (type == MyApp.PHOTO){
+                        startCamera();
+                    }else if (type == MyApp.SEX){
+                        mPersonSex.setText("男");
+                    }
+                    break;
+                case R.id.btn_bottom:
+                    if (type == MyApp.PHOTO){
+                        startPick();
+                    }else if (type == MyApp.SEX){
+                        mPersonSex.setText("女");
+                    }
+                    break;
                 default:
                     break;
             }
         }
+
     };
-    private void startPick(DialogInterface dialog) {
-        dialog.dismiss();
+
+    private void startPick() {
+        menuWindow.dismiss();
         Intent intent = new Intent(Intent.ACTION_PICK, null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 "image/*");
         startActivityForResult(intent, PHOTO_PICK);
     }
 
-    private void startCamera(DialogInterface dialog) {
-        dialog.dismiss();
+    private void startCamera() {
+        menuWindow.dismiss();
         // 调用系统的拍照功能
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra("camerasensortype", 2); // 调用前置摄像头
@@ -143,6 +166,7 @@ public class PersonageMessageActivity extends BaseActivity{
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
         startActivityForResult(intent, PHOTO_CARMERA);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -168,6 +192,7 @@ public class PersonageMessageActivity extends BaseActivity{
 
     /**
      * 调用系统剪裁
+     *
      * @param uri
      * @param size
      */
@@ -189,6 +214,7 @@ public class PersonageMessageActivity extends BaseActivity{
 
     /**
      * 设置图片显示在界面
+     *
      * @param data
      */
     private void setPicToView(Intent data) {
@@ -201,6 +227,7 @@ public class PersonageMessageActivity extends BaseActivity{
 
     /**
      * 把剪裁完的图片保存到手机sdcard中
+     *
      * @param bmp
      */
     private void saveCropPic(Bitmap bmp) {
@@ -226,6 +253,7 @@ public class PersonageMessageActivity extends BaseActivity{
             }
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
