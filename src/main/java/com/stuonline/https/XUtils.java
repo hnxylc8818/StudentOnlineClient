@@ -30,12 +30,9 @@ public class XUtils {
     public static final String REG = "reg";
     public static final String UPHOTO = "updatePhoto";
     public static final String UUSER = "updateUser";
-    public static final String SIGN = "sign";
     public static final String VER = "ver";
-    public static final String LESSONS = "lessons";
-    public static final String LES = "les";
-    public static final String MLS = "mylessons";
-    public static final String LES_DETAIL="lessondetail";
+    public static final String QROLE ="queryRole";
+    public static final String SFB="saveFeedBack";
 
     public static HttpUtils httpUtils;
     public static BitmapUtils bitmapUtils;
