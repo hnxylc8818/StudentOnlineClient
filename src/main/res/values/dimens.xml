@@ -12,4 +12,5 @@
     <dimen name="register_margerright">20dp</dimen>
     <dimen name="register_margertop">10dp</dimen>
     <dimen name="register_text_size">15sp</dimen>
+    <dimen name="size_default">100dp</dimen>
 </resources>
