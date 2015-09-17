@@ -14,24 +14,32 @@
         app:right_text_visibility="gone"
         app:right_visibility="gone" />
 
-    <com.stuonline.views.ParallaxListView
-        android:id="@+id/personal_center_lv"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent"
+    <com.stuonline.views.CircleRefreshLayout
+        android:orientation="vertical"
+        android:id="@+id/personal_center_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:AniBackColor="#ff0097cd">
 
-    <Button
-        android:id="@+id/personal_center_exit"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/selector_code_bg"
-        android:text="退出登录"
-        android:textSize="?attr/text_size_20"
-        android:textColor="@color/selector_bg_text_color" />
+        <ListView
+            android:id="@+id/personal_center_lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@null"
+            android:listSelector="@android:color/transparent" />
 
+
+        <Button
+            android:id="@+id/personal_center_exit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="350dp"
+            android:background="@drawable/selector_code_bg"
+            android:text="退出登录"
+            android:textColor="@color/selector_bg_text_color"
+            android:textSize="?attr/text_size_20" />
+    </com.stuonline.views.CircleRefreshLayout>
 </LinearLayout>

@@ -13,13 +13,13 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/personal_center_header_img"
+            android:id="@+id/personal_center_item_img"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/msg" />
 
         <TextView
-            android:id="@+id/personal_center_header_text"
+            android:id="@+id/personal_center_item_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"

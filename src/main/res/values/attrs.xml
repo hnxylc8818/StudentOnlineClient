@@ -54,4 +54,11 @@
     <attr name="text_size_20" format="dimension|integer"/>
     <attr name="text_size_18" format="dimension|integer"/>
     <attr name="text_size_16" format="dimension|integer"/>
+
+    <!-- 水滴下拉刷新 -->
+    <declare-styleable name="CirCleRefreshLayout">
+        <attr name="AniBackColor" format="color" />
+        <attr name="AniForeColor" format="color" />
+        <attr name="CircleSmaller" format="integer"/>
+    </declare-styleable>
 </resources>

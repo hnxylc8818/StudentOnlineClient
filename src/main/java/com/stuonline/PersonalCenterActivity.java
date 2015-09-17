@@ -15,9 +15,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.http.RequestParams;
@@ -30,6 +30,7 @@ import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.JsonUtil;
 import com.stuonline.views.CircleImage;
+import com.stuonline.views.CircleRefreshLayout;
 import com.stuonline.views.ParallaxListView;
 import com.stuonline.views.TitleView;
 
@@ -50,7 +51,7 @@ public class PersonalCenterActivity extends BaseActivity {
     @ViewInject(R.id.personal_center_title)
     private TitleView personTitle;
     @ViewInject(R.id.personal_center_lv)
-    private ParallaxListView lv;
+    private ListView lv;
     private Dialog dialog;
     private Intent intent;
     private List<Map<String, Object>> data;
@@ -60,6 +61,9 @@ public class PersonalCenterActivity extends BaseActivity {
     private CharSequence temp;
     private int selectionStart;
     private int selectionEnd;
+
+    @ViewInject(R.id.personal_center_refresh)
+    private CircleRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,10 +103,9 @@ public class PersonalCenterActivity extends BaseActivity {
         }
         loadData();
         String[] from = new String[]{"img", "text"};
-        int[] to = new int[]{R.id.personal_center_header_img, R.id.personal_center_header_text};
+        int[] to = new int[]{R.id.personal_center_item_img, R.id.personal_center_item_text};
         SimpleAdapter adapter = new SimpleAdapter(this, data, R.layout.layout_personal_center_item, from, to);
         lv.setAdapter(adapter);
-        lv.setParallaxImageView(imgBg);
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +121,26 @@ public class PersonalCenterActivity extends BaseActivity {
                 endIntentAnim();
             }
         });
+        refreshLayout.setOnRefreshListener(new CircleRefreshLayout.OnCircleRefreshListener() {
+            @Override
+            public void completeRefresh() {
+
+            }
+
+            @Override
+            public void refreshing() {
+
+                refreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 更新完后调用该方法结束刷新
+                        refreshLayout.finishRefreshing();
+                    }
+                },3000);
+            }
+        });
     }
+
 
     private void loadData() {
         data = new ArrayList<>();
@@ -178,15 +200,6 @@ public class PersonalCenterActivity extends BaseActivity {
                 finish();
                 endIntentAnim();
                 break;
-        }
-    }
-
-    // 当界面显示出来的时候回调
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            lv.setViewBounds();
         }
     }
 
