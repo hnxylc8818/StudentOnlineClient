@@ -36,6 +36,7 @@ import cn.smssdk.SMSSDK;
 
 /**
  * Created by SunJiShuang on 2015/9/15.
+ * 短信验证
  */
 public class ValidateActivity extends BaseActivity {
     @ViewInject(R.id.validate_title)
@@ -50,6 +51,9 @@ public class ValidateActivity extends BaseActivity {
     private Timer timer;
     private TimerTask task;
     private int reg;
+
+    private String account;
+    private String code;
     private Handler msghandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -117,13 +121,11 @@ public class ValidateActivity extends BaseActivity {
             }
         }
     };
-    String account;
-    String code;
+
 
     @OnClick({R.id.validate_send_code})
     public void onClick(View v) {
         getCode();
-        account = etAccount.getText().toString().trim();
         if (account.matches("^1(3|4|5|6|7|8)\\d{9}$")) {
             SMSSDK.getVerificationCode("86", account);
         } else {
@@ -167,7 +169,6 @@ public class ValidateActivity extends BaseActivity {
 
     private void init() {
         SMSSDK.initSDK(this, "a659ba5e877d", "72f1a4c705eb2e64c09aa13c9cbe3f89");
-//        SMSSDK.initSDK(this, "a444b4578e20", "8cdd0658f98ebd0cb51dcb42a5a23b69");
         setContentView(R.layout.activity_validate);
         ViewUtils.inject(this);
         title.setOnRightTextclickListener(onClickListener);
@@ -176,6 +177,7 @@ public class ValidateActivity extends BaseActivity {
         timer = new Timer();
         etAccount.setEtChangeLis(textWatcher);
         reg = getIntent().getIntExtra("reg", 2);
+        account = etAccount.getText().toString().trim();
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -191,10 +193,34 @@ public class ValidateActivity extends BaseActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
+            RequestParams params;
             if (s.length() == 11 && etAccount.getText().matches("^1(3|4|5|7|8)\\d{9}$")) {
                 account = etAccount.getText().toString().trim();
+                if (reg == 1) {
+                    params = new RequestParams();
+                    params.addBodyParameter("u.account", account);
+                    XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
+                        @Override
+                        public void onSuccess(ResponseInfo<String> responseInfo) {
+                            if (responseInfo.result != null) {
+                                JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+                                });
+                                Result<Boolean> result = jsonUtil.parse(responseInfo.result);
+                                if (result.data) {
+                                    XUtils.showToast("该账号已存在，请重新输入");
+                                    btSendCode.setEnabled(false);
+                                } else {
+                                    btSendCode.setEnabled(true);
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    btSendCode.setEnabled(true);
+                }
+
                 if (reg == 2) {
-                    RequestParams params = new RequestParams();
+                    params = new RequestParams();
                     params.addBodyParameter("u.account", account);
                     XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
                         @Override
@@ -215,7 +241,11 @@ public class ValidateActivity extends BaseActivity {
                 } else {
                     btSendCode.setEnabled(true);
                 }
+            } else if (s.length() == 11) {
+                XUtils.showToast("账号格式不正确");
+                btSendCode.setEnabled(false);
             }
+            btSendCode.setEnabled(false);
         }
     };
 }
