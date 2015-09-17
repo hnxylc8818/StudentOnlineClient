@@ -42,6 +42,10 @@ public class SelectPicPopupWindow extends PopupWindow {
                 text1="学生";
                 text2="教师";
                 break;
+            case 4:
+                text1="手机验证";
+                text2="邮箱验证";
+                break;
         }
         btn1.setText(text1);
         btn2.setText(text2);

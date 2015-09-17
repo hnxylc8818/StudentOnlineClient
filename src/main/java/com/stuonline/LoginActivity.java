@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 
 import com.alibaba.fastjson.TypeReference;
@@ -20,6 +21,7 @@ import com.stuonline.utils.DialogUtil;
 import com.stuonline.utils.EditDialog;
 import com.stuonline.utils.JsonUtil;
 import com.stuonline.views.CustomerEditText;
+import com.stuonline.views.SelectPicPopupWindow;
 import com.stuonline.views.TitleView;
 
 /**
@@ -33,6 +35,8 @@ public class LoginActivity extends BaseActivity {
     @ViewInject(R.id.login_pwd)
     private CustomerEditText etPwd;
     private SharedPreferences sp;
+
+    private SelectPicPopupWindow menuWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +64,11 @@ public class LoginActivity extends BaseActivity {
                 login();
                 break;
             case R.id.login_reset:
-                startActivity(intent);
-                startIntentAnim();
                 //找回密码
+                //实例化SelectPicPopupWindow
+                menuWindow = new SelectPicPopupWindow(LoginActivity.this, itemsOnClick, MyApp.RESET);
+                //显示窗口
+                menuWindow.showAtLocation(LoginActivity.this.findViewById(R.id.login_root), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
                 break;
             case R.id.login_reg:
                 startActivity(intent);
@@ -71,6 +77,33 @@ public class LoginActivity extends BaseActivity {
                 break;
         }
     }
+
+    private Intent intent;
+
+    //为弹出窗口实现监听类
+    private View.OnClickListener itemsOnClick = new View.OnClickListener() {
+
+        public void onClick(View v) {
+            menuWindow.dismiss();
+            switch (v.getId()) {
+                case R.id.btn_top:
+                    // 跳转手机验证界面
+                    intent=new Intent(LoginActivity.this,ValidateActivity.class);
+                    startActivity(intent);
+                    startIntentAnim();
+                    break;
+                case R.id.btn_bottom:
+                    // 跳转邮箱验证界面
+                    intent=new Intent(LoginActivity.this,ResetPwdActivity.class);
+                    startActivity(intent);
+                    startIntentAnim();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    };
 
     /**
      * 登录方法

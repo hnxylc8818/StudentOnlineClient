@@ -13,6 +13,7 @@ public class MyApp extends Application {
     public static final int SEX=1;
     public static final int PHOTO=2;
     public static final int ROLE=3;
+    public static final int RESET=4;
 
     @Override
     public void onCreate() {

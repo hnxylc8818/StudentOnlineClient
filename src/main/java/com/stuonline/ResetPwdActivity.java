@@ -11,7 +11,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.views.TitleView;
 
 /**
  * Created by SunJiShuang on 2015/9/17.
@@ -19,6 +21,8 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
  */
 public class ResetPwdActivity extends BaseActivity {
     private Dialog dialog;
+    @ViewInject(R.id.reset_pwd_title)
+    private TitleView titleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,13 @@ public class ResetPwdActivity extends BaseActivity {
     private void init() {
         setContentView(R.layout.activity_reset_pwd);
         ViewUtils.inject(this);
+        titleView.setOnLeftclickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                endIntentAnim();
+            }
+        });
     }
 
     @OnClick(R.id.reset_pwd_bt)
