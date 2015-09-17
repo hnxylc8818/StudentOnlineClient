@@ -57,7 +57,6 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick({R.id.login_login, R.id.login_reg, R.id.login_reset})
     public void onClick(View v) {
-        Intent intent = new Intent(LoginActivity.this, ValidateActivity.class);
         switch (v.getId()) {
             case R.id.login_login:
                 //登录按钮
@@ -71,6 +70,8 @@ public class LoginActivity extends BaseActivity {
                 menuWindow.showAtLocation(LoginActivity.this.findViewById(R.id.login_root), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
                 break;
             case R.id.login_reg:
+                Intent intent = new Intent(LoginActivity.this, ValidateActivity.class);
+                intent.putExtra("reg", 1);
                 startActivity(intent);
                 startIntentAnim();
                 //注册账号
@@ -88,14 +89,14 @@ public class LoginActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.btn_top:
                     // 跳转手机验证界面
-                    intent=new Intent(LoginActivity.this,ValidateActivity.class);
+                    intent = new Intent(LoginActivity.this, ValidateActivity.class);
                     startActivity(intent);
                     startIntentAnim();
                     break;
                 case R.id.btn_bottom:
                     // 跳转邮箱验证界面
-                    intent=new Intent(LoginActivity.this,ResetPwdActivity.class);
-                    intent.putExtra("account",etAccount.getText().toString());
+                    intent = new Intent(LoginActivity.this, ResetPwdActivity.class);
+                    intent.putExtra("account", etAccount.getText().toString());
                     startActivity(intent);
                     startIntentAnim();
                     break;

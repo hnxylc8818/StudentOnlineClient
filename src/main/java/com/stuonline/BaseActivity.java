@@ -74,10 +74,10 @@ public class BaseActivity extends FragmentActivity {
         //滑动结束后 参数1一次滑动前事件，2一次滑动后事件，3x滑动速度，4y滑动速度
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            float x1=e1.getX();
-            float x2=e2.getX();
-            float xDriver=x1-x2;
-            if (xDriver<0){
+            float x1 = e1.getX();
+            float x2 = e2.getX();
+            float xDriver = x1 - x2;
+            if (xDriver < -300) {
                 finish();
                 endIntentAnim();
             }

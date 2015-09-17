@@ -21,7 +21,7 @@ import com.stuonline.views.TitleView;
 
 /**
  * Created by SunJiShuang on 2015/9/17.
- * 找回密码
+ * 验证邮箱找回密码(验证页)
  */
 public class ResetPwdActivity extends BaseActivity {
     private Dialog dialog;
@@ -52,17 +52,15 @@ public class ResetPwdActivity extends BaseActivity {
     @OnClick(R.id.reset_pwd_bt)
     public void onClick(View v) {
 
-        String email=emailedt.getText().toString();
-        if (email.isEmpty()){
+        String email = emailedt.getText().toString();
+        if (email.isEmpty()) {
             XUtils.showToast("注册邮箱不能为空");
             return;
-        }else if (!email.matches("^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")){
+        } else if (!email.matches("^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")) {
             XUtils.showToast("邮箱格式错误");
             return;
         }
-        startActivity(new Intent(ResetPwdActivity.this,ResetPasswordActivity.class));
-        startIntentAnim();
-//       // dialog();
+        dialog();
     }
 
     private void dialog() {
@@ -87,6 +85,9 @@ public class ResetPwdActivity extends BaseActivity {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Intent intent = new Intent(ResetPwdActivity.this, ResetPasswordActivity.class);
+            startActivity(intent);
+            startIntentAnim();
             dialog.dismiss();
         }
     };

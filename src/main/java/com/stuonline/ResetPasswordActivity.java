@@ -13,6 +13,7 @@ import com.stuonline.views.TitleView;
 
 /**
  * Created by Administrator on 2015/9/17.
+ * 验证邮箱找回密码(重置密码页)
  */
 public class ResetPasswordActivity extends BaseActivity {
     @ViewInject(R.id.verify_title)

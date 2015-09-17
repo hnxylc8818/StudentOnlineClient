@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,6 +43,7 @@ public class ValidateActivity extends BaseActivity {
     private static int TIME = 30;
     private Timer timer;
     private TimerTask task;
+    private int reg;
     private Handler msghandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -88,9 +90,16 @@ public class ValidateActivity extends BaseActivity {
                 if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                     msghandler.sendMessage(msghandler.obtainMessage(1, R.string.code_send_suc, 0));
                 } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                    Intent intent = new Intent(ValidateActivity.this, RegisterActivity.class);
-                    intent.putExtra("account", account);
-                    startActivity(intent);
+                    Log.i("reg", "" + reg);
+                    if (reg == 1) {
+                        Intent intent = new Intent(ValidateActivity.this, RegisterActivity.class);
+                        intent.putExtra("account", account);
+                        startActivity(intent);
+                    } else if (reg == 2) {
+                        Intent intent = new Intent(ValidateActivity.this, SmsRePwdActivity.class);
+                        intent.putExtra("account", account);
+                        startActivity(intent);
+                    }
                     finish();
                     startIntentAnim();
                 }
@@ -161,6 +170,7 @@ public class ValidateActivity extends BaseActivity {
         SMSSDK.registerEventHandler(eventHandler);
         timer = new Timer();
         etAccount.setEtChangeLis(textWatcher);
+        reg = getIntent().getIntExtra("reg", 2);
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
