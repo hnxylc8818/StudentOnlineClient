@@ -11,14 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="中国大学生在线"
-        app:right_text_visibility="gone"
+        app:right_text="注销"
+        app:right_text_Size="?attr/text_size_18"
+        app:right_text_visibility="visible"
         app:right_visibility="gone" />
 
     <com.stuonline.views.CircleRefreshLayout
-        android:orientation="vertical"
         android:id="@+id/personal_center_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:AniBackColor="#ff0097cd">
 
         <ListView
@@ -30,16 +32,16 @@
             android:listSelector="@android:color/transparent" />
 
 
-        <Button
-            android:id="@+id/personal_center_exit"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="350dp"
-            android:background="@drawable/selector_code_bg"
-            android:text="退出登录"
-            android:textColor="@color/selector_bg_text_color"
-            android:textSize="?attr/text_size_20" />
+        <!--<Button-->
+            <!--android:id="@+id/personal_center_exit"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="350dp"-->
+            <!--android:background="@drawable/selector_code_bg"-->
+            <!--android:text="退出登录"-->
+            <!--android:textColor="@color/selector_bg_text_color"-->
+            <!--android:textSize="?attr/text_size_20" />-->
     </com.stuonline.views.CircleRefreshLayout>
 </LinearLayout>

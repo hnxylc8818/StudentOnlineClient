@@ -23,6 +23,7 @@ import com.stuonline.entity.Result;
 import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.EditDialog;
 import com.stuonline.utils.JsonUtil;
 import com.stuonline.views.SelectPicPopupWindow;
 import com.stuonline.views.TitleView;
@@ -127,7 +128,7 @@ public class ThuInfoActivity extends BaseActivity {
         init();
     }
 
-    @OnClick({R.id.huinfo_role, R.id.thuinfo_school, R.id.thuinfo_faculty, R.id.thuinfo_class, R.id.thuinfo_date,R.id.thuinfo_bt})
+    @OnClick({R.id.huinfo_role, R.id.thuinfo_school, R.id.thuinfo_faculty, R.id.thuinfo_class, R.id.thuinfo_date, R.id.thuinfo_bt})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.huinfo_role:
@@ -142,9 +143,37 @@ public class ThuInfoActivity extends BaseActivity {
                 break;
             case R.id.thuinfo_faculty:
                 //院系
+                EditDialog.showDialog(this, "请输入院系");
+                EditDialog.setButtonEnsure(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String faculty = EditDialog.getText();
+                        if (faculty.isEmpty()) {
+                            department.setText(MyApp.user.getDepartment() == null ? "未填写" : MyApp.user.getDepartment());
+                            EditDialog.hiddenWaitting();
+                            return;
+                        }
+                        department.setText(faculty);
+                        EditDialog.hiddenWaitting();
+                    }
+                });
                 break;
             case R.id.thuinfo_class:
                 //班级
+                EditDialog.showDialog(this, "请输入班级");
+                EditDialog.setButtonEnsure(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String ulass = EditDialog.getText();
+                        if (ulass.isEmpty()) {
+                            uclass.setText(MyApp.user.getNick() == null ? "未填写" : MyApp.user.getNick());
+                            EditDialog.hiddenWaitting();
+                            return;
+                        }
+                        uclass.setText(ulass);
+                        EditDialog.hiddenWaitting();
+                    }
+                });
                 break;
             case R.id.thuinfo_date:
                 //入学时间
@@ -164,23 +193,23 @@ public class ThuInfoActivity extends BaseActivity {
 
     private void saveThuInfo() {
 //        String schools=school.getText().toString();
-        String schools="北科院";
-        String departments=department.getText().toString();
-        String ulcass=uclass.getText().toString();
-        String date=thuinfo_date_tv.getText().toString();
-        if (TextUtils.isEmpty(role.getText().toString())){
+        String schools = "北科院";
+        String departments = department.getText().toString();
+        String ulcass = uclass.getText().toString();
+        String date = thuinfo_date_tv.getText().toString();
+        if (TextUtils.isEmpty(role.getText().toString())) {
             XUtils.showToast("请选择角色");
             return;
-        }else if (TextUtils.isEmpty(schools)){
+        } else if (TextUtils.isEmpty(schools)) {
             XUtils.showToast("请选择学校");
             return;
-        }else if (TextUtils.isEmpty(departments)){
+        } else if (TextUtils.isEmpty(departments)) {
             XUtils.showToast("请选择院系");
             return;
-        }else if (TextUtils.isEmpty(ulcass)){
+        } else if (TextUtils.isEmpty(ulcass)) {
             XUtils.showToast("请选择班级");
             return;
-        }else if (TextUtils.isEmpty(date)){
+        } else if (TextUtils.isEmpty(date)) {
             XUtils.showToast("请选择入学年份");
             return;
         }
@@ -190,7 +219,7 @@ public class ThuInfoActivity extends BaseActivity {
         params.addBodyParameter("u.roleId", String.valueOf(roleId));
         params.addBodyParameter("u.school", schools);
         params.addBodyParameter("u.department", departments);
-        params.addBodyParameter("u.UClass",ulcass);
+        params.addBodyParameter("u.UClass", ulcass);
         params.addBodyParameter("u.uyear", date);
         DialogUtil.showWaitting(this);
         XUtils.send(XUtils.UUSER, params, new MyCallBack<String>() {
@@ -203,8 +232,8 @@ public class ThuInfoActivity extends BaseActivity {
                     Result<Muser> result = jsonUtil.parse(responseInfo.result);
                     XUtils.showToast(result.desc);
                     if (result.state == Result.STATE_SUC) {
-                        MyApp.user=result.data;
-                       finish();
+                        MyApp.user = result.data;
+                        finish();
                         endIntentAnim();
                     }
                 }

@@ -122,7 +122,7 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/selected" />
 
-        <EditText
+        <TextView
             android:id="@+id/thuinfo_faculty_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/selected" />
 
-        <EditText
+        <TextView
             android:id="@+id/thuinfo_class_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

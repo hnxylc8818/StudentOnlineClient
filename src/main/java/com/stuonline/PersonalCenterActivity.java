@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
 import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.http.RequestParams;
@@ -83,7 +84,7 @@ public class PersonalCenterActivity extends BaseActivity {
         personSchool = (TextView) header.findViewById(R.id.personal_center_school);
         personPhoto = (CircleImage) header.findViewById(R.id.personal_center_photo);
         ImageView imgBg = (ImageView) header.findViewById(R.id.header_bg);
-
+        personTitle.setOnRightTextclickListener(onClickListener);
         lv.addHeaderView(header);
         if (null != MyApp.user) {
             personAccount.setText(String.format("账号：%s", MyApp.user.getAccount()));
@@ -138,7 +139,7 @@ public class PersonalCenterActivity extends BaseActivity {
                         // 更新完后调用该方法结束刷新
                         refreshLayout.finishRefreshing();
                     }
-                },3000);
+                }, 3000);
             }
         });
     }
@@ -191,17 +192,10 @@ public class PersonalCenterActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.personal_center_person_info, R.id.personal_center_exit})
+    @OnClick(R.id.personal_center_person_info)
     private void click(View v) {
         switch (v.getId()) {
-            case R.id.personal_center_exit:
-                // 退出登录，跳转登录页面,并注销当前账号
-                MyApp.release();
-                intent = new Intent(PersonalCenterActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-                endIntentAnim();
-                break;
+
         }
     }
 
@@ -238,29 +232,42 @@ public class PersonalCenterActivity extends BaseActivity {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String content = etContent.getText().toString().trim();
-            if (content.isEmpty()) {
-                XUtils.showToast("意见反馈不能为空!");
-                return;
-            }
-            RequestParams params = new RequestParams();
-            params.addBodyParameter("f.content", content);
-            params.addBodyParameter("f.uid", String.valueOf(MyApp.user.getUid()));
-            XUtils.send(XUtils.SFB, params, new MyCallBack<String>() {
-                @Override
-                public void onSuccess(ResponseInfo<String> responseInfo) {
-                    if (responseInfo != null) {
-                        JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
-                        });
-                        Result<Boolean> result = jsonUtil.parse(responseInfo.result);
-                        XUtils.showToast(result.desc);
-                        if (result.data) {
-                            dialog.dismiss();
-                            etContent.getText().clear();
-                        }
+            switch (v.getId()) {
+                case R.id.title_right:
+                    // 退出登录，跳转登录页面,并注销当前账号
+                    MyApp.release();
+                    intent = new Intent(PersonalCenterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                    endIntentAnim();
+                    break;
+                case R.id.feedback_bt:
+                    //意见反馈
+                    String content = etContent.getText().toString().trim();
+                    if (content.isEmpty()) {
+                        XUtils.showToast("意见反馈不能为空!");
+                        return;
                     }
-                }
-            });
+                    RequestParams params = new RequestParams();
+                    params.addBodyParameter("f.content", content);
+                    params.addBodyParameter("f.uid", String.valueOf(MyApp.user.getUid()));
+                    XUtils.send(XUtils.SFB, params, new MyCallBack<String>() {
+                        @Override
+                        public void onSuccess(ResponseInfo<String> responseInfo) {
+                            if (responseInfo != null) {
+                                JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+                                });
+                                Result<Boolean> result = jsonUtil.parse(responseInfo.result);
+                                XUtils.showToast(result.desc);
+                                if (result.data) {
+                                    dialog.dismiss();
+                                    etContent.getText().clear();
+                                }
+                            }
+                        }
+                    });
+                    break;
+            }
         }
     };
     private TextWatcher textWatcher = new TextWatcher() {
