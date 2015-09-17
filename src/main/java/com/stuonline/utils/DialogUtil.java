@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.stuonline.R;
 
@@ -38,6 +40,7 @@ public class DialogUtil {
             waitting.show();
             Window window = waitting.getWindow();
             window.setContentView(R.layout.layout_waitting);
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         } else {
             waitting.show();
         }

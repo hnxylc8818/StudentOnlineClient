@@ -3,23 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/shape_waitting_bg"
     android:orientation="vertical">
 
     <ProgressBar
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        style="?android:attr/progressBarStyle"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/img"
+        android:layout_gravity="center"
+        android:layout_width="100dip"
+        android:layout_height="150dip"
+        android:indeterminateDrawable="@drawable/page_loading" />
+
     <TextView
-        android:text="Loading..."
-        android:textSize="?attr/text_size_20"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@android:color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dip"
+        android:gravity="center"
+        android:paddingLeft="25.0dip"
+        android:paddingRight="25.0dip"
+        android:text="小驴正在努力为您加载，请稍候~"
+        android:textColor="@android:color/black" />
 
 </LinearLayout>
