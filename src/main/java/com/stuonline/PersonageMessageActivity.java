@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +19,10 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.stuonline.entity.Muser;
@@ -34,10 +37,12 @@ import com.stuonline.views.CircleImage;
 import com.stuonline.views.SelectPicPopupWindow;
 import com.stuonline.views.TitleView;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -187,9 +192,9 @@ public class PersonageMessageActivity extends BaseActivity {
 
     private void updatePersonInfo() {
         if (checkInfo()) {
-            RequestParams params = new RequestParams();
+            final RequestParams params = new RequestParams();
             params.addBodyParameter("u.uid", String.valueOf(MyApp.user.getUid()));
-            if (isPhoto) {
+            if (isPhoto && tempFile.exists()) {
                 params.addBodyParameter("photo", tempFile);
             }
             params.addBodyParameter("u.uname", uname);
