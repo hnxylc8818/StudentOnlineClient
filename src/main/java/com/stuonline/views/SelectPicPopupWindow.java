@@ -39,8 +39,8 @@ public class SelectPicPopupWindow extends PopupWindow {
                 text2="从相册选择";
                 break;
             case 3:
-                text1="教师";
-                text2="学生";
+                text1="学生";
+                text2="教师";
                 break;
         }
         btn1.setText(text1);
