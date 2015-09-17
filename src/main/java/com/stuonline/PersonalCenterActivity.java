@@ -210,9 +210,11 @@ public class PersonalCenterActivity extends BaseActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(
                     PersonalCenterActivity.this);
             builder.setView(v);
+            etContent.getText().clear();
             dialog = builder.show();
             dialog.setCanceledOnTouchOutside(true);
         } else {
+            etContent.getText().clear();
             dialog.show();
         }
     }
