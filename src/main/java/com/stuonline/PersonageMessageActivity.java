@@ -27,6 +27,7 @@ import com.stuonline.entity.Result;
 import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.EditDialog;
 import com.stuonline.utils.JsonUtil;
 import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.CircleImage;
@@ -50,9 +51,9 @@ public class PersonageMessageActivity extends BaseActivity {
     @ViewInject(R.id.pgemge_photo)
     private CircleImage mPersonPhoto;
     @ViewInject(R.id.pgemge_name)
-    private EditText mPersonName;
+    private TextView mPersonName;
     @ViewInject(R.id.pgemge_nick)
-    private EditText mPersonNick;
+    private TextView mPersonNick;
     @ViewInject(R.id.pgemge_sex)
     private TextView mPersonSex;
     @ViewInject(R.id.pgemge_save)
@@ -64,7 +65,7 @@ public class PersonageMessageActivity extends BaseActivity {
     private Bitmap bmp;
     private int type;
     private Integer sex = null;
-    private boolean isPhoto=false;
+    private boolean isPhoto = false;
 
     private static final int PHOTO_CARMERA = 1;
     private static final int PHOTO_PICK = 2;
@@ -117,7 +118,7 @@ public class PersonageMessageActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.pgemge_photo, R.id.pgemge_save, R.id.title_left, R.id.pgemge_sex, R.id.btn_top, R.id.btn_bottom})
+    @OnClick({R.id.pgemge_photo, R.id.pgemge_save, R.id.title_left, R.id.pgemge_sex, R.id.btn_top, R.id.btn_bottom, R.id.pgemge_rl_name, R.id.pgemge_rl_nick})
     public void onclick(View v) {
         switch (v.getId()) {
             case R.id.title_left:
@@ -143,6 +144,28 @@ public class PersonageMessageActivity extends BaseActivity {
             case R.id.pgemge_save:
                 //保存
                 updatePersonInfo();
+                break;
+            case R.id.pgemge_rl_name:
+                EditDialog.showDialog(this, "请输入新姓名");
+                EditDialog.setButtonEnsure(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String name = EditDialog.getText();
+                        mPersonName.setText(name);
+                        EditDialog.hiddenWaitting();
+                    }
+                });
+                break;
+            case R.id.pgemge_rl_nick:
+                EditDialog.showDialog(this, "请输入新昵称");
+                EditDialog.setButtonEnsure(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String nick = EditDialog.getText();
+                        mPersonNick.setText(nick);
+                        EditDialog.hiddenWaitting();
+                    }
+                });
                 break;
         }
     }
@@ -186,11 +209,11 @@ public class PersonageMessageActivity extends BaseActivity {
     private boolean checkInfo() {
         uname = mPersonName.getText().toString().trim();
         nick = mPersonNick.getText().toString().trim();
-        String gender=mPersonSex.getText().toString().trim();
-        if (gender.equals("男")){
-            sex=1;
-        }else if (gender.equals("女")){
-            sex=0;
+        String gender = mPersonSex.getText().toString().trim();
+        if (gender.equals("男")) {
+            sex = 1;
+        } else if (gender.equals("女")) {
+            sex = 0;
         }
         if (TextUtils.isEmpty(uname)) {
             XUtils.showToast("请输入姓名");
@@ -208,8 +231,8 @@ public class PersonageMessageActivity extends BaseActivity {
 
         public void onClick(View v) {
             menuWindow.dismiss();
-            uname=mPersonName.getText().toString().trim();
-            nick=mPersonNick.getText().toString().trim();
+            uname = mPersonName.getText().toString().trim();
+            nick = mPersonNick.getText().toString().trim();
             switch (v.getId()) {
                 case R.id.btn_top:
                     if (type == MyApp.PHOTO) {
@@ -323,10 +346,10 @@ public class PersonageMessageActivity extends BaseActivity {
         FileOutputStream fis = null;
         bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
         try {
-            isPhoto=true;
+            isPhoto = true;
             if (tempFile.exists()) {
                 tempFile.delete();
-                tempFile=new File(Environment.getExternalStorageDirectory(),
+                tempFile = new File(Environment.getExternalStorageDirectory(),
                         getPhotoFileName());
             }
             fis = new FileOutputStream(tempFile);

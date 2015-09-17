@@ -10,6 +10,7 @@ import com.lidroid.xutils.http.HttpHandler;
 import com.stuonline.controller.ActivityController;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.EditDialog;
 import com.stuonline.utils.SharedUtil;
 
 /**
@@ -50,6 +51,7 @@ public class BaseActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         DialogUtil.destoryWaitting();
+        EditDialog.destoryWaitting();
         ActivityController.removeActivity(this);
     }
 

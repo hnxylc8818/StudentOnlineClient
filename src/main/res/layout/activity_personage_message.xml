@@ -47,6 +47,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/pgemge_rl_name"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="20dp"
@@ -61,7 +62,7 @@
             android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
-        <EditText
+        <TextView
             android:id="@+id/pgemge_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,6 +81,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/pgemge_rl_nick"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="20dp"
@@ -94,7 +96,7 @@
             android:textColor="?attr/text_color_model"
             android:textSize="?attr/text_size_20" />
 
-        <EditText
+        <TextView
             android:id="@+id/pgemge_nick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
