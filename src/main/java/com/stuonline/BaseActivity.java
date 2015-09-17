@@ -3,7 +3,9 @@ package com.stuonline;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.Window;
 
 import com.lidroid.xutils.http.HttpHandler;
@@ -21,13 +23,67 @@ public class BaseActivity extends FragmentActivity {
     private Handler handler = new Handler();
     protected HttpHandler httpHandler;
 
+    private GestureDetector detector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         changeTheme();
         ActivityController.addActivity(this);
+        detector = new GestureDetector(this, cestureLis);
     }
+
+    // 分发触摸事件
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        detector.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
+    }
+
+    private GestureDetector.OnGestureListener cestureLis = new GestureDetector.OnGestureListener() {
+
+        // 按下时
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return false;
+        }
+
+        // 短按时
+        @Override
+        public void onShowPress(MotionEvent e) {
+        }
+
+        // 抬起时
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return false;
+        }
+
+        //滑动中持续调用 参数1 一次滑动前事件，2 一次滑动后事件，3 x滑动距离，4 y滑动距离
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            return false;
+        }
+
+        //长按时
+        @Override
+        public void onLongPress(MotionEvent e) {
+        }
+
+        //滑动结束后 参数1一次滑动前事件，2一次滑动后事件，3x滑动速度，4y滑动速度
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            float x1=e1.getX();
+            float x2=e2.getX();
+            float xDriver=x1-x2;
+            if (xDriver<0){
+                finish();
+                endIntentAnim();
+            }
+            return false;
+        }
+    };
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
