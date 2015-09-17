@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telephony.SmsMessage;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.entity.Muser;
 import com.stuonline.entity.Result;
 import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
@@ -104,7 +106,7 @@ public class ValidateActivity extends BaseActivity {
                         Intent intent = new Intent(ValidateActivity.this, RegisterActivity.class);
                         intent.putExtra("account", account);
                         startActivity(intent);
-                    } else if (reg == 2) {
+                    } else {
                         Intent intent = new Intent(ValidateActivity.this, SmsRePwdActivity.class);
                         intent.putExtra("account", account);
                         startActivity(intent);
@@ -150,6 +152,7 @@ public class ValidateActivity extends BaseActivity {
         @Override
         public void run() {
             btSendCode.setText(String.format("%d秒后重新发送", TIME));
+            etAccount.setEnabled(false);
             TIME--;
             if (TIME <= 0) {
                 // 结束定时任务线程,取消定时
@@ -203,10 +206,10 @@ public class ValidateActivity extends BaseActivity {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
                             if (responseInfo.result != null) {
-                                JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+                                JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
                                 });
-                                Result<Boolean> result = jsonUtil.parse(responseInfo.result);
-                                if (result.data) {
+                                Result<Muser> result = jsonUtil.parse(responseInfo.result);
+                                if (result.state == Result.STATE_SUC) {
                                     XUtils.showToast("该账号已存在，请重新输入");
                                     btSendCode.setEnabled(false);
                                 } else {
@@ -215,9 +218,10 @@ public class ValidateActivity extends BaseActivity {
                             }
                         }
                     });
-                } else {
-                    btSendCode.setEnabled(true);
                 }
+//                else {
+//                    btSendCode.setEnabled(true);
+//                }
 
                 if (reg == 2) {
                     params = new RequestParams();
@@ -226,10 +230,10 @@ public class ValidateActivity extends BaseActivity {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
                             if (responseInfo.result != null) {
-                                JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+                                JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
                                 });
-                                Result<Boolean> result = jsonUtil.parse(responseInfo.result);
-                                if (!result.data) {
+                                Result<Muser> result = jsonUtil.parse(responseInfo.result);
+                                if (result.state == Result.STATE_FAIL) {
                                     XUtils.showToast("该账号不存在，请重新输入");
                                     btSendCode.setEnabled(false);
                                 } else {
@@ -238,9 +242,10 @@ public class ValidateActivity extends BaseActivity {
                             }
                         }
                     });
-                } else {
-                    btSendCode.setEnabled(true);
                 }
+//                else {
+//                    btSendCode.setEnabled(true);
+//                }
             } else if (s.length() == 11) {
                 XUtils.showToast("账号格式不正确");
                 btSendCode.setEnabled(false);
