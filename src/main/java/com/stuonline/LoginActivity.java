@@ -95,6 +95,7 @@ public class LoginActivity extends BaseActivity {
                 case R.id.btn_bottom:
                     // 跳转邮箱验证界面
                     intent=new Intent(LoginActivity.this,ResetPwdActivity.class);
+                    intent.putExtra("account",etAccount.getText().toString());
                     startActivity(intent);
                     startIntentAnim();
                     break;

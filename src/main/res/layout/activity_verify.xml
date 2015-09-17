@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="?attr/bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<com.stuonline.views.TitleView
+    android:id="@+id/verify_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:centent_text="重置密码"
+    app:right_text="确定"
+    />
+
+    <com.stuonline.views.CustomerEditText
+        android:id="@+id/verify_email"
+        app:input_type="normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text_color="?attr/text_color_model"
+        android:layout_marginLeft="@dimen/register_margerleft"
+        android:layout_marginRight="@dimen/register_margerright"
+        app:hint_text="验证码"
+        />
+    <com.stuonline.views.CustomerEditText
+        android:id="@+id/verify_pwd"
+        app:input_type="password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text_color="?attr/text_color_model"
+        android:layout_marginLeft="@dimen/register_margerleft"
+        android:layout_marginRight="@dimen/register_margerright"
+        app:hint_text="新密码"
+        />
+    <com.stuonline.views.CustomerEditText
+        android:id="@+id/verify_repeatepwd"
+        android:layout_width="match_parent"
+        app:input_type="password"
+        android:layout_height="wrap_content"
+        app:text_color="?attr/text_color_model"
+        android:layout_marginLeft="@dimen/register_margerleft"
+        android:layout_marginRight="@dimen/register_margerright"
+        app:hint_text="确认新密码"
+        />
+
+</LinearLayout>

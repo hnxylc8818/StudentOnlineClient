@@ -43,6 +43,7 @@
         <activity android:name=".UpdatePasswordActivity" />
         <activity android:name=".ThuInfoActivity" />
         <activity android:name=".ResetPwdActivity"/>
+        <activity android:name=".ResetPasswordActivity"/>
 
         <!-- SMSSDK -->
         <activity

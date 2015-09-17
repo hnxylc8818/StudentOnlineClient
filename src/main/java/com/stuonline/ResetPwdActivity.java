@@ -2,8 +2,10 @@ package com.stuonline;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +15,8 @@ import android.widget.Button;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.https.XUtils;
+import com.stuonline.views.CustomerEditText;
 import com.stuonline.views.TitleView;
 
 /**
@@ -23,6 +27,8 @@ public class ResetPwdActivity extends BaseActivity {
     private Dialog dialog;
     @ViewInject(R.id.reset_pwd_title)
     private TitleView titleView;
+    @ViewInject(R.id.reset_pwd_email)
+    private CustomerEditText emailedt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +46,23 @@ public class ResetPwdActivity extends BaseActivity {
                 endIntentAnim();
             }
         });
+
     }
 
     @OnClick(R.id.reset_pwd_bt)
     public void onClick(View v) {
-        dialog();
+
+        String email=emailedt.getText().toString();
+        if (email.isEmpty()){
+            XUtils.showToast("注册邮箱不能为空");
+            return;
+        }else if (!email.matches("^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")){
+            XUtils.showToast("邮箱格式错误");
+            return;
+        }
+        startActivity(new Intent(ResetPwdActivity.this,ResetPasswordActivity.class));
+        startIntentAnim();
+//       // dialog();
     }
 
     private void dialog() {
