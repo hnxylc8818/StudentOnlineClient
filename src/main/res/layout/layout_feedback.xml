@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/feedback_edit"
@@ -16,7 +16,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:background="@android:drawable/edit_text"
+            android:background="@drawable/edit_text_bg"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:gravity="top"

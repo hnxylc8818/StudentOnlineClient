@@ -1,23 +1,34 @@
 package com.stuonline;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.lidroid.xutils.view.annotation.event.OnItemClick;
-import com.stuonline.entity.Feedback;
+import com.stuonline.entity.Result;
+import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
-import com.stuonline.utils.FeedbackDialog;
-import com.stuonline.utils.SharedUtil;
+import com.stuonline.utils.JsonUtil;
 import com.stuonline.views.CircleImage;
 import com.stuonline.views.ParallaxListView;
 import com.stuonline.views.TitleView;
@@ -40,9 +51,15 @@ public class PersonalCenterActivity extends BaseActivity {
     private TitleView personTitle;
     @ViewInject(R.id.personal_center_lv)
     private ParallaxListView lv;
-
+    private Dialog dialog;
     private Intent intent;
     private List<Map<String, Object>> data;
+    private EditText etContent;
+    private TextView hasnum;// 用来显示剩余字数
+    private int num = 140;//限制的最大字数
+    private CharSequence temp;
+    private int selectionStart;
+    private int selectionEnd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,27 +75,27 @@ public class PersonalCenterActivity extends BaseActivity {
         personAccount = (TextView) header.findViewById(R.id.personal_center_account);
         personNick = (TextView) header.findViewById(R.id.personal_center_nick);
         personSchool = (TextView) header.findViewById(R.id.personal_center_school);
-        personPhoto= (CircleImage) header.findViewById(R.id.personal_center_photo);
+        personPhoto = (CircleImage) header.findViewById(R.id.personal_center_photo);
         ImageView imgBg = (ImageView) header.findViewById(R.id.header_bg);
 
         lv.addHeaderView(header);
         if (null != MyApp.user) {
             personAccount.setText(String.format("账号：%s", MyApp.user.getAccount()));
-            String nick="";
-            String school="";
-            if (MyApp.user.getNick() == null){
-                nick="未填写";
-            }else {
-                nick=MyApp.user.getNick();
+            String nick = "";
+            String school = "";
+            if (MyApp.user.getNick() == null) {
+                nick = "未填写";
+            } else {
+                nick = MyApp.user.getNick();
             }
-            if (MyApp.user.getSchool() == null){
-                school="未填写";
-            }else {
-                school=MyApp.user.getSchool();
+            if (MyApp.user.getSchool() == null) {
+                school = "未填写";
+            } else {
+                school = MyApp.user.getSchool();
             }
-            personNick.setText(String.format("昵称：%s",nick));
+            personNick.setText(String.format("昵称：%s", nick));
             personSchool.setText(String.format("学校：%s", school));
-            XUtils.bitmapUtils.display(personPhoto,XUtils.BURL+MyApp.user.getPhotoUrl());
+            XUtils.bitmapUtils.display(personPhoto, XUtils.BURL + MyApp.user.getPhotoUrl());
         }
         loadData();
         String[] from = new String[]{"img", "text"};
@@ -145,7 +162,7 @@ public class PersonalCenterActivity extends BaseActivity {
                 break;
             case 4:
                 // 跳转意见反馈
-                new FeedbackDialog().showWaitting(this);
+                thuInfo();
                 break;
         }
     }
@@ -178,4 +195,80 @@ public class PersonalCenterActivity extends BaseActivity {
         super.onResume();
         init();
     }
+
+    private void thuInfo() {
+        if (dialog == null) {
+            View v = LayoutInflater.from(PersonalCenterActivity.this).inflate(
+                    R.layout.layout_feedback, null);
+            v.setBackgroundColor(Color.WHITE);
+            etContent = (EditText) v.findViewById(R.id.feedback_edit);
+            hasnum = (TextView) v.findViewById(R.id.feedback_num);
+            Button sendFeedBack = (Button) v.findViewById(R.id.feedback_bt);
+            hasnum.setText(num + "");
+            sendFeedBack.setOnClickListener(onClickListener);
+            etContent.addTextChangedListener(textWatcher);
+            AlertDialog.Builder builder = new AlertDialog.Builder(
+                    PersonalCenterActivity.this);
+            builder.setView(v);
+            dialog = builder.show();
+            dialog.setCanceledOnTouchOutside(true);
+        } else {
+            dialog.show();
+        }
+    }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String content = etContent.getText().toString().trim();
+            if (content.isEmpty()) {
+                XUtils.showToast("意见反馈不能为空!");
+                return;
+            }
+            RequestParams params = new RequestParams();
+            params.addBodyParameter("f.content", content);
+            params.addBodyParameter("f.uid", String.valueOf(MyApp.user.getUid()));
+            XUtils.send(XUtils.SFB, params, new MyCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    if (responseInfo != null) {
+                        JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+                        });
+                        Result<Boolean> result = jsonUtil.parse(responseInfo.result);
+                        XUtils.showToast(result.desc);
+                        if (result.data) {
+                            dialog.dismiss();
+                            etContent.getText().clear();
+                        }
+                    }
+                }
+            });
+        }
+    };
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            temp = s;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            int number = num - s.length();
+            hasnum.setText("" + number);
+            selectionStart = etContent.getSelectionStart();
+            selectionEnd = etContent.getSelectionEnd();
+            if (temp.length() > num) {
+                s.delete(selectionStart - 1, selectionEnd);
+                int tempSelection = selectionEnd;
+                etContent.setText(s);
+                etContent.setSelection(tempSelection);//设置光标在最后
+            }
+        }
+
+    };
 }

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
@@ -17,11 +16,8 @@ import com.stuonline.entity.Muser;
 import com.stuonline.entity.Result;
 import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
-import com.stuonline.utils.DialogHelper;
 import com.stuonline.utils.DialogUtil;
-import com.stuonline.utils.FeedbackDialog;
 import com.stuonline.utils.JsonUtil;
-import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.CustomerEditText;
 import com.stuonline.views.TitleView;
 
