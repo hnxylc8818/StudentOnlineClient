@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.lidroid.xutils.ViewUtils;
@@ -43,9 +45,11 @@ public class ResetPwdActivity extends BaseActivity {
             button.setOnClickListener(onClickListener);
             AlertDialog.Builder builder = new AlertDialog.Builder(
                     ResetPwdActivity.this);
-            builder.setView(v);
             dialog = builder.show();
             dialog.setCanceledOnTouchOutside(true);
+            Window w = dialog.getWindow();
+            w.setContentView(v);
+            w.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         } else {
             dialog.show();
         }

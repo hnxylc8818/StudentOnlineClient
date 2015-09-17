@@ -11,6 +11,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -222,9 +224,12 @@ public class PersonalCenterActivity extends BaseActivity {
             etContent.addTextChangedListener(textWatcher);
             AlertDialog.Builder builder = new AlertDialog.Builder(
                     PersonalCenterActivity.this);
-            builder.setView(v);
+//            builder.setView(v);
             dialog = builder.show();
             dialog.setCanceledOnTouchOutside(true);
+            Window w = dialog.getWindow();
+            w.setContentView(v);
+            w.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         } else {
             dialog.show();
         }

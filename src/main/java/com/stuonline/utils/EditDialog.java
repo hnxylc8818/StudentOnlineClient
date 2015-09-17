@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,27 +26,29 @@ public class EditDialog {
 
     public static void showDialog(Context context, String text) {
 //        if (dialog == null) {
-            View v = LayoutInflater.from(context).inflate(
-                    R.layout.layout_edit_dialog, null);
-            v.setBackgroundColor(Color.WHITE);
-            TextView tv = (TextView) v.findViewById(R.id.edit_dialog_tv);
-            tv.setText(null);
-            tv.setText(text);
-            ensure = (Button) v.findViewById(R.id.edit_dialog_ensure);
-            cancel = (Button) v.findViewById(R.id.edit_dialog_cancel);
-            input = (EditText) v.findViewById(R.id.edit_dialog_input);
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            AlertDialog.Builder builder = new AlertDialog.Builder(
-                    context);
-            builder.setView(v);
-            dialog = builder.show();
-            dialog.setCanceledOnTouchOutside(true);
-        }
+        View v = LayoutInflater.from(context).inflate(
+                R.layout.layout_edit_dialog, null);
+        v.setBackgroundColor(Color.WHITE);
+        TextView tv = (TextView) v.findViewById(R.id.edit_dialog_tv);
+        tv.setText(null);
+        tv.setText(text);
+        ensure = (Button) v.findViewById(R.id.edit_dialog_ensure);
+        cancel = (Button) v.findViewById(R.id.edit_dialog_cancel);
+        input = (EditText) v.findViewById(R.id.edit_dialog_input);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog.Builder builder = new AlertDialog.Builder(
+                context);
+        dialog = builder.show();
+        dialog.setCanceledOnTouchOutside(true);
+        Window w = dialog.getWindow();
+        w.setContentView(v);
+        w.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+    }
 //    else {
 //            dialog.show();
 //        }
