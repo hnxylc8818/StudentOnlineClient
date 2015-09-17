@@ -13,11 +13,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.entity.Result;
+import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.JsonUtil;
 import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.CustomerEditText;
 import com.stuonline.views.TitleView;
@@ -186,7 +192,29 @@ public class ValidateActivity extends BaseActivity {
         @Override
         public void afterTextChanged(Editable s) {
             if (s.length() == 11 && etAccount.getText().matches("^1(3|4|5|7|8)\\d{9}$")) {
-                btSendCode.setEnabled(true);
+                account = etAccount.getText().toString().trim();
+                if (reg == 2) {
+                    RequestParams params = new RequestParams();
+                    params.addBodyParameter("u.account", account);
+                    XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
+                        @Override
+                        public void onSuccess(ResponseInfo<String> responseInfo) {
+                            if (responseInfo.result != null) {
+                                JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+                                });
+                                Result<Boolean> result = jsonUtil.parse(responseInfo.result);
+                                if (!result.data) {
+                                    XUtils.showToast("该账号不存在，请重新输入");
+                                    btSendCode.setEnabled(false);
+                                } else {
+                                    btSendCode.setEnabled(true);
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    btSendCode.setEnabled(true);
+                }
             }
         }
     };
