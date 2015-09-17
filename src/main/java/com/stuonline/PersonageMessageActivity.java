@@ -118,7 +118,7 @@ public class PersonageMessageActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.pgemge_photo, R.id.pgemge_save, R.id.title_left, R.id.pgemge_sex, R.id.btn_top, R.id.btn_bottom, R.id.pgemge_rl_name, R.id.pgemge_rl_nick})
+    @OnClick({R.id.pgemge_rl_photo, R.id.pgemge_save, R.id.title_left, R.id.pgemge_rl_sex, R.id.btn_top, R.id.btn_bottom, R.id.pgemge_rl_name, R.id.pgemge_rl_nick})
     public void onclick(View v) {
         switch (v.getId()) {
             case R.id.title_left:
@@ -126,7 +126,7 @@ public class PersonageMessageActivity extends BaseActivity {
                 finish();
                 endIntentAnim();
                 break;
-            case R.id.pgemge_photo:
+            case R.id.pgemge_rl_photo:
                 type = MyApp.PHOTO;
                 //更改头像
                 //实例化SelectPicPopupWindow
@@ -134,7 +134,7 @@ public class PersonageMessageActivity extends BaseActivity {
                 //显示窗口
                 menuWindow.showAtLocation(PersonageMessageActivity.this.findViewById(R.id.pgemge_root), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
                 break;
-            case R.id.pgemge_sex:
+            case R.id.pgemge_rl_sex:
                 type = MyApp.SEX;
                 //实例化SelectPicPopupWindow
                 menuWindow = new SelectPicPopupWindow(PersonageMessageActivity.this, itemsOnClick, MyApp.SEX);
@@ -151,6 +151,11 @@ public class PersonageMessageActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         String name = EditDialog.getText();
+                        if (name.isEmpty()) {
+                            mPersonName.setText(MyApp.user.getUname());
+                            EditDialog.hiddenWaitting();
+                            return;
+                        }
                         mPersonName.setText(name);
                         EditDialog.hiddenWaitting();
                     }
@@ -162,6 +167,11 @@ public class PersonageMessageActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         String nick = EditDialog.getText();
+                        if (nick.isEmpty()) {
+                            mPersonName.setText(MyApp.user.getNick());
+                            EditDialog.hiddenWaitting();
+                            return;
+                        }
                         mPersonNick.setText(nick);
                         EditDialog.hiddenWaitting();
                     }

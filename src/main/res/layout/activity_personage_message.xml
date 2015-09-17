@@ -17,6 +17,7 @@
         app:right_text_visibility="gone" />
 
     <RelativeLayout
+        android:id="@+id/pgemge_rl_photo"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="20dp"
@@ -115,6 +116,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/pgemge_rl_sex"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="20dp"

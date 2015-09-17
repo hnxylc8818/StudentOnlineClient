@@ -24,11 +24,12 @@ public class EditDialog {
     private static EditText input;//取消
 
     public static void showDialog(Context context, String text) {
-        if (dialog == null) {
+//        if (dialog == null) {
             View v = LayoutInflater.from(context).inflate(
                     R.layout.layout_edit_dialog, null);
             v.setBackgroundColor(Color.WHITE);
             TextView tv = (TextView) v.findViewById(R.id.edit_dialog_tv);
+            tv.setText(null);
             tv.setText(text);
             ensure = (Button) v.findViewById(R.id.edit_dialog_ensure);
             cancel = (Button) v.findViewById(R.id.edit_dialog_cancel);
@@ -44,10 +45,11 @@ public class EditDialog {
             builder.setView(v);
             dialog = builder.show();
             dialog.setCanceledOnTouchOutside(true);
-        } else {
-            dialog.show();
         }
-    }
+//    else {
+//            dialog.show();
+//        }
+//    }
 
     /**
      * 确定按钮点击事件
