@@ -45,7 +45,12 @@
         <activity android:name=".ResetPwdActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".SmsRePwdActivity" />
-
+        <activity android:name="com.stuonline.thirds.demo.tpl.LoginActivity"/>
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- SMSSDK -->
         <activity
             android:name="com.mob.tools.MobUIShell"

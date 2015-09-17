@@ -8,5 +8,9 @@
     <color name="font_light_gray">#cfd5e3</color>
     <color name="font_dark_gray">#848484</color>
     <color name="pink">#ff9899</color>
-
+    <color name="page_back">#fff2f2f2</color>
+    <color name="logo_text_color">#ff7f7f7f</color>
+    <color name="white">#ffffffff</color>
+    <color name="login_with_other_plat_text_color">#ff383838</color>
+    <color name="dialog_white_bg">#fbfbfb</color>
 </resources>

@@ -53,7 +53,18 @@ public class LoginActivity extends BaseActivity {
         //读取本地保存的用户信息并进行解密
         etAccount.setText(new String(Base64.decode(account, Base64.NO_WRAP)));
         etPwd.setText(new String(Base64.decode(pwd, Base64.NO_WRAP)));
+        title.setOnRightTextclickListener(onClickListener);
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(LoginActivity.this, com.stuonline.thirds.demo.tpl.LoginActivity.class);
+            startActivity(intent);
+            finish();
+            endIntentAnim();
+        }
+    };
 
     @OnClick({R.id.login_login, R.id.login_reg, R.id.login_reset})
     public void onClick(View v) {
