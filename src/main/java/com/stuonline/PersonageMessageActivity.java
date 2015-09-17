@@ -97,7 +97,12 @@ public class PersonageMessageActivity extends BaseActivity {
             XUtils.bitmapUtils.display(mPersonPhoto, XUtils.BURL + MyApp.user.getPhotoUrl());
             mPersonName.setText(MyApp.user.getUname() == null ? "未填写" : MyApp.user.getUname());
             mPersonNick.setText(MyApp.user.getNick() == null ? "未填写" : MyApp.user.getNick());
-            mPersonSex.setText(MyApp.user.getGender() == 0 ? "女" : "男");
+            if (MyApp.user.getGender()==null) {
+                mPersonSex.setText("未选择");
+            }
+            else {
+                mPersonSex.setText(MyApp.user.getGender() == 0 ? "女" : "男");
+            }
         }
         if (null != bmp) {
             mPersonPhoto.setImageBitmap(bmp);

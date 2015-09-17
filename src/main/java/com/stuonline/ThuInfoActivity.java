@@ -74,9 +74,24 @@ public class ThuInfoActivity extends BaseActivity {
                role.setText("未选择");
            }
            school.setText("北科院");
-           department.setText(MyApp.user.getDepartment());
-           uclass.setText(MyApp.user.getUClass());
-           thuinfo_date_tv.setText(MyApp.user.getUyear());
+           if (null!= MyApp.user.getDepartment()) {
+               department.setText(MyApp.user.getDepartment());
+           }
+           else {
+               department.setText("未填写院系");
+           }
+           if (null!=MyApp.user.getUClass()) {
+               uclass.setText(MyApp.user.getUClass());
+           }
+           else {
+               uclass.setText("未填写班级");
+           }
+           if (null!=MyApp.user.getUyear()) {
+               thuinfo_date_tv.setText(MyApp.user.getUyear());
+           }
+           else {
+               thuinfo_date_tv.setText("未选择年份");
+           }
        }
 
 
