@@ -68,12 +68,11 @@ public class ThuInfoActivity extends BaseActivity {
         title = (TitleView) findViewById(R.id.thuinfo_title);
         title.setOnLeftclickListener(onClickListener);
        if (MyApp.user!=null){
-           if (!TextUtils.isEmpty(String.valueOf(MyApp.user.getRoleId()))){
+           if (null != MyApp.user.getRoleId()){
                role.setText(MyApp.user.getRoleId() == 1 ? "学生" : "教师");
            }else {
                role.setText("未选择");
            }
-
            school.setText("北科院");
            department.setText(MyApp.user.getDepartment());
            uclass.setText(MyApp.user.getUClass());
