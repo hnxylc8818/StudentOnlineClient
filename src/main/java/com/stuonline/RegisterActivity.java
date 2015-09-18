@@ -85,16 +85,13 @@ public class RegisterActivity extends BaseActivity {
             XUtils.showToast("密码不能为空!");
             return;
         }
-        if (TextUtils.isEmpty(repeatPassword)) {
-            XUtils.showToast("重复密码不能为空!");
-            return;
-        }
+
         if (!email.matches("^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")) {
             XUtils.showToast("邮箱格式不正确！");
             return;
         }
         if (!password.equals(repeatPassword)) {
-            XUtils.showToast("俩次密码不一致！");
+            XUtils.showToast("两次密码不一致！");
             return;
         }
         RequestParams params = new RequestParams();
