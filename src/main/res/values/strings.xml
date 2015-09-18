@@ -15,7 +15,7 @@
     <string name="code_error">验证码错误</string>
 
     <string name="proj_name">ShareSDK_TPL</string>
-    <string name="share_sdk">Share SDK</string>
+    <string name="share_sdk">第三方登录</string>
     <string name="login_with_msg">用手机号码登录</string>
     <string name="login_with_weixin">用微信登录</string>
     <string name="login_with_sina_weibo">用新浪微博登录</string>
