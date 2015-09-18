@@ -76,48 +76,53 @@ public class RegisterActivity extends BaseActivity {
         String email = mEmail.getText();
         String password = mPassword.getText();
         String repeatPassword = mRepeatPassword.getText();
-        if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password) && TextUtils.isEmpty(repeatPassword)) {
-            if (TextUtils.isEmpty(email))
-                XUtils.showToast("邮箱不能为空!");
-            if (TextUtils.isEmpty(password))
-                XUtils.showToast("密码不能为空!");
-            if (TextUtils.isEmpty(repeatPassword))
-                XUtils.showToast("重复密码不能为空!");
-        } else {
-            if (!email.matches("^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")) {
-                XUtils.showToast("邮箱不正确！");
-            } else {
-                if (!password.equals(repeatPassword)) {
-                    XUtils.showToast("密码不一致！");
-                } else {
-                    RequestParams params = new RequestParams();
-                    params.addBodyParameter("u.account", account);
-                    params.addBodyParameter("u.pwd", password);
-                    params.addBodyParameter("u.email", email);
-                    DialogUtil.showWaitting(this);
-                    XUtils.send(XUtils.REG, params, new MyCallBack<String>() {
-                        @Override
-                        public void onSuccess(ResponseInfo<String> responseInfo) {
-                            DialogUtil.hiddenWaitting();
-                            if (responseInfo != null) {
-                                JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
-                                });
-                                Result<Boolean> result = jsonUtil.parse(responseInfo.result);
-                                XUtils.showToast(result.desc);
-                                if (result.state == Result.STATE_SUC) {
-                                    finish();
-                                    endIntentAnim();
-                                }
 
-                            }
-                        }
+        if (TextUtils.isEmpty(email)) {
+            XUtils.showToast("邮箱不能为空!");
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            XUtils.showToast("密码不能为空!");
+            return;
+        }
+        if (TextUtils.isEmpty(repeatPassword)) {
+            XUtils.showToast("重复密码不能为空!");
+            return;
+        }
+        if (!email.matches("^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")) {
+            XUtils.showToast("邮箱格式不正确！");
+            return;
+        }
+        if (!password.equals(repeatPassword)) {
+            XUtils.showToast("俩次密码不一致！");
+            return;
+        }
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("u.account", account);
+        params.addBodyParameter("u.pwd", password);
+        params.addBodyParameter("u.email", email);
+        DialogUtil.showWaitting(this);
+        XUtils.send(XUtils.REG, params, new MyCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                DialogUtil.hiddenWaitting();
+                if (responseInfo != null) {
+                    JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
                     });
+                    Result<Boolean> result = jsonUtil.parse(responseInfo.result);
+                    XUtils.showToast(result.desc);
+                    if (result.state == Result.STATE_SUC) {
+                        finish();
+                        endIntentAnim();
+                    }
+
                 }
             }
+        });
 
-        }
 
     }
+
 
     @Override
     protected void onResume() {
