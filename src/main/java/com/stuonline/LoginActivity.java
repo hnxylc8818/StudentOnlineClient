@@ -82,7 +82,6 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.login_reg:
                 Intent intent = new Intent(LoginActivity.this, ValidateActivity.class);
-                intent.putExtra("reg", 1);
                 startActivity(intent);
                 startIntentAnim();
                 //注册账号
@@ -100,7 +99,7 @@ public class LoginActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.btn_top:
                     // 跳转手机验证界面
-                    intent = new Intent(LoginActivity.this, ValidateActivity.class);
+                    intent = new Intent(LoginActivity.this, VliPhoneActivity.class);
                     startActivity(intent);
                     startIntentAnim();
                     break;

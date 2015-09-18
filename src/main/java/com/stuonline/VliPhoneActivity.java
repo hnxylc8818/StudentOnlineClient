@@ -1,16 +1,11 @@
 package com.stuonline;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.telephony.SmsMessage;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -26,7 +21,6 @@ import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
 import com.stuonline.utils.JsonUtil;
-import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.CustomerEditText;
 import com.stuonline.views.TitleView;
 
@@ -37,10 +31,9 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 /**
- * Created by SunJiShuang on 2015/9/15.
- * 短信验证
+ * Created by SunJiShuang on 2015/9/18.
  */
-public class ValidateActivity extends BaseActivity {
+public class VliPhoneActivity extends BaseActivity {
     @ViewInject(R.id.validate_title)
     private TitleView title;
     @ViewInject(R.id.validate_account)
@@ -52,7 +45,6 @@ public class ValidateActivity extends BaseActivity {
     private static int TIME = 30;
     private Timer timer;
     private TimerTask task;
-
     private String account;
     private String code;
     private Handler msghandler = new Handler(new Handler.Callback() {
@@ -94,15 +86,16 @@ public class ValidateActivity extends BaseActivity {
             }
         }
     };
+
     private EventHandler eventHandler = new EventHandler() {
         @Override
         public void afterEvent(int event, int result, Object data) {
             if (result == SMSSDK.RESULT_COMPLETE) {
                 if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                    msghandler.sendMessage(msghandler.obtainMessage(1, R.string.code_send_suc, 0));
                     DialogUtil.hiddenWaitting();
+                    msghandler.sendMessage(msghandler.obtainMessage(1, R.string.code_send_suc, 0));
                 } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                    Intent intent = new Intent(ValidateActivity.this, RegisterActivity.class);
+                    Intent intent = new Intent(VliPhoneActivity.this, SmsRePwdActivity.class);
                     intent.putExtra("account", account);
                     startActivity(intent);
                     finish();
@@ -117,7 +110,6 @@ public class ValidateActivity extends BaseActivity {
             }
         }
     };
-
 
     @OnClick({R.id.validate_send_code})
     public void onClick(View v) {
@@ -195,7 +187,7 @@ public class ValidateActivity extends BaseActivity {
                 account = etAccount.getText().toString().trim();
                 RequestParams params = new RequestParams();
                 params.addBodyParameter("u.account", account);
-                DialogUtil.showWaitting(ValidateActivity.this);
+                DialogUtil.showWaitting(VliPhoneActivity.this);
                 XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -204,11 +196,12 @@ public class ValidateActivity extends BaseActivity {
                             JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
                             });
                             Result<Muser> result = jsonUtil.parse(responseInfo.result);
-                            if (result.state == Result.STATE_SUC) {
-                                XUtils.showToast("该账号已存在，请重新输入");
+                            if (result.state == Result.STATE_FAIL) {
+                                XUtils.showToast("该账号不存在，请重新输入");
                                 btSendCode.setEnabled(false);
                             } else {
-                                XUtils.showToast("恭喜该账号未被注册，请继续注册");
+                                MyApp.user = result.data;
+                                XUtils.showToast("账号存在请继续验证");
                                 btSendCode.setEnabled(true);
                             }
                         }

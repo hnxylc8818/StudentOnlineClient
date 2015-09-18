@@ -176,4 +176,13 @@ public class CustomerEditText extends RelativeLayout {
     public void setEtChangeLis(TextWatcher textWatcher) {
         input.addTextChangedListener(textWatcher);
     }
+    public void setInputEnabled(Boolean boo){
+        input.setEnabled(boo);
+        if (boo){
+            bt.setVisibility(View.VISIBLE);
+        }else {
+            bt.setVisibility(View.GONE);
+        }
+    }
+
 }
