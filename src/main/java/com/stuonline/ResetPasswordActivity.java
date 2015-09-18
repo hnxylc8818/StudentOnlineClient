@@ -4,10 +4,18 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.entity.Muser;
+import com.stuonline.entity.Result;
+import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
+import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.JsonUtil;
 import com.stuonline.views.CustomerEditText;
 import com.stuonline.views.TitleView;
 
@@ -43,7 +51,7 @@ public class ResetPasswordActivity extends BaseActivity {
                 startIntentAnim();
                 break;
             case R.id.title_right:
-
+                updatepwd();
                 break;
         }
     }
@@ -51,22 +59,41 @@ public class ResetPasswordActivity extends BaseActivity {
         String Verify=verifytv.getText().toString();
         String pwd=verifypwd.getText().toString();
         String repeatPwd=verifyrepstpwd.getText().toString();
-        if (TextUtils.isEmpty(Verify)){
-            XUtils.showToast("验证码不能为空");
+        if (!Verify.equals(MyApp.user.getBundle())){
+            XUtils.showToast("验证码错误");
             return;
         }
+
         if (TextUtils.isEmpty(pwd)){
             XUtils.showToast("密码不能为空");
             return;
         }
-        if (TextUtils.isEmpty(repeatPwd)){
-            XUtils.showToast("确认密码不能为空");
-            return;
-        }
-        if (pwd.equals(repeatPwd)){
+
+        if (!pwd.equals(repeatPwd)){
             XUtils.showToast("密码不一致!");
             return;
         }
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("u.uid", String.valueOf(MyApp.user.getUid()));
+        params.addBodyParameter("u.pwd", pwd);
+        DialogUtil.showWaitting(this);
+        XUtils.send(XUtils.UUSER, params, new MyCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                DialogUtil.hiddenWaitting();
+                if (responseInfo != null) {
+                    JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
+                    });
+                    Result<Muser> result = jsonUtil.parse(responseInfo.result);
+                    XUtils.showToast(result.desc);
+                    if (result.state == Result.STATE_SUC) {
+                        MyApp.user = result.data;
+                        finish();
+                        endIntentAnim();
+                    }
+                }
+            }
+        });
 
     }
 }

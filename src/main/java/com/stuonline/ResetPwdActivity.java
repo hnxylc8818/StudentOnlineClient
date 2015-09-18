@@ -3,19 +3,29 @@ package com.stuonline;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.stuonline.entity.Muser;
+import com.stuonline.entity.Result;
+import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
+import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.JsonUtil;
 import com.stuonline.views.CustomerEditText;
 import com.stuonline.views.TitleView;
 
@@ -52,7 +62,7 @@ public class ResetPwdActivity extends BaseActivity {
     @OnClick(R.id.reset_pwd_bt)
     public void onClick(View v) {
 
-        String email = emailedt.getText().toString();
+        final String email = emailedt.getText().toString();
         if (email.isEmpty()) {
             XUtils.showToast("注册邮箱不能为空");
             return;
@@ -60,7 +70,27 @@ public class ResetPwdActivity extends BaseActivity {
             XUtils.showToast("邮箱格式错误");
             return;
         }
-        dialog();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("mailAddr", email);
+        DialogUtil.showWaitting(this);
+        XUtils.send(XUtils.SMAIL, params, new MyCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                DialogUtil.hiddenWaitting();
+                if (responseInfo != null) {
+                    JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
+                    });
+                    Result<Muser> result = jsonUtil.parse(responseInfo.result);
+                    XUtils.showToast(result.desc);
+                    if (result.state == Result.STATE_SUC) {
+                        MyApp.user = result.data;
+                        dialog();
+
+                    }
+                }
+            }
+        });
+
     }
 
     private void dialog() {
@@ -87,6 +117,7 @@ public class ResetPwdActivity extends BaseActivity {
         public void onClick(View v) {
             Intent intent = new Intent(ResetPwdActivity.this, ResetPasswordActivity.class);
             startActivity(intent);
+            finish();
             startIntentAnim();
             dialog.dismiss();
         }
