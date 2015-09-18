@@ -81,9 +81,9 @@ public class LoginActivity extends BaseActivity {
                 menuWindow.showAtLocation(LoginActivity.this.findViewById(R.id.login_root), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
                 break;
             case R.id.login_reg:
-                Intent intent = new Intent(LoginActivity.this, ValidateActivity.class);
-                intent.putExtra("reg", 1);
-                startActivity(intent);
+                Intent intentReg = new Intent(LoginActivity.this, ValidateActivity.class);
+                intentReg.putExtra("reg", 1);
+                startActivity(intentReg);
                 startIntentAnim();
                 //注册账号
                 break;
@@ -100,8 +100,9 @@ public class LoginActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.btn_top:
                     // 跳转手机验证界面
-                    intent = new Intent(LoginActivity.this, ValidateActivity.class);
-                    startActivity(intent);
+                    Intent intentPhone = new Intent(LoginActivity.this, ValidateActivity.class);
+                    intentPhone.putExtra("reg",2);
+                    startActivity(intentPhone);
                     startIntentAnim();
                     break;
                 case R.id.btn_bottom:

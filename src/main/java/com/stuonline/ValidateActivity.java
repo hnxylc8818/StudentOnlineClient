@@ -106,7 +106,7 @@ public class ValidateActivity extends BaseActivity {
                         Intent intent = new Intent(ValidateActivity.this, RegisterActivity.class);
                         intent.putExtra("account", account);
                         startActivity(intent);
-                    } else {
+                    } else if (reg == 2){
                         Intent intent = new Intent(ValidateActivity.this, SmsRePwdActivity.class);
                         intent.putExtra("account", account);
                         startActivity(intent);
@@ -180,8 +180,9 @@ public class ValidateActivity extends BaseActivity {
         SMSSDK.registerEventHandler(eventHandler);
         timer = new Timer();
         etAccount.setEtChangeLis(textWatcher);
-        reg = getIntent().getIntExtra("reg", 2);
+        reg = getIntent().getIntExtra("reg", 0);
         account = etAccount.getText().toString().trim();
+        XUtils.showToast("==="+reg);
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -203,9 +204,11 @@ public class ValidateActivity extends BaseActivity {
                 if (reg == 1) {
                     params = new RequestParams();
                     params.addBodyParameter("u.account", account);
+                    DialogUtil.showWaitting(ValidateActivity.this);
                     XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
+                            DialogUtil.hiddenWaitting();
                             if (responseInfo.result != null) {
                                 JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
                                 });
@@ -214,6 +217,7 @@ public class ValidateActivity extends BaseActivity {
                                     XUtils.showToast("该账号已存在，请重新输入");
                                     btSendCode.setEnabled(false);
                                 } else {
+                                    XUtils.showToast("该账号未被注册，请继续验证");
                                     btSendCode.setEnabled(true);
                                 }
                             }
@@ -223,9 +227,11 @@ public class ValidateActivity extends BaseActivity {
                 if (reg == 2) {
                     params = new RequestParams();
                     params.addBodyParameter("u.account", account);
+                    DialogUtil.showWaitting(ValidateActivity.this);
                     XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
+                            DialogUtil.hiddenWaitting();
                             if (responseInfo.result != null) {
                                 JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
                                 });
@@ -234,6 +240,7 @@ public class ValidateActivity extends BaseActivity {
                                     XUtils.showToast("该账号不存在，请重新输入");
                                     btSendCode.setEnabled(false);
                                 } else {
+                                    XUtils.showToast("账号存在，请继续验证");
                                     MyApp.user = result.data;
                                     btSendCode.setEnabled(true);
                                 }

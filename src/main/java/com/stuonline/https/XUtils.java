@@ -34,6 +34,7 @@ public class XUtils {
     public static final String QROLE = "queryRole";
     public static final String SFB = "saveFeedBack";
     public static final String QUACCOUNT = "quaccount";
+    public static final String SMAIL="sendMail";
 
 
     public static HttpUtils httpUtils;
@@ -66,8 +67,8 @@ public class XUtils {
     }
 
     public static void download(String url) {
-        String path = Environment.getExternalStorageDirectory() + File.separator + "starclass"
-                + File.separator + "download" + File.separator + "starclass.apk";
+        String path = Environment.getExternalStorageDirectory() + File.separator + "StudentOnline"
+                + File.separator + "download" + File.separator + "studentonline.apk";
         File f = new File(path);
         if (f.exists()) {
             f.delete();

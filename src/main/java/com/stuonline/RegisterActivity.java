@@ -114,7 +114,6 @@ public class RegisterActivity extends BaseActivity {
                     });
                 }
             }
-
         }
 
     }
