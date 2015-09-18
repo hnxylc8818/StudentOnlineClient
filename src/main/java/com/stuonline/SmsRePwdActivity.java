@@ -71,7 +71,7 @@ public class SmsRePwdActivity extends BaseActivity {
             return;
         }
         RequestParams params = new RequestParams();
-        params.addBodyParameter("u.account", account);
+        params.addBodyParameter("u.uid", String.valueOf(MyApp.user.getUid()));
         params.addBodyParameter("u.pwd", newPwd);
         XUtils.send(XUtils.UUSER, params, new MyCallBack<String>() {
             @Override

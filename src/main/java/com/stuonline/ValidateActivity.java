@@ -159,6 +159,7 @@ public class ValidateActivity extends BaseActivity {
                 task.cancel();
                 TIME = 30;
                 btSendCode.setEnabled(true);
+                etAccount.setEnabled(true);
                 btSendCode.setText("发送验证码");
             }
         }
@@ -219,10 +220,6 @@ public class ValidateActivity extends BaseActivity {
                         }
                     });
                 }
-//                else {
-//                    btSendCode.setEnabled(true);
-//                }
-
                 if (reg == 2) {
                     params = new RequestParams();
                     params.addBodyParameter("u.account", account);
@@ -237,15 +234,13 @@ public class ValidateActivity extends BaseActivity {
                                     XUtils.showToast("该账号不存在，请重新输入");
                                     btSendCode.setEnabled(false);
                                 } else {
+                                    MyApp.user = result.data;
                                     btSendCode.setEnabled(true);
                                 }
                             }
                         }
                     });
                 }
-//                else {
-//                    btSendCode.setEnabled(true);
-//                }
             } else if (s.length() == 11) {
                 XUtils.showToast("账号格式不正确");
                 btSendCode.setEnabled(false);
