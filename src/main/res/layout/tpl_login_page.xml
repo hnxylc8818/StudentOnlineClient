@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/page_back"
@@ -11,6 +12,7 @@
         android:layout_centerInParent="true" >
 
         <LinearLayout
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
@@ -20,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="60dp"
+                android:layout_marginBottom="30dp"
                 android:drawableLeft="@drawable/ic_launcher"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
@@ -29,19 +31,6 @@
                 android:textSize="48dp"
                 android:singleLine="true"
                 android:textStyle="bold" />
- 			
- 			<TextView
-                android:id="@+id/tvMsgRegister"
-                android:singleLine="true"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/msg_login"
-                android:gravity="center"
-                android:text="@string/login_with_msg"
-                android:textColor="@color/white"
-                android:textSize="18dp" />
   			
   			<TextView
                 android:id="@+id/tvWeixin"

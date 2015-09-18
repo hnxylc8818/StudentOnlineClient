@@ -39,6 +39,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="账号：queen"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:maxLength="12"
+            android:ellipsize="end"
             android:textColor="@android:color/white"
             android:textSize="?attr/text_size_16" />
 

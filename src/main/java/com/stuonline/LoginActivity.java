@@ -17,8 +17,8 @@ import com.stuonline.entity.Muser;
 import com.stuonline.entity.Result;
 import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
+import com.stuonline.thirds.demo.tpl.ThirdLoginActivity;
 import com.stuonline.utils.DialogUtil;
-import com.stuonline.utils.EditDialog;
 import com.stuonline.utils.JsonUtil;
 import com.stuonline.views.CustomerEditText;
 import com.stuonline.views.SelectPicPopupWindow;
@@ -59,10 +59,8 @@ public class LoginActivity extends BaseActivity {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(LoginActivity.this, com.stuonline.thirds.demo.tpl.LoginActivity.class);
+            Intent intent = new Intent(LoginActivity.this, ThirdLoginActivity.class);
             startActivity(intent);
-            finish();
-            endIntentAnim();
         }
     };
 

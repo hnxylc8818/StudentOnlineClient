@@ -45,7 +45,7 @@
         <activity android:name=".ResetPwdActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".SmsRePwdActivity" />
-        <activity android:name="com.stuonline.thirds.demo.tpl.LoginActivity"/>
+        <activity android:name=".thirds.demo.tpl.ThirdLoginActivity"/>
         <activity
             android:name="cn.sharesdk.framework.ShareSDKUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"

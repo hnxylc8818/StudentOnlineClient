@@ -184,7 +184,6 @@ public class SignupPage extends FakeActivity implements OnClickListener, Callbac
 			if (signupListener != null) {
 				// 执行注册
 				if (signupListener.onSignUp(userInfo) ) {
-					Toast.makeText(activity, R.string.signup_success, Toast.LENGTH_SHORT).show();
 					finish();
 				} else {
 					Toast.makeText(activity, R.string.signup_failed, Toast.LENGTH_SHORT).show();
