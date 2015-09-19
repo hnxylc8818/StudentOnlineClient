@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -95,11 +96,17 @@ public class VliPhoneActivity extends BaseActivity {
                     DialogUtil.hiddenWaitting();
                     msghandler.sendMessage(msghandler.obtainMessage(1, R.string.code_send_suc, 0));
                 } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                    Intent intent = new Intent(VliPhoneActivity.this, SmsRePwdActivity.class);
-                    intent.putExtra("account", account);
-                    startActivity(intent);
-                    finish();
-                    startIntentAnim();
+                    Log.e("aaaaaaa",MyApp.type+"========");
+                    if (MyApp.type == 2) {
+                        Log.e("bbbbbbbb",MyApp.type+"========");
+                        Intent intent = new Intent(VliPhoneActivity.this, SmsRePwdActivity.class);
+                        intent.putExtra("account", account);
+                        startActivity(intent);
+                        finish();
+                        startIntentAnim();
+                    }else{
+                        finish();
+                    }
                 }
             } else {
                 if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {

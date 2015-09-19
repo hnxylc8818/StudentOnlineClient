@@ -102,11 +102,15 @@ public class ValidateActivity extends BaseActivity {
                     msghandler.sendMessage(msghandler.obtainMessage(1, R.string.code_send_suc, 0));
                     DialogUtil.hiddenWaitting();
                 } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                    Intent intent = new Intent(ValidateActivity.this, RegisterActivity.class);
-                    intent.putExtra("account", account);
-                    startActivity(intent);
-                    finish();
-                    startIntentAnim();
+                    if (MyApp.type == 1) {
+                        Intent intent = new Intent(ValidateActivity.this, RegisterActivity.class);
+                        intent.putExtra("account", account);
+                        startActivity(intent);
+                        finish();
+                        startIntentAnim();
+                    }else{
+                        finish();
+                    }
                 }
             } else {
                 if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {

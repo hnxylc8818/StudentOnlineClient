@@ -80,6 +80,7 @@ public class LoginActivity extends BaseActivity {
                 menuWindow.showAtLocation(LoginActivity.this.findViewById(R.id.login_root), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
                 break;
             case R.id.login_reg:
+                MyApp.type = 1;
                 Intent intent = new Intent(LoginActivity.this, ValidateActivity.class);
                 startActivity(intent);
                 startIntentAnim();
@@ -98,6 +99,7 @@ public class LoginActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.btn_top:
                     // 跳转手机验证界面
+                    MyApp.type = 2;
                     intent = new Intent(LoginActivity.this, VliPhoneActivity.class);
                     startActivity(intent);
                     startIntentAnim();

@@ -83,8 +83,6 @@ public class SmsRePwdActivity extends BaseActivity {
                     XUtils.showToast(result.desc);
                     if (result.state == Result.STATE_SUC) {
                         MyApp.user = result.data;
-                        Intent intent = new Intent(SmsRePwdActivity.this, LoginActivity.class);
-                        startActivity(intent);
                         finish();
                         endIntentAnim();
                     }

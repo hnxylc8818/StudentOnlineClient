@@ -49,7 +49,6 @@ public class RegisterActivity extends BaseActivity {
     private void init() {
         setContentView(R.layout.activity_register);
         ViewUtils.inject(this);
-        account = getIntent().getStringExtra("account");
     }
 
     @OnClick({R.id.title_left, R.id.title_right})
@@ -94,6 +93,7 @@ public class RegisterActivity extends BaseActivity {
             XUtils.showToast("两次密码不一致！");
             return;
         }
+        account = getIntent().getStringExtra("account");
         RequestParams params = new RequestParams();
         params.addBodyParameter("u.account", account);
         params.addBodyParameter("u.pwd", password);

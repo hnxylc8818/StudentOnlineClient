@@ -14,6 +14,7 @@ public class MyApp extends Application {
     public static final int PHOTO=2;
     public static final int ROLE=3;
     public static final int RESET=4;
+    public static int type=0;
 
     @Override
     public void onCreate() {
