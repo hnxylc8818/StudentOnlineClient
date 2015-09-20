@@ -51,7 +51,7 @@ public class XUtils {
             bitmapUtils = new BitmapUtils(context);
         }
         bitmapUtils.configDefaultLoadFailedImage(R.drawable.load_fail);
-        bitmapUtils.configDefaultLoadingImage(R.drawable.loading);
+        bitmapUtils.configDefaultLoadingImage(R.drawable.loadding2);
         bitmapUtils.configDefaultReadTimeout(10000);
     }
 
