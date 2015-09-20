@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.stuonline.fragments.ItemFragment;
 import com.stuonline.https.XUtils;
@@ -23,6 +24,7 @@ public class MainActivity extends BaseActivity {
     private SplashView splashView;
     private TitleView titleView;
     private View mainView;
+    private ImageView addTab;
 
     /**
      * Tab标题
@@ -91,6 +93,9 @@ public class MainActivity extends BaseActivity {
                 }
             });
         }
+        addTab= (ImageView) mainView.findViewById(R.id.add_tab);
+        addTab.setOnClickListener(l);
+
         ViewGroup parent = (ViewGroup) mainView.getParent();
         if (null != parent) {
             parent.removeView(mainView);
@@ -111,6 +116,17 @@ public class MainActivity extends BaseActivity {
             setContentView(frameLayout);
         }
     }
+
+    private View.OnClickListener l =new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.add_tab:
+                    XUtils.showToast("添加标签");
+                    break;
+            }
+        }
+    };
 
     private Handler handler = new Handler();
 
