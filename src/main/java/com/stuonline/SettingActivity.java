@@ -69,6 +69,7 @@ public class SettingActivity extends BaseActivity {
                         font=3;
                         break;
                 }
+                MyApp.isChange=true;
                 SharedUtil.saveFont(SettingActivity.this,font);
                 init();
             }
@@ -86,6 +87,7 @@ public class SettingActivity extends BaseActivity {
     private CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            MyApp.isChange=true;
             SharedUtil.saveModel(SettingActivity.this, isChecked);
             init();
         }

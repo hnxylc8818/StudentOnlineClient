@@ -35,7 +35,6 @@ public class ResetPasswordActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
     }
 
     private void init() {
@@ -94,6 +93,11 @@ public class ResetPasswordActivity extends BaseActivity {
                 }
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        init();
     }
 }

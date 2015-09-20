@@ -16,6 +16,7 @@ public class MyApp extends Application {
     public static final int RESET=4;
     public static int type=0;
     public static boolean isWelcome=true;   // 是否开启欢迎界面
+    public static boolean isChange=false;
 
     @Override
     public void onCreate() {

@@ -78,6 +78,10 @@ public class BaseActivity extends FragmentActivity {
             float x2 = e2.getX();
             float xDriver = x1 - x2;
             if (xDriver < -300) {
+                // 如果当前Activity对象是MainActivity，不执行左滑退出事件
+                if (BaseActivity.this instanceof MainActivity){
+                    return false;
+                }
                 finish();
                 endIntentAnim();
             }

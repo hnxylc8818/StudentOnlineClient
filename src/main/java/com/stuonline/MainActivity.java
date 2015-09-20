@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.stuonline.fragments.ItemFragment;
 import com.stuonline.https.XUtils;
@@ -42,7 +41,8 @@ public class MainActivity extends BaseActivity {
 
         // 帧布局
         frameLayout = new FrameLayout(this);
-        if (mainView == null) {
+        if (mainView == null || MyApp.isChange) {
+            MyApp.isChange = false;
             // 主布局
             mainView = getLayoutInflater().inflate(R.layout.activity_main, null);
             titleView = (TitleView) mainView.findViewById(R.id.main_title);
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
 
                 @Override
                 public void onPageSelected(int arg0) {
-                    Toast.makeText(getApplicationContext(), TITLE[arg0], Toast.LENGTH_SHORT).show();
+
                 }
 
                 @Override

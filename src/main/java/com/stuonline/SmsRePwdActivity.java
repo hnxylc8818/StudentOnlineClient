@@ -32,8 +32,12 @@ public class SmsRePwdActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        init();
     }
 
     private void init() {

@@ -92,7 +92,6 @@ public class PersonageMessageActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
     }
 
     private void init() {
