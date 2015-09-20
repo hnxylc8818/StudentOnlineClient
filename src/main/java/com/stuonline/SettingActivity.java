@@ -27,8 +27,6 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
-
     }
 
     private void init() {
@@ -69,7 +67,7 @@ public class SettingActivity extends BaseActivity {
                         font=3;
                         break;
                 }
-                MyApp.isChange=true;
+                setChange();
                 SharedUtil.saveFont(SettingActivity.this,font);
                 init();
             }
@@ -87,15 +85,20 @@ public class SettingActivity extends BaseActivity {
     private CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            MyApp.isChange=true;
+            setChange();
             SharedUtil.saveModel(SettingActivity.this, isChecked);
             init();
         }
     };
 
+    private void setChange(){
+        MyApp.isMainChange=true;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         init();
+
     }
 }

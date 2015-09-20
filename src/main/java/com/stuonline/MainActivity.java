@@ -19,7 +19,6 @@ import com.stuonline.vpi.TabPageIndicator;
 
 public class MainActivity extends BaseActivity {
 
-    private boolean isFirst = false;
     private FrameLayout frameLayout;
     private SplashView splashView;
     private TitleView titleView;
@@ -41,8 +40,8 @@ public class MainActivity extends BaseActivity {
 
         // 帧布局
         frameLayout = new FrameLayout(this);
-        if (mainView == null || MyApp.isChange) {
-            MyApp.isChange = false;
+        if (mainView == null || MyApp.isMainChange) {
+            MyApp.isMainChange=false;
             // 主布局
             mainView = getLayoutInflater().inflate(R.layout.activity_main, null);
             titleView = (TitleView) mainView.findViewById(R.id.main_title);
