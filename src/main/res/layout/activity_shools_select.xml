@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="?attr/bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.stuonline.views.TitleView
+        android:id="@+id/shools_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centent_text="选择学校"
+        app:right_text_visibility="gone"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@mipmap/search">
+        <SearchView
+            android:id="@+id/shools_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center"
+            android:background="@drawable/selector_search_bg">
+
+        </SearchView>
+    </LinearLayout>
+    <ListView
+        android:id="@+id/shools_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    </ListView>
+
+</LinearLayout>

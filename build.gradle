@@ -35,4 +35,5 @@ dependencies {
     compile files('libs/ShareSDK-Twitter-2.5.9.jar')
     compile files('libs/ShareSDK-Wechat-2.5.9.jar')
     compile files('libs/ShareSDK-Wechat-Core-2.5.9.jar')
+    compile files('libs/BaiduLBS_Android.jar')
 }
