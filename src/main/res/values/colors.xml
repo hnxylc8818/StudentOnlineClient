@@ -13,4 +13,23 @@
     <color name="white">#ffffffff</color>
     <color name="login_with_other_plat_text_color">#ff383838</color>
     <color name="dialog_white_bg">#fbfbfb</color>
+    <color name="selected">#AA0000</color>
+    <color name="unselected">#FF555555</color>
+
+    <color name="splash_bg">#FAEBD7</color>
+    <color name="orange">#FF9600</color>
+    <color name="purple">#D15FEE</color>
+    <color name="yellow">#FFD200</color>
+    <color name="blue">#00C6FF</color>
+    <color name="green">#00E099</color>
+    <color name="darker_pink">#FF3892</color>
+
+    <array name="splach_circle_colors">
+        <item>@color/blue</item>
+        <item>@color/green</item>
+        <item>@color/darker_pink</item>
+        <item>@color/orange</item>
+        <item>@color/purple</item>
+        <item>@color/yellow</item>
+    </array>
 </resources>

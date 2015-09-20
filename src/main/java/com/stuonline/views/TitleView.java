@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.stuonline.R;
+import com.stuonline.https.XUtils;
 
 /**
  * 孙卫星
@@ -159,5 +160,9 @@ public class TitleView extends RelativeLayout {
      */
     public void setTitleRightText(String text){
         mRighttext.setText(text);
+    }
+
+    public void setTitleRightImgSrc(String imgPath){
+        XUtils.bitmapUtils.display(mRightimg,imgPath);
     }
 }

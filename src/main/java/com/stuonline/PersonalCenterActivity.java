@@ -120,6 +120,8 @@ public class PersonalCenterActivity extends BaseActivity {
         personTitle.setOnLeftclickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent=new Intent(PersonalCenterActivity.this,MainActivity.class);
+                startActivity(intent);
                 finish();
                 endIntentAnim();
             }
