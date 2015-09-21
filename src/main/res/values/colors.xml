@@ -15,6 +15,7 @@
     <color name="dialog_white_bg">#fbfbfb</color>
     <color name="selected">#AA0000</color>
     <color name="unselected">#FF555555</color>
+    <color name="spots_dialog_color">@android:color/holo_blue_dark</color>
 
     <color name="splash_bg">#FAEBD7</color>
     <color name="orange">#FF9600</color>

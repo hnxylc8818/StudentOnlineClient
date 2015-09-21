@@ -3,8 +3,10 @@ package com.stuonline;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.util.Log;
@@ -17,9 +19,12 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.stuonline.dialog.SpotsDialog;
 import com.stuonline.entity.AppVersion;
 import com.stuonline.entity.Result;
 import com.stuonline.https.MyCallBack;
@@ -28,6 +33,9 @@ import com.stuonline.utils.DialogUtil;
 import com.stuonline.utils.JsonUtil;
 import com.stuonline.utils.SharedUtil;
 import com.stuonline.views.TitleView;
+
+import java.io.File;
+import java.util.Set;
 
 import cn.sharesdk.framework.authorize.ResizeLayout;
 
@@ -121,8 +129,6 @@ public class SettingActivity extends BaseActivity {
             PackageManager m = this.getPackageManager();
             PackageInfo info = m.getPackageInfo(this.getPackageName(), 0);
             currVersionName = info.versionName;
-            Log.i("aaaaa",String.valueOf(info.versionCode));
-            XUtils.showToast(info.versionCode);
             RequestParams params = new RequestParams();
 
             params.addBodyParameter("ver", String.valueOf(info.versionCode));
@@ -160,12 +166,46 @@ public class SettingActivity extends BaseActivity {
                 .setNegativeButton("立即更新", dialogLis).setNeutralButton("下次再说", dialogLis).show();
     }
 
+    private SpotsDialog downloadDialog;
+
     private DialogInterface.OnClickListener dialogLis = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
                 case DialogInterface.BUTTON_NEGATIVE:
-                    XUtils.download(appVersion.getAppUrl());
+                    downloadDialog=new SpotsDialog(SettingActivity.this,"下载中...");
+                    downloadDialog.show();
+                    XUtils.download(appVersion.getAppUrl(),new RequestCallBack<File>() {
+                        @Override
+                        public void onSuccess(ResponseInfo<File> responseInfo) {
+                            if (null != responseInfo) {
+                                File file = responseInfo.result;
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            } else {
+                                XUtils.showToast("下载错误");
+                            }
+                        }
+
+                        @Override
+                        public void onLoading(long total, long current, boolean isUploading) {
+                            super.onLoading(total, current, isUploading);
+                            Log.e("MainActivity", "===loading====" + current);
+                            if (current >= total){
+                                downloadDialog.dismiss();
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(HttpException e, String s) {
+                            XUtils.showToast("下载失败");
+                            Log.e("MainActivity", "====download error====" + s);
+                            e.printStackTrace();
+                        }
+                    });
                     break;
                 case DialogInterface.BUTTON_NEUTRAL:
                     dialog.dismiss();

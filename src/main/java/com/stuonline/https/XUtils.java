@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.lidroid.xutils.BitmapUtils;
@@ -16,6 +17,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.stuonline.R;
+import com.stuonline.dialog.SpotsDialog;
 
 import java.io.File;
 
@@ -51,7 +53,7 @@ public class XUtils {
             bitmapUtils = new BitmapUtils(context);
         }
         bitmapUtils.configDefaultLoadFailedImage(R.drawable.load_fail);
-        bitmapUtils.configDefaultLoadingImage(R.drawable.loadding2);
+        bitmapUtils.configDefaultLoadingImage(R.drawable.loading);
         bitmapUtils.configDefaultReadTimeout(10000);
     }
 
@@ -67,39 +69,13 @@ public class XUtils {
         return httpUtils.send(HttpRequest.HttpMethod.POST, BURL + url, params, callBack);
     }
 
-    public static void download(String url) {
+    public static void download(String url,RequestCallBack<File> callBack) {
         String path = Environment.getExternalStorageDirectory() + File.separator + "StudentOnline"
                 + File.separator + "download" + File.separator + "studentonline.apk";
         File f = new File(path);
         if (f.exists()) {
             f.delete();
         }
-        httpUtils.download(BURL + url, path, true, true, new RequestCallBack<File>() {
-            @Override
-            public void onSuccess(ResponseInfo<File> responseInfo) {
-                if (null != responseInfo) {
-                    File file = responseInfo.result;
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(intent);
-                } else {
-                    showToast("下载错误");
-                }
-            }
-
-            @Override
-            public void onLoading(long total, long current, boolean isUploading) {
-                super.onLoading(total, current, isUploading);
-                Log.e("MainActivity", "===loading====" + current);
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                showToast("下载失败");
-                Log.e("MainActivity", "====download error====" + s);
-                e.printStackTrace();
-            }
-        });
+        httpUtils.download(BURL + url, path, true, true, callBack);
     }
 }

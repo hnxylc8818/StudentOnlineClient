@@ -61,4 +61,5 @@
     <string name="tpl_send_verify_code">检验验证码</string>
     <string name="signup_success">注册成功</string>
     <string name="signup_failed">注册失败</string>
+    <string name="loading_title">下载中...</string>
 </resources>
