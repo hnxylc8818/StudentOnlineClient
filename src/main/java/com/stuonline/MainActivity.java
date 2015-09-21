@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.stuonline.fragments.ItemFragment;
 import com.stuonline.https.XUtils;
+import com.stuonline.views.DragGridView;
 import com.stuonline.views.SplashView;
 import com.stuonline.views.TitleView;
 import com.stuonline.vpi.TabPageIndicator;
@@ -122,7 +123,8 @@ public class MainActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.add_tab:
-                    XUtils.showToast("添加标签");
+                    startActivity(new Intent(MainActivity.this,AddTabActivity.class));
+                    startIntentAnim();
                     break;
             }
         }
