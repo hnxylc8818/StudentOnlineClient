@@ -38,11 +38,11 @@
             android:id="@+id/personal_center_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="账号：queen"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:maxLength="16"
             android:ellipsize="end"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="账号：queen"
             android:textColor="@android:color/white"
             android:textSize="?attr/text_size_16" />
 
@@ -50,6 +50,10 @@
             android:id="@+id/personal_center_school"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLength="11"
+            android:maxLines="1"
+            android:singleLine="true"
             android:text="学校：北京理工大学"
             android:textColor="@android:color/white"
             android:textSize="?attr/text_size_16" />

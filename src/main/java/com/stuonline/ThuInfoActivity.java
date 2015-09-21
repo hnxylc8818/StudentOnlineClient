@@ -2,6 +2,7 @@ package com.stuonline;
 
 import android.app.DatePickerDialog;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -48,13 +49,12 @@ public class ThuInfoActivity extends BaseActivity {
     private TextView uclass;
     @ViewInject(R.id.thuinfo_date_tv)
     private TextView thuinfo_date_tv;
-
     @ViewInject(R.id.thuinfo_bt)
     private Button thuinfo_bt;
-
     private int roleId;
     private SimpleDateFormat df;
     private Calendar calendar;
+    private String schoolAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,33 +67,32 @@ public class ThuInfoActivity extends BaseActivity {
         calendar = Calendar.getInstance();
         title = (TitleView) findViewById(R.id.thuinfo_title);
         title.setOnLeftclickListener(onClickListener);
-       if (MyApp.user!=null){
-           if (null != MyApp.user.getRoleId()){
-               role.setText(MyApp.user.getRoleId() == 1 ? "学生" : "教师");
-           }else {
-               role.setText("未选择");
-           }
-           school.setText("北科院");
-           if (null!= MyApp.user.getDepartment()) {
-               department.setText(MyApp.user.getDepartment());
-           }
-           else {
-               department.setText("未填写院系");
-           }
-           if (null!=MyApp.user.getUClass()) {
-               uclass.setText(MyApp.user.getUClass());
-           }
-           else {
-               uclass.setText("未填写班级");
-           }
-           if (null!=MyApp.user.getUyear()) {
-               thuinfo_date_tv.setText(MyApp.user.getUyear());
-           }
-           else {
-               thuinfo_date_tv.setText("未选择年份");
-           }
-       }
-
+        if (MyApp.user != null) {
+            if (null != MyApp.user.getRoleId()) {
+                role.setText(MyApp.user.getRoleId() == 1 ? "学生" : "教师");
+            } else {
+                role.setText("未选择");
+            }
+            if (!TextUtils.isEmpty(schoolAdd)) {
+                MyApp.user.setSchool(schoolAdd);
+            }
+            school.setText(MyApp.user.getSchool());
+            if (null != MyApp.user.getDepartment()) {
+                department.setText(MyApp.user.getDepartment());
+            } else {
+                department.setText("未填写院系");
+            }
+            if (null != MyApp.user.getUClass()) {
+                uclass.setText(MyApp.user.getUClass());
+            } else {
+                uclass.setText("未填写班级");
+            }
+            if (null != MyApp.user.getUyear()) {
+                thuinfo_date_tv.setText(MyApp.user.getUyear());
+            } else {
+                thuinfo_date_tv.setText("未选择年份");
+            }
+        }
 
 
     }
@@ -139,6 +138,8 @@ public class ThuInfoActivity extends BaseActivity {
                 break;
             case R.id.thuinfo_school:
                 //学校
+                Intent intent = new Intent(this, SchoolSearchActivity.class);
+                startActivityForResult(intent, 20);
                 break;
             case R.id.thuinfo_faculty:
                 //院系
@@ -190,9 +191,16 @@ public class ThuInfoActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 20 && resultCode == 30 && data != null) {
+            schoolAdd = data.getStringExtra("address");
+        }
+    }
+
     private void saveThuInfo() {
-//        String schools=school.getText().toString();
-        String schools = "北科院";
+        String schools = school.getText().toString();
         String departments = department.getText().toString();
         String ulcass = uclass.getText().toString();
         String date = thuinfo_date_tv.getText().toString();

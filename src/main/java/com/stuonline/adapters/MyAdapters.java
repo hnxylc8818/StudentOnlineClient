@@ -11,17 +11,23 @@ import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.stuonline.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Administrator on 2015/9/20.
  */
 public class MyAdapters extends BaseAdapter{
-    private List<SuggestionResult.SuggestionInfo> poiInfos;
+    private List<PoiInfo> poiInfos;
     private LayoutInflater lif;
-    public MyAdapters(Context context,List<SuggestionResult.SuggestionInfo> poiInfos){
+    public MyAdapters(Context context,List<PoiInfo> poiInfos){
         this.lif=LayoutInflater.from(context);
-        this.poiInfos=poiInfos;
+        if(poiInfos!=null){
+            this.poiInfos = poiInfos;
+        }else{
+            this.poiInfos  = new ArrayList<>();
+        }
+
     };
     @Override
     public int getCount() {
@@ -29,7 +35,7 @@ public class MyAdapters extends BaseAdapter{
     }
 
     @Override
-    public SuggestionResult.SuggestionInfo getItem(int position) {
+    public PoiInfo getItem(int position) {
         return poiInfos.get(position);
     }
 
@@ -50,12 +56,10 @@ public class MyAdapters extends BaseAdapter{
         }else {
             holder =(ViewHolder)convertView.getTag();
         }
-        SuggestionResult.SuggestionInfo poiInfo=getItem(position);
-        holder.name.setText(poiInfo.key);
-        holder.adress.setText(poiInfo.city);
+        PoiInfo poiInfo=getItem(position);
+        holder.name.setText(poiInfo.name);
+        holder.adress.setText(poiInfo.address);
         return convertView;
-
-
     }
 class ViewHolder{
     TextView name;
@@ -69,8 +73,10 @@ class ViewHolder{
         //刷新
         notifyDataSetChanged();
     }
-    public void add(List<SuggestionResult.SuggestionInfo> infos){
-        this.poiInfos.addAll(infos);
+
+
+    public void addAll(List<PoiInfo> data){
+        this.poiInfos.addAll(data);
         notifyDataSetChanged();
     }
 }
