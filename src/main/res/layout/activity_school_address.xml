@@ -4,27 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <com.stuonline.views.TitleView
         android:id="@+id/shools_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="选择学校"
-        app:right_text_visibility="gone"/>
+        app:right_text_visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/address_input"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_margin="8dp"
+            android:background="@mipmap/search"
+            android:drawableLeft="@mipmap/search_img"
             android:maxLines="1"
             android:padding="3dp"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </LinearLayout>
 
     <ListView
@@ -32,7 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent" >
-    </ListView>
+        android:cacheColorHint="@android:color/transparent"></ListView>
 
 </LinearLayout>
