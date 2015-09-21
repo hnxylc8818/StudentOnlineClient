@@ -76,7 +76,7 @@ public class ResetPasswordActivity extends BaseActivity {
         params.addBodyParameter("u.uid", String.valueOf(MyApp.user.getUid()));
         params.addBodyParameter("u.pwd", pwd);
         DialogUtil.showWaitting(this);
-        XUtils.send(XUtils.UUSER, params, new MyCallBack<String>() {
+        httpHandler=XUtils.send(XUtils.UUSER, params, new MyCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 DialogUtil.hiddenWaitting();

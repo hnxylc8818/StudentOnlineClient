@@ -106,10 +106,11 @@ public class SchoolSearchActivity extends BaseActivity {
             poiSearch = PoiSearch.newInstance();
             PoiCitySearchOption citySearchOption = new PoiCitySearchOption();
             citySearchOption.city("北京");
-            citySearchOption.keyword(s.toString());
+            citySearchOption.keyword(s.toString()+"学校");
             citySearchOption.pageNum(8);
             poiSearch.searchInCity(citySearchOption);
-            poiSearch.setOnGetPoiSearchResultListener(getPoiSearchResultListener);
+            poiSearch
+                    .setOnGetPoiSearchResultListener(getPoiSearchResultListener);
         }
     };
 

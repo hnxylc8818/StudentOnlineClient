@@ -98,7 +98,7 @@ public class RegisterActivity extends BaseActivity {
         params.addBodyParameter("u.pwd", password);
         params.addBodyParameter("u.email", email);
         DialogUtil.showWaitting(this);
-        XUtils.send(XUtils.REG, params, new MyCallBack<String>() {
+        httpHandler=XUtils.send(XUtils.REG, params, new MyCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 DialogUtil.hiddenWaitting();

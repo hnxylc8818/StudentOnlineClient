@@ -194,7 +194,7 @@ public class VliPhoneActivity extends BaseActivity {
                 RequestParams params = new RequestParams();
                 params.addBodyParameter("u.account", account);
                 DialogUtil.showWaitting(VliPhoneActivity.this);
-                XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
+                httpHandler=XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
                         DialogUtil.hiddenWaitting();

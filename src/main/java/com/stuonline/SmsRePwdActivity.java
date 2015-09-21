@@ -77,7 +77,7 @@ public class SmsRePwdActivity extends BaseActivity {
         RequestParams params = new RequestParams();
         params.addBodyParameter("u.uid", String.valueOf(MyApp.user.getUid()));
         params.addBodyParameter("u.pwd", newPwd);
-        XUtils.send(XUtils.UUSER, params, new MyCallBack<String>() {
+        httpHandler=XUtils.send(XUtils.UUSER, params, new MyCallBack<String>() {
             @Override
             public void onSuccess(final ResponseInfo<String> responseInfo) {
                 if (responseInfo != null) {

@@ -180,11 +180,11 @@ public class SettingActivity extends BaseActivity {
             PackageManager m = this.getPackageManager();
             PackageInfo info = m.getPackageInfo(this.getPackageName(), 0);
             currVersionName = info.versionName;
-            Log.i("aaaaa", String.valueOf(info.versionCode));
+//            Log.i("aaaaa", String.valueOf(info.versionCode));
             RequestParams params = new RequestParams();
             params.addBodyParameter("ver", String.valueOf(info.versionCode));
             DialogUtil.showWaitting(this);
-            XUtils.send(XUtils.VER, params, new MyCallBack<String>() {
+            httpHandler=XUtils.send(XUtils.VER, params, new MyCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     DialogUtil.hiddenWaitting();

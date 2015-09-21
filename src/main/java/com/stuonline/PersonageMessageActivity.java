@@ -101,10 +101,9 @@ public class PersonageMessageActivity extends BaseActivity {
             XUtils.bitmapUtils.display(mPersonPhoto, XUtils.BURL + MyApp.user.getPhotoUrl());
             mPersonName.setText(MyApp.user.getUname() == null ? "未填写" : MyApp.user.getUname());
             mPersonNick.setText(MyApp.user.getNick() == null ? "未填写" : MyApp.user.getNick());
-            if (MyApp.user.getGender()==null) {
+            if (MyApp.user.getGender() == null) {
                 mPersonSex.setText("未选择");
-            }
-            else {
+            } else {
                 mPersonSex.setText(MyApp.user.getGender() == 0 ? "女" : "男");
             }
         }
@@ -200,7 +199,7 @@ public class PersonageMessageActivity extends BaseActivity {
             params.addBodyParameter("u.nick", nick);
             params.addBodyParameter("u.gender", String.valueOf(sex));
             DialogUtil.showWaitting(this);
-            XUtils.send(XUtils.UPHOTO, params, new MyCallBack<String>() {
+            httpHandler=XUtils.send(XUtils.UPHOTO, params, new MyCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     DialogUtil.hiddenWaitting();
@@ -233,6 +232,8 @@ public class PersonageMessageActivity extends BaseActivity {
             sex = 1;
         } else if (gender.equals("女")) {
             sex = 0;
+        } else {
+            sex = 1;
         }
         if (TextUtils.isEmpty(uname)) {
             XUtils.showToast("请输入姓名");

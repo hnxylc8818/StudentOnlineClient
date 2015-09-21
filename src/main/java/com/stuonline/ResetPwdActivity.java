@@ -78,7 +78,7 @@ public class ResetPwdActivity extends BaseActivity {
         RequestParams params = new RequestParams();
         params.addBodyParameter("mailAddr", email);
         DialogUtil.showWaitting(this);
-        XUtils.send(XUtils.SMAIL, params, new MyCallBack<String>() {
+        httpHandler=XUtils.send(XUtils.SMAIL, params, new MyCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 DialogUtil.hiddenWaitting();

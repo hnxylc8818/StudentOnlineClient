@@ -229,7 +229,7 @@ public class ThuInfoActivity extends BaseActivity {
         params.addBodyParameter("u.UClass", ulcass);
         params.addBodyParameter("u.uyear", date);
         DialogUtil.showWaitting(this);
-        XUtils.send(XUtils.UUSER, params, new MyCallBack<String>() {
+        httpHandler=XUtils.send(XUtils.UUSER, params, new MyCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 DialogUtil.hiddenWaitting();

@@ -135,7 +135,7 @@ public class LoginActivity extends BaseActivity {
         params.addBodyParameter("u.account", account);
         params.addBodyParameter("u.pwd", pwd);
         DialogUtil.showWaitting(this);
-        XUtils.send(XUtils.LOGIN, params, new MyCallBack<String>() {
+        httpHandler = XUtils.send(XUtils.LOGIN, params, new MyCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 DialogUtil.hiddenWaitting();

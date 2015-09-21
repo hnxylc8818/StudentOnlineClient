@@ -251,7 +251,7 @@ public class PersonalCenterActivity extends BaseActivity {
                     RequestParams params = new RequestParams();
                     params.addBodyParameter("f.content", content);
                     params.addBodyParameter("f.uid", String.valueOf(MyApp.user.getUid()));
-                    XUtils.send(XUtils.SFB, params, new MyCallBack<String>() {
+                    httpHandler=XUtils.send(XUtils.SFB, params, new MyCallBack<String>() {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
                             if (responseInfo != null) {
