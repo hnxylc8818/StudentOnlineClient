@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile files('libs/fastjson-1.1.34.android.jar')
     compile files('libs/xUtils-2.6.14.jar')
@@ -37,4 +37,5 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.5.9.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/BaiduLBS_Android.jar')
+    compile project(':pulltorefresh_library')
 }

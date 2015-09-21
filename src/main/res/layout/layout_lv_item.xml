@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/news_item_vp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/news_item_thumb"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:src="@drawable/load_fail" />
+
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/news_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="asdasdas"
+                android:textColor="?attr/text_color_model"
+                android:textSize="?attr/text_size_20" />
+            <TextView
+                android:id="@+id/news_item_resume"
+                android:text="zsdsadsadadas"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="?attr/text_size_16"
+                android:textColor="@color/font_light_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

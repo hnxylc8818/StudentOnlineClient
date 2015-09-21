@@ -27,7 +27,7 @@ import java.io.File;
 public class XUtils {
 
     public static final String BURL = "http://123.56.126.25:8080/StuentOnlineServer/";
-//            public static final String BURL = "http://192.168.11.178:8080/StuentOnlineServer/";
+    //            public static final String BURL = "http://192.168.11.178:8080/StuentOnlineServer/";
     public static final String LOGIN = "login";
     public static final String REG = "reg";
     public static final String UPHOTO = "updatePhoto";
@@ -36,8 +36,13 @@ public class XUtils {
     public static final String QROLE = "queryRole";
     public static final String SFB = "saveFeedBack";
     public static final String QUACCOUNT = "quaccount";
-    public static final String SMAIL="sendMail";
-    public static final String REGTHIRD="regThird";
+    public static final String SMAIL = "sendMail";
+    public static final String REGTHIRD = "regThird";
+    public static final String QUERYTABS = "queryTabs";
+    public static final String QUERYNEWSES = "queryNewses";
+    public static final String QUERYNEWS = "queryNews";
+    public static final String QUERYCOMMENTS = "queryComments";
+    public static final String SAVECOMMENT = "saveComment";
 
 
     public static HttpUtils httpUtils;
@@ -69,7 +74,7 @@ public class XUtils {
         return httpUtils.send(HttpRequest.HttpMethod.POST, BURL + url, params, callBack);
     }
 
-    public static void download(String url,RequestCallBack<File> callBack) {
+    public static void download(String url, RequestCallBack<File> callBack) {
         String path = Environment.getExternalStorageDirectory() + File.separator + "StudentOnline"
                 + File.separator + "download" + File.separator + "studentonline.apk";
         File f = new File(path);
