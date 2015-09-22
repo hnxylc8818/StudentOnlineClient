@@ -138,7 +138,7 @@ public class SettingActivity extends BaseActivity {
                     dialog.dismiss();
                     downloadDialog = new SpotsDialog(SettingActivity.this, "下载中...");
                     downloadDialog.show();
-                    XUtils.download(appVersion.getAppUrl(), new RequestCallBack<File>() {
+                    httpHandler = XUtils.download(appVersion.getAppUrl(), new RequestCallBack<File>() {
                         @Override
                         public void onSuccess(ResponseInfo<File> responseInfo) {
                             if (null != responseInfo) {
@@ -184,7 +184,7 @@ public class SettingActivity extends BaseActivity {
             RequestParams params = new RequestParams();
             params.addBodyParameter("ver", String.valueOf(info.versionCode));
             DialogUtil.showWaitting(this);
-            httpHandler=XUtils.send(XUtils.VER, params, new MyCallBack<String>() {
+            httpHandler = XUtils.send(XUtils.VER, params, new MyCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     DialogUtil.hiddenWaitting();

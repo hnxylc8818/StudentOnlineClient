@@ -42,13 +42,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        init();
     }
 
     private void init() {
 
         // 帧布局
         frameLayout = new FrameLayout(this);
-        if (mainView == null || MyApp.isMainChange) {
+//        if (mainView == null || MyApp.isMainChange) {
             MyApp.isMainChange = false;
             // 主布局
             mainView = getLayoutInflater().inflate(R.layout.activity_main, null);
@@ -57,6 +58,7 @@ public class MainActivity extends BaseActivity {
             adapter = new TabPageIndicatorAdapter(getSupportFragmentManager(), null);
             ViewPager pager = (ViewPager) mainView.findViewById(R.id.vp);
             pager.setAdapter(adapter);
+            pager.setCurrentItem(1);
 
             //实例化TabPageIndicator然后设置ViewPager与之关联
             indicator= (TabPageIndicator) mainView.findViewById(R.id.indicator);
@@ -98,7 +100,7 @@ public class MainActivity extends BaseActivity {
                     }
                 }
             });
-        }
+//        }
         addTab = (ImageView) mainView.findViewById(R.id.add_tab);
         addTab.setOnClickListener(l);
 
@@ -108,16 +110,17 @@ public class MainActivity extends BaseActivity {
         }
         // 先添加主布局
         frameLayout.addView(mainView);
+        loadTab();
         // 如果是首次进入App界面
         if (MyApp.isWelcome) {
-            // 更改属性值为false，表示下次进入不是第一次，不显示欢迎动画
-            MyApp.isWelcome = false;
             // 再添加SplashView
             splashView = new SplashView(this);
             frameLayout.addView(splashView);
             setContentView(frameLayout);
             // 开启Splash动画 --- 模拟后台加载数据
             startLoad();
+            // 更改属性值为false，表示下次进入不是第一次，不显示欢迎动画
+            MyApp.isWelcome = false;
         } else {
             setContentView(frameLayout);
         }
@@ -142,7 +145,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void run() {
                 // 数据加载完毕执行后面的动画 -- 让ContentView显示
-                loadTab();
                 splashView.splashAndDisapper();
             }
         }, 3000);
@@ -157,6 +159,7 @@ public class MainActivity extends BaseActivity {
                     });
                     Result<List<Tab>> result = jsonUtil.parse(responseInfo.result);
                     if (result.state == Result.STATE_SUC) {
+                        adapter.clear();
                         adapter.addAll(result.data);
                         indicator.notifyDataSetChanged();
                     }
@@ -211,6 +214,10 @@ public class MainActivity extends BaseActivity {
                 this.tabs.addAll(tabs);
                 notifyDataSetChanged();
             }
+        }
+        public void clear(){
+            this.tabs.clear();
+            notifyDataSetChanged();
         }
 
     }

@@ -2,6 +2,8 @@ package com.stuonline.https;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -19,7 +21,16 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.stuonline.R;
 import com.stuonline.dialog.SpotsDialog;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by Xubin on 2015/9/8.
@@ -74,13 +85,38 @@ public class XUtils {
         return httpUtils.send(HttpRequest.HttpMethod.POST, BURL + url, params, callBack);
     }
 
-    public static void download(String url, RequestCallBack<File> callBack) {
+    public static HttpHandler download(String url, RequestCallBack<File> callBack) {
         String path = Environment.getExternalStorageDirectory() + File.separator + "StudentOnline"
                 + File.separator + "download" + File.separator + "studentonline.apk";
         File f = new File(path);
         if (f.exists()) {
             f.delete();
         }
-        httpUtils.download(BURL + url, path, true, true, callBack);
+        return httpUtils.download(BURL + url, path, true, true, callBack);
+    }
+
+    public final static Bitmap returnBitMap(String url) {
+        URL myFileUrl = null;
+        Bitmap bitmap = null;
+
+        try {
+            myFileUrl = new URL(url);
+            HttpURLConnection conn;
+
+            conn = (HttpURLConnection) myFileUrl.openConnection();
+
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }  catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 }
