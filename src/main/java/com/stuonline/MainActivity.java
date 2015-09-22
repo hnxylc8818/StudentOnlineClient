@@ -163,7 +163,7 @@ public class MainActivity extends BaseActivity {
                     Result<List<Tab>> result = jsonUtil.parse(responseInfo.result);
                     if (result.state == Result.STATE_SUC) {
                         adapter.clear();
-                        if (MyApp.meTabs == null) {
+                        if (MyApp.meTabs == null || MyApp.meTabs.size() == 0) {
                             adapter.addAll(result.data);
                         } else {
                             adapter.addAll(conversionTab(MyApp.meTabs));
