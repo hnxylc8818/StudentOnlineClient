@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.alibaba.fastjson.TypeReference;
 import com.lidroid.xutils.http.ResponseInfo;
+import com.stuonline.entity.MeTab;
 import com.stuonline.entity.Result;
 import com.stuonline.entity.Tab;
 import com.stuonline.fragments.ItemFragment;
@@ -49,19 +50,20 @@ public class MainActivity extends BaseActivity {
 
         // 帧布局
         frameLayout = new FrameLayout(this);
+
         if (mainView == null || MyApp.isMainChange) {
             MyApp.isMainChange = false;
             // 主布局
             mainView = getLayoutInflater().inflate(R.layout.activity_main, null);
             titleView = (TitleView) mainView.findViewById(R.id.main_title);
             //ViewPager的adapter
-            adapter = new TabPageIndicatorAdapter(getSupportFragmentManager(), null);
+            adapter = new TabPageIndicatorAdapter(getSupportFragmentManager(),conversionTab(MyApp.meTabs));
             ViewPager pager = (ViewPager) mainView.findViewById(R.id.vp);
             pager.setAdapter(adapter);
             pager.setCurrentItem(1);
 
             //实例化TabPageIndicator然后设置ViewPager与之关联
-            indicator= (TabPageIndicator) mainView.findViewById(R.id.indicator);
+            indicator = (TabPageIndicator) mainView.findViewById(R.id.indicator);
             indicator.setViewPager(pager);
 
             //如果我们要对ViewPager设置监听，用indicator设置就行了
@@ -131,7 +133,7 @@ public class MainActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.add_tab:
-                    startActivity(new Intent(MainActivity.this,AddTabActivity.class));
+                    startActivity(new Intent(MainActivity.this, AddTabActivity.class));
                     startIntentAnim();
                     break;
             }
@@ -161,7 +163,11 @@ public class MainActivity extends BaseActivity {
                     Result<List<Tab>> result = jsonUtil.parse(responseInfo.result);
                     if (result.state == Result.STATE_SUC) {
                         adapter.clear();
-                        adapter.addAll(result.data);
+                        if (MyApp.meTabs == null) {
+                            adapter.addAll(result.data);
+                        } else {
+                            adapter.addAll(conversionTab(MyApp.meTabs));
+                        }
                         indicator.notifyDataSetChanged();
                     }
                 } else {
@@ -216,7 +222,8 @@ public class MainActivity extends BaseActivity {
                 notifyDataSetChanged();
             }
         }
-        public void clear(){
+
+        public void clear() {
             this.tabs.clear();
             notifyDataSetChanged();
         }
@@ -235,5 +242,19 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         // 当此Activity销毁时说明已经退出程序，所有更改 MyApp.isWelcome = true;表示下次进入为第一次，显示欢迎动画
         MyApp.isWelcome = true;
+    }
+
+    public List<Tab> conversionTab(List<MeTab> meTabs) {
+        List<Tab> tabs = new ArrayList<>();
+        Tab tab = null;
+        if (null != meTabs && meTabs.size() > 0) {
+            for (MeTab meTab : meTabs) {
+                tab = new Tab();
+                tab.setTid(meTab.getT_id());
+                tab.setTab(meTab.getT_tabname());
+                tabs.add(tab);
+            }
+        }
+        return tabs;
     }
 }

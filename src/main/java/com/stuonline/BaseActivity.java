@@ -87,6 +87,10 @@ public class BaseActivity extends FragmentActivity {
                     Intent intent=new Intent(BaseActivity.this,MainActivity.class);
                     startActivity(intent);
                 }
+                if (BaseActivity.this instanceof AddTabActivity && MyApp.isMainChange){
+                    Intent intent=new Intent(BaseActivity.this,MainActivity.class);
+                    startActivity(intent);
+                }
                 finish();
                 endIntentAnim();
             }
