@@ -6,10 +6,11 @@
     android:background="?attr/bg"
     android:layout_height="match_parent">
     <com.stuonline.views.TitleView
+        android:id="@+id/add_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:centent_text="中国大学生在线"
-        app:right_text="确定"/>
+        app:right_text_visibility="gone"/>
     <RelativeLayout
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:background="@color/black_half"
+            android:background="@color/font_dark_gray"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/tab1"
             android:layout_centerVertical="true"
@@ -32,7 +33,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:background="@color/black_half"
+            android:background="@color/font_dark_gray"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@id/tab1"
             android:layout_centerVertical="true"
@@ -57,7 +58,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:background="@color/black_half"
+            android:background="@color/font_dark_gray"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/tab2"
             android:layout_centerVertical="true"
@@ -72,7 +73,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:background="@color/black_half"
+            android:background="@color/font_dark_gray"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@id/tab2"
             android:layout_centerVertical="true"

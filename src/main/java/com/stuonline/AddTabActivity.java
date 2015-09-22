@@ -22,6 +22,7 @@ import com.stuonline.utils.DBTools;
 import com.stuonline.utils.DialogUtil;
 import com.stuonline.utils.JsonUtil;
 import com.stuonline.views.DragGridView;
+import com.stuonline.views.TitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,34 +39,57 @@ public class AddTabActivity extends BaseActivity {
     GridViewAdapter2 adapter2;
     GridViewAdapter adapter;
     public DBTools dbTools;
-    private String istrue = "1";
-    private String isfalse = "0";
+    private String istrue="1";
+    private String isfalse="0";
+    private TitleView titleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         init();
     }
 
     private void init() {
         setContentView(R.layout.activity_add_tab);
-        dbTools = new DBTools(this);
-        dbTools.deleteTab();
-        initData();
+        titleView= (TitleView) findViewById(R.id.add_title);
+        titleView.setOnLeftclickListener(onclicllistenr);
         initView();
+        dbTools=new DBTools(this);
+        if (dbTools.queryAll()!=null){
+            strList=new ArrayList<>();
+            strListAll=new ArrayList<>();
+            strList = dbTools.queryAllisMe(istrue);
+            Log.i("aaaaa","======="+strList.size());
+            MyApp.meTabs=strList;
+            adapter.AddAll(strList);
+            XUtils.showToast(strList.size() + "");
+            strListAll=dbTools.queryAllisMe(isfalse);
+            adapter2.AddAll(strListAll);
+        }else {
+            dbTools.deleteTab();
+            initData();
+        }
+
+
 
     }
+    public View.OnClickListener onclicllistenr=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.title_left:
+                    finish();
+                    endIntentAnim();
+                    break;
+            }
+        }
+    };
 
-    public void initData() {
+    public void initData(){
         strList2 = new ArrayList<Tab>();
-        strList = new ArrayList<MeTab>();
+        strList=new ArrayList<MeTab>();
         DialogUtil.showWaitting(this);
-        httpHandler = XUtils.send(XUtils.QUERYTABS, null, new MyCallBack<String>() {
+        httpHandler=XUtils.send(XUtils.QUERYTABS, null, new MyCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 DialogUtil.hiddenWaitting();
@@ -87,11 +111,11 @@ public class AddTabActivity extends BaseActivity {
 
                             }
                             strList = dbTools.queryAllisMe(istrue);
-                            Log.i("aaaaa", "=======" + strList.size());
-                            MyApp.meTabs = strList;
+                            Log.i("aaaaa","======="+strList.size());
+                            MyApp.meTabs=strList;
                             adapter.AddAll(strList);
                             XUtils.showToast(strList.size() + "");
-                            strListAll = dbTools.queryAllisMe(isfalse);
+                            strListAll=dbTools.queryAllisMe(isfalse);
                             adapter2.AddAll(strListAll);
                         }
                     }
@@ -105,7 +129,7 @@ public class AddTabActivity extends BaseActivity {
     private void initView() {
         gridView = (GridView) findViewById(R.id.drag_grid_views);
         gridViewAll = (GridView) findViewById(R.id.drag_grid_views2);
-        adapter = new GridViewAdapter(this, strList);
+         adapter = new GridViewAdapter(this, strList);
         adapter2 = new GridViewAdapter2(this, strListAll);
         gridView.setAdapter(adapter);
         gridViewAll.setAdapter(adapter2);
