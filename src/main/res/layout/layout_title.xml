@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="centent"
+        android:text="中国大学生在线"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="?attr/text_size_22" />
     <TextView

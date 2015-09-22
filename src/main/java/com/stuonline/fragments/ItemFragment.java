@@ -1,5 +1,6 @@
 package com.stuonline.fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.stuonline.MyApp;
+import com.stuonline.NewsInfoActivity;
 import com.stuonline.R;
 import com.stuonline.adapters.ADAdapter;
 import com.stuonline.adapters.NewsAdapter;
@@ -86,7 +89,7 @@ public class ItemFragment extends Fragment {
             lv = (PullToRefreshListView) view.findViewById(R.id.news_lv);
             View header = inflater.inflate(R.layout.layout_news_lv_header, null);
             vp = (ViewPager) header.findViewById(R.id.news_header_vp);
-            dd= (LinearLayout) header.findViewById(R.id.news_header_dd);
+            dd = (LinearLayout) header.findViewById(R.id.news_header_dd);
             vp.setOnPageChangeListener(pageChangeListener);
             lv.getRefreshableView().addHeaderView(header);
             lv.getRefreshableView().setCacheColorHint(Color.TRANSPARENT);
@@ -98,6 +101,7 @@ public class ItemFragment extends Fragment {
             Bundle mBundle = getArguments();
             tid = mBundle.getString("tid");
             loadNews(false);
+            lv.setOnItemClickListener(itemClickListener);
         }
         ViewGroup parent = (ViewGroup) view.getParent();
         if (null != parent) {
@@ -106,7 +110,17 @@ public class ItemFragment extends Fragment {
         return view;
     }
 
-    private ViewPager.OnPageChangeListener pageChangeListener=new ViewPager.OnPageChangeListener() {
+    private AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent=new Intent(getActivity(), NewsInfoActivity.class);
+            intent.putExtra("nid",(int)id);
+            startActivity(intent);
+            startIntentAnim();
+        }
+    };
+
+    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             if (null != adAdapter && null != dd) {
@@ -133,7 +147,7 @@ public class ItemFragment extends Fragment {
         }
     };
 
-    private void loadDD(){
+    private void loadDD() {
         // 设置点点布局属性
         LinearLayout.MarginLayoutParams mlp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -248,5 +262,9 @@ public class ItemFragment extends Fragment {
         imageView.setLayoutParams(lp);
 
         return imageView;
+    }
+
+    protected void startIntentAnim() {
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }
