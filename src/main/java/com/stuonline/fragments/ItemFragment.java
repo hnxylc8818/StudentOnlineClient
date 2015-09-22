@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.TypeReference;
@@ -24,6 +26,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.stuonline.MyApp;
 import com.stuonline.R;
+import com.stuonline.adapters.ADAdapter;
 import com.stuonline.adapters.NewsAdapter;
 import com.stuonline.entity.News;
 import com.stuonline.entity.Result;
@@ -32,7 +35,10 @@ import com.stuonline.utils.DialogUtil;
 import com.stuonline.utils.JsonUtil;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Xubin on 2015/9/20.
@@ -44,9 +50,33 @@ public class ItemFragment extends Fragment {
     private Integer pageIndex = 1;
     private PullToRefreshListView lv;
     private NewsAdapter adapter;
+    private ADAdapter adAdapter;
     private String tid;
     private ViewPager vp;
-    private List<News> newsList;
+    private int j = 0;
+    private Bitmap[] bitmaps = new Bitmap[3];
+    private int nid;
+    private LinearLayout dd;
+    private List<Map<String, Object>> data = new ArrayList<>();
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    if (j <= 2) {
+                        nid = msg.arg1;
+                        data.add(getVpData(nid, (Bitmap) msg.obj));
+                        if (j == 2) {
+                            adAdapter = new ADAdapter(data);
+                            vp.setAdapter(adAdapter);
+                            loadDD();
+                        }
+                        j++;
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +86,8 @@ public class ItemFragment extends Fragment {
             lv = (PullToRefreshListView) view.findViewById(R.id.news_lv);
             View header = inflater.inflate(R.layout.layout_news_lv_header, null);
             vp = (ViewPager) header.findViewById(R.id.news_header_vp);
+            dd= (LinearLayout) header.findViewById(R.id.news_header_dd);
+            vp.setOnPageChangeListener(pageChangeListener);
             lv.getRefreshableView().addHeaderView(header);
             lv.getRefreshableView().setCacheColorHint(Color.TRANSPARENT);
             lv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -74,18 +106,66 @@ public class ItemFragment extends Fragment {
         return view;
     }
 
+    private ViewPager.OnPageChangeListener pageChangeListener=new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            if (null != adAdapter && null != dd) {
+                // 改变小点选择状态
+                for (int i = 0; i < dd.getChildCount(); i++) {
+                    if (position == i) {
+                        dd.getChildAt(i).setEnabled(true);
+                    } else {
+                        dd.getChildAt(i).setEnabled(false);
+                    }
+                }
+
+            }
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
+
+    private void loadDD(){
+        // 设置点点布局属性
+        LinearLayout.MarginLayoutParams mlp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        // 设置点点之间的间距
+        int margin = getResources().getDimensionPixelSize(R.dimen.home_header_dd_margin);
+        mlp.leftMargin = margin;
+        mlp.rightMargin = margin;
+        // 设置小点，ViewPager标识器
+        for (int i = 0; i < adAdapter.getCount(); i++) {
+            // 创建小点图片
+            ImageView ddImg = new ImageView(getActivity());
+            ddImg.setImageResource(R.drawable.news_header_dd_selector);
+            // 通过enable属性设置小点使用的颜色
+            if (i == 0) {
+                ddImg.setEnabled(true);
+            } else {
+                ddImg.setEnabled(false);
+            }
+            // 将小点添加到布局的指定位置
+            dd.addView(ddImg, mlp);
+        }
+    }
+
     private void loadHeaderVp(List<News> newsList) {
-        Bitmap[] bitmaps = new Bitmap[3];
-        Bitmap bmp=null;
         if (newsList != null && newsList.size() > 0) {
             for (int i = 0; i < 3; i++) {
                 News news = newsList.get(i);
-                Log.i("----news--------",news+"");
-                bmp=XUtils.returnBitMap(XUtils.BURL+news.getNewsUrl());
-                bitmaps[i] = bmp;
+                XUtils.returnBitMap(handler, XUtils.BURL + news.getNewsUrl(), news.getNid());
             }
         }
-        Log.i("bitmap----------", bitmaps[0] + "");
     }
 
     private PullToRefreshBase.OnRefreshListener2 listener2 = new PullToRefreshBase.OnRefreshListener2() {
@@ -125,6 +205,8 @@ public class ItemFragment extends Fragment {
                         if (isFlush) {
                             adapter.clear();
                         }
+//                        handler.sendMessage(handler.obtainMessage(1,result.data));
+                        loadHeaderVp(result.data);
                         adapter.addAll(result.data);
                         pageIndex++;
                     }
@@ -142,5 +224,29 @@ public class ItemFragment extends Fragment {
                 e.printStackTrace();
             }
         });
+    }
+
+    private Map<String, Object> getVpData(int nid, Bitmap bmp) {
+        List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("nid", nid);
+        map.put("view", getVpView(bmp));
+        return map;
+    }
+
+    private ViewPager.LayoutParams lp = null;
+
+    private View getVpView(Bitmap bmp) {
+        ImageView imageView = new ImageView(getActivity());
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setImageBitmap(bmp);
+        if (lp == null) {
+            lp = new ViewPager.LayoutParams();
+            lp.width = ViewPager.LayoutParams.MATCH_PARENT;
+            lp.height = ViewPager.LayoutParams.MATCH_PARENT;
+        }
+        imageView.setLayoutParams(lp);
+
+        return imageView;
     }
 }
