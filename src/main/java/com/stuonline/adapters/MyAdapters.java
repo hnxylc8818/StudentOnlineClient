@@ -27,8 +27,7 @@ public class MyAdapters extends BaseAdapter{
         }else{
             this.poiInfos  = new ArrayList<>();
         }
-
-    };
+    }
     @Override
     public int getCount() {
         return poiInfos!=null?poiInfos.size():0;
