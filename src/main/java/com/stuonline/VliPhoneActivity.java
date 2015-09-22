@@ -93,17 +93,19 @@ public class VliPhoneActivity extends BaseActivity {
             if (result == SMSSDK.RESULT_COMPLETE) {
                 if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                     DialogUtil.hiddenWaitting();
-                    msghandler.sendMessage(msghandler.obtainMessage(1, R.string.code_send_suc, 0));
-                } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                    Log.e("aaaaaaa",MyApp.type+"========");
                     if (MyApp.type == 2) {
-                        Log.e("bbbbbbbb",MyApp.type+"========");
+                        msghandler.sendMessage(msghandler.obtainMessage(1, R.string.code_send_suc, 0));
+                    }
+                } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                    Log.e("aaaaaaa", MyApp.type + "========");
+                    if (MyApp.type == 2) {
+                        Log.e("bbbbbbbb", MyApp.type + "========");
                         Intent intent = new Intent(VliPhoneActivity.this, SmsRePwdActivity.class);
                         intent.putExtra("account", account);
                         startActivity(intent);
                         finish();
                         startIntentAnim();
-                    }else{
+                    } else {
                         finish();
                     }
                 }
@@ -194,7 +196,7 @@ public class VliPhoneActivity extends BaseActivity {
                 RequestParams params = new RequestParams();
                 params.addBodyParameter("u.account", account);
                 DialogUtil.showWaitting(VliPhoneActivity.this);
-                httpHandler=XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
+                httpHandler = XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
                         DialogUtil.hiddenWaitting();

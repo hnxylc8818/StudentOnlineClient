@@ -98,8 +98,10 @@ public class ValidateActivity extends BaseActivity {
         public void afterEvent(int event, int result, Object data) {
             if (result == SMSSDK.RESULT_COMPLETE) {
                 if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                    msghandler.sendMessage(msghandler.obtainMessage(1, R.string.code_send_suc, 0));
                     DialogUtil.hiddenWaitting();
+                    if (MyApp.type == 1) {
+                        msghandler.sendMessage(msghandler.obtainMessage(1, R.string.code_send_suc, 0));
+                    }
                 } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                     if (MyApp.type == 1) {
                         Intent intent = new Intent(ValidateActivity.this, RegisterActivity.class);
@@ -107,7 +109,7 @@ public class ValidateActivity extends BaseActivity {
                         startActivity(intent);
                         finish();
                         startIntentAnim();
-                    }else{
+                    } else {
                         finish();
                     }
                 }
@@ -199,7 +201,7 @@ public class ValidateActivity extends BaseActivity {
                 RequestParams params = new RequestParams();
                 params.addBodyParameter("u.account", account);
                 DialogUtil.showWaitting(ValidateActivity.this);
-                httpHandler=XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
+                httpHandler = XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
                         DialogUtil.hiddenWaitting();
