@@ -11,9 +11,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
     private String sqlCreateTable = "create table metab("
             + "t_id integer primary key autoincrement,"
-            + "t_tabname varchar(30) not null)";
+            + "t_tabname varchar(30) not null,"
+            + "t_isMe integer not null)";
 
-    public DBHelper(Context context, String name,int version) {
+    public DBHelper(Context context, String name, int version) {
         super(context, name, null, version);
 
     }

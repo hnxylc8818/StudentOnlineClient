@@ -6,6 +6,7 @@ package com.stuonline.entity;
 public class MeTab {
     private  int t_id;
     private  String t_tabname;
+    private boolean t_isMe;
 
     public String getT_tabname() {
         return t_tabname;
@@ -21,5 +22,13 @@ public class MeTab {
 
     public void setT_id(int t_id) {
         this.t_id = t_id;
+    }
+
+    public boolean isT_isMe() {
+        return t_isMe;
+    }
+
+    public void setT_isMe(boolean t_isMe) {
+        this.t_isMe = t_isMe;
     }
 }

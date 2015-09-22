@@ -131,7 +131,8 @@ public class MainActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.add_tab:
-                    XUtils.showToast("添加标签");
+                    startActivity(new Intent(MainActivity.this,AddTabActivity.class));
+                    startIntentAnim();
                     break;
             }
         }

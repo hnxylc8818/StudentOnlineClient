@@ -2,8 +2,11 @@ package com.stuonline;
 
 import android.app.Application;
 
+import com.stuonline.entity.MeTab;
 import com.stuonline.entity.Muser;
 import com.stuonline.https.XUtils;
+
+import java.util.List;
 
 /**
  * Created by Xubin on 2015/9/8.
@@ -18,6 +21,7 @@ public class MyApp extends Application {
     public static boolean isWelcome=true;   // 是否开启欢迎界面
 
     public static boolean isMainChange=false;
+    public static List<MeTab> meTabs;
 
     @Override
     public void onCreate() {

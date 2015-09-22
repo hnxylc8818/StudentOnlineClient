@@ -79,7 +79,7 @@
             android:layout_marginRight="10dp"
             />
     </RelativeLayout>
-    <com.stuonline.views.DragGridView
+    <GridView
         android:id="@+id/drag_grid_views2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.stuonline.entity.MeTab;
+import com.stuonline.entity.Tab;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +16,12 @@ import java.util.List;
 /**
  * Created by xiaolin on 2015/1/24.
  */
-public class GridViewAdapter extends BaseAdapter {
+public class GridViewAdapter2 extends BaseAdapter {
     private Context context;
     private List<MeTab> strList;
     private int hidePosition = AdapterView.INVALID_POSITION;
 
-    public GridViewAdapter(Context context, List<MeTab> strList) {
+    public GridViewAdapter2(Context context, List<MeTab> strList) {
         this.context = context;
         this.strList = strList;
     }
@@ -95,15 +96,13 @@ public class GridViewAdapter extends BaseAdapter {
     public void clear(){
         this.strList.clear();
     }
-    public  void AddAll(List<MeTab> meTabs){
-
-        if (null != meTabs){
+    public  void AddAll(List<MeTab> tabs){
+        if (null != tabs){
             if (this.strList==null){
                 this.strList=new ArrayList<>();
             }
-            this.strList.addAll(meTabs);
+            this.strList.addAll(tabs);
             notifyDataSetChanged();
         }
-
     }
 }
