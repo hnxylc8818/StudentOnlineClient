@@ -46,7 +46,6 @@ public class GridViewAdapter extends BaseAdapter {
         TextView view;
         if(convertView == null) {
             view = new TextView(context);
-            view.findViewById(R.layout.layout_tab_item);
         }
         else {
             view = (TextView)convertView;
