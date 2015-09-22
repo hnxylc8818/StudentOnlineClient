@@ -1,5 +1,6 @@
 package com.stuonline;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -81,6 +82,10 @@ public class BaseActivity extends FragmentActivity {
                 // 如果当前Activity对象是MainActivity，不执行左滑退出事件
                 if (BaseActivity.this instanceof MainActivity){
                     return false;
+                }
+                if (BaseActivity.this instanceof PersonalCenterActivity && MyApp.isMainChange){
+                    Intent intent=new Intent(BaseActivity.this,MainActivity.class);
+                    startActivity(intent);
                 }
                 finish();
                 endIntentAnim();

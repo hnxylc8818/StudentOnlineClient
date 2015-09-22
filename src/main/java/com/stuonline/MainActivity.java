@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
 
         // 帧布局
         frameLayout = new FrameLayout(this);
-//        if (mainView == null || MyApp.isMainChange) {
+        if (mainView == null || MyApp.isMainChange) {
             MyApp.isMainChange = false;
             // 主布局
             mainView = getLayoutInflater().inflate(R.layout.activity_main, null);
@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity {
                     }
                 }
             });
-//        }
+        }
         addTab = (ImageView) mainView.findViewById(R.id.add_tab);
         addTab.setOnClickListener(l);
 
