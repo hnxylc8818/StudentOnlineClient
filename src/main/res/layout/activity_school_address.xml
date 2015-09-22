@@ -36,7 +36,7 @@
 
         <ListView
             android:id="@+id/city_lv"
-            android:layout_width="60dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:background="@android:color/transparent"
