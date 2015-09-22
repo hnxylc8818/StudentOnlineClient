@@ -54,7 +54,7 @@ public class SchoolSearchActivity extends BaseActivity {
     private TitleView title;
     @ViewInject(R.id.city_lv)
     private ListView lvCity;
-    private String mCity;
+    private String mCity = "北京";
     private CityAdapter cityAdapter;
 
     @Override
@@ -127,6 +127,7 @@ public class SchoolSearchActivity extends BaseActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
+            DialogUtil.showWaitting(SchoolSearchActivity.this);
             poiSearch = PoiSearch.newInstance();
             PoiCitySearchOption citySearchOption = new PoiCitySearchOption();
             citySearchOption.city(mCity);
