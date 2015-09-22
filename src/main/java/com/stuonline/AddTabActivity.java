@@ -55,7 +55,7 @@ public class AddTabActivity extends BaseActivity {
         titleView.setOnLeftclickListener(onclicllistenr);
         initView();
         dbTools=new DBTools(this);
-        if (dbTools.queryAll()!=null){
+        if (dbTools.queryAll()!=null && dbTools.queryAll().size()>0){
             strList=new ArrayList<>();
             strListAll=new ArrayList<>();
             strList = dbTools.queryAllisMe(istrue);
@@ -146,7 +146,6 @@ public class AddTabActivity extends BaseActivity {
             meTab.setT_tabname(strList.get(position).getT_tabname());
             meTab.setT_isMe(false);
             dbTools.UpdateMetab(meTab, String.valueOf(id));
-            adapter.removeView(position);
             adapter.clear();
             strList = dbTools.queryAllisMe(istrue);
             MyApp.meTabs = strList;
@@ -168,7 +167,6 @@ public class AddTabActivity extends BaseActivity {
             meTab.setT_tabname(strListAll.get(position).getT_tabname());
             meTab.setT_isMe(true);
             dbTools.UpdateMetab(meTab, String.valueOf(id));
-            adapter.removeView(position);
             adapter.clear();
             strList = dbTools.queryAllisMe(istrue);
             MyApp.meTabs = strList;

@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.stuonline.R;
 import com.stuonline.entity.MeTab;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class GridViewAdapter extends BaseAdapter {
         TextView view;
         if(convertView == null) {
             view = new TextView(context);
+            view.findViewById(R.layout.layout_tab_item);
         }
         else {
             view = (TextView)convertView;
