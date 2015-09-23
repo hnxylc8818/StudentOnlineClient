@@ -1,12 +1,15 @@
 package com.stuonline.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.stuonline.R;
 import com.stuonline.entity.MeTab;
 import com.stuonline.entity.Tab;
 
@@ -44,11 +47,16 @@ public class GridViewAdapter2 extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView view;
-        if(convertView == null) {
+        if (convertView == null) {
             view = new TextView(context);
-        }
-        else {
-            view = (TextView)convertView;
+            view.setTextColor(Color.RED);
+            view.setBackgroundResource(R.drawable.seletor_item_tab);
+            view.setGravity(Gravity.CENTER);
+        } else {
+            view = (TextView) convertView;
+            view.setTextColor(Color.RED);
+            view.setBackgroundResource(R.drawable.seletor_item_tab);
+            view.setGravity(Gravity.CENTER);
         }
 
         //hide时隐藏Text

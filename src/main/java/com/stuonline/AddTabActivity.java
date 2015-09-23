@@ -59,7 +59,7 @@ public class AddTabActivity extends BaseActivity {
             strList=new ArrayList<>();
             strListAll=new ArrayList<>();
             strList = dbTools.queryAllisMe(istrue);
-            MyApp.meTabs=strList;
+            MyApp.setMeTabs(strList);
             adapter.AddAll(strList);
             strListAll=dbTools.queryAllisMe(isfalse);
             adapter2.AddAll(strListAll);
@@ -102,7 +102,7 @@ public class AddTabActivity extends BaseActivity {
 
                         }
                         strList = dbTools.queryAllisMe(istrue);
-                        MyApp.meTabs=strList;
+                        MyApp.setMeTabs(strList);
                         adapter.AddAll(strList);
                         strListAll=dbTools.queryAllisMe(isfalse);
                         adapter2.AddAll(strListAll);
@@ -136,8 +136,7 @@ public class AddTabActivity extends BaseActivity {
             dbTools.UpdateMetab(meTab, String.valueOf(id));
             adapter.clear();
             strList = dbTools.queryAllisMe(istrue);
-            MyApp.meTabs = strList;
-            XUtils.showToast(MyApp.meTabs.size() + "");
+            MyApp.setMeTabs(strList);
             adapter.AddAll(strList);
             adapter2.clear();
             strListAll = dbTools.queryAllisMe(isfalse);
@@ -157,9 +156,8 @@ public class AddTabActivity extends BaseActivity {
             dbTools.UpdateMetab(meTab, String.valueOf(id));
             adapter.clear();
             strList = dbTools.queryAllisMe(istrue);
-            MyApp.meTabs = strList;
+            MyApp.setMeTabs(strList);
             adapter.AddAll(strList);
-            XUtils.showToast(MyApp.meTabs.size() + "");
             adapter2.clear();
             strListAll = dbTools.queryAllisMe(isfalse);
             adapter2.AddAll(strListAll);

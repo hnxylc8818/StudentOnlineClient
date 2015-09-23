@@ -1,10 +1,14 @@
 package com.stuonline.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.stuonline.R;
@@ -28,7 +32,7 @@ public class GridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return strList!=null?strList.size():0;
+        return strList != null ? strList.size() : 0;
     }
 
     @Override
@@ -44,18 +48,22 @@ public class GridViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView view;
-        if(convertView == null) {
+        if (convertView == null) {
             view = new TextView(context);
-        }
-        else {
-            view = (TextView)convertView;
+            view.setTextColor(Color.RED);
+            view.setBackgroundResource(R.drawable.seletor_item_tab);
+            view.setGravity(Gravity.CENTER);
+        } else {
+            view = (TextView) convertView;
+            view.setTextColor(Color.RED);
+            view.setBackgroundResource(R.drawable.seletor_item_tab);
+            view.setGravity(Gravity.CENTER);
         }
 
         //hide时隐藏Text
-        if(position != hidePosition) {
+        if (position != hidePosition) {
             view.setText(strList.get(position).getT_tabname());
-        }
-        else {
+        } else {
             view.setText("");
         }
         view.setId(position);
@@ -81,26 +89,28 @@ public class GridViewAdapter extends BaseAdapter {
     //更新拖动时的gridView
     public void swapView(int draggedPos, int destPos) {
         //从前向后拖动，其他item依次前移
-        if(draggedPos < destPos) {
-            strList.add(destPos+1, getItem(draggedPos));
+        if (draggedPos < destPos) {
+            strList.add(destPos + 1, getItem(draggedPos));
             strList.remove(draggedPos);
         }
         //从后向前拖动，其他item依次后移
-        else if(draggedPos > destPos) {
+        else if (draggedPos > destPos) {
             strList.add(destPos, getItem(draggedPos));
-            strList.remove(draggedPos+1);
+            strList.remove(draggedPos + 1);
         }
         hidePosition = destPos;
         notifyDataSetChanged();
     }
-    public void clear(){
+
+    public void clear() {
         this.strList.clear();
     }
-    public  void AddAll(List<MeTab> meTabs){
 
-        if (null != meTabs){
-            if (this.strList==null){
-                this.strList=new ArrayList<>();
+    public void AddAll(List<MeTab> meTabs) {
+
+        if (null != meTabs) {
+            if (this.strList == null) {
+                this.strList = new ArrayList<>();
             }
             this.strList.addAll(meTabs);
             notifyDataSetChanged();

@@ -5,6 +5,7 @@ import android.app.Application;
 import com.stuonline.entity.MeTab;
 import com.stuonline.entity.Muser;
 import com.stuonline.https.XUtils;
+import com.stuonline.utils.DBTools;
 import com.stuonline.utils.DialogUtil;
 
 import java.util.List;
@@ -22,18 +23,34 @@ public class MyApp extends Application {
     public static boolean isWelcome = true;   // 是否开启欢迎界面
 
     public static boolean isMainChange = false;
-    public static List<MeTab> meTabs;
+    private static List<MeTab> meTabs;
+    private static DBTools dbTools;
+
+
 
     @Override
     public void onCreate() {
+
         super.onCreate();
         XUtils.init(getApplicationContext());
         DialogUtil.init(getApplicationContext());
+        dbTools=new DBTools(getApplicationContext());
     }
 
     public static void release() {
         user = null;
         meTabs = null;
     }
+    public static List<MeTab> getMeTabs() {
+        if (meTabs == null) {
 
+            meTabs =dbTools.queryAllisMe("1");
+        }
+
+        return meTabs;
+    }
+
+    public static void setMeTabs(List<MeTab> meTabs) {
+        MyApp.meTabs = meTabs;
+    }
 }

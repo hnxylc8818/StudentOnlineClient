@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity {
             mainView = getLayoutInflater().inflate(R.layout.activity_main, null);
             titleView = (TitleView) mainView.findViewById(R.id.main_title);
             //ViewPager的adapter
-            adapter = new TabPageIndicatorAdapter(getSupportFragmentManager(),conversionTab(MyApp.meTabs));
+            adapter = new TabPageIndicatorAdapter(getSupportFragmentManager(),conversionTab(MyApp.getMeTabs()));
             ViewPager pager = (ViewPager) mainView.findViewById(R.id.vp);
             pager.setAdapter(adapter);
             pager.setCurrentItem(1);
@@ -160,10 +160,10 @@ public class MainActivity extends BaseActivity {
             public void success(Result<List<Tab>> result) {
                 if (result.state == Result.STATE_SUC) {
                     adapter.clear();
-                    if (MyApp.meTabs == null || MyApp.meTabs.size() == 0) {
+                    if (MyApp.getMeTabs() == null || MyApp.getMeTabs().size() == 0) {
                         adapter.addAll(result.data);
                     } else {
-                        adapter.addAll(conversionTab(MyApp.meTabs));
+                        adapter.addAll(conversionTab(MyApp.getMeTabs()));
                     }
                     indicator.notifyDataSetChanged();
                 }
