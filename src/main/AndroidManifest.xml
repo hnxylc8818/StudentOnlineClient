@@ -44,9 +44,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity">
-
-        </activity>
+        <activity android:name=".NewsInfoActivity"/>
+        <activity android:name=".LoginActivity"/>
         <activity android:name=".ValidateActivity" />
         <activity android:name=".PersonalCenterActivity" />
         <activity android:name=".RegisterActivity" />

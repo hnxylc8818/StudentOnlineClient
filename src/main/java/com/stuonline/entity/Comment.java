@@ -10,31 +10,13 @@ public class Comment implements java.io.Serializable {
 
 	private Integer cid;
 	private Integer nid;
-	private Integer uid;
 	private String content;
 	private Integer toUid;
 	private String cdate;
-
-	// Constructors
-
-	/** default constructor */
-	public Comment() {
-	}
-
-	/** full constructor */
-	public Comment(Integer nid, Integer uid, String content, Integer toUid,
-			String cdate) {
-		this.nid = nid;
-		this.uid = uid;
-		this.content = content;
-		this.toUid = toUid;
-		this.cdate = cdate;
-	}
-
-	// Property accessors
+	private Muser muser;
 
 	public Integer getCid() {
-		return this.cid;
+		return cid;
 	}
 
 	public void setCid(Integer cid) {
@@ -42,23 +24,15 @@ public class Comment implements java.io.Serializable {
 	}
 
 	public Integer getNid() {
-		return this.nid;
+		return nid;
 	}
 
 	public void setNid(Integer nid) {
 		this.nid = nid;
 	}
 
-	public Integer getUid() {
-		return this.uid;
-	}
-
-	public void setUid(Integer uid) {
-		this.uid = uid;
-	}
-
 	public String getContent() {
-		return this.content;
+		return content;
 	}
 
 	public void setContent(String content) {
@@ -66,7 +40,7 @@ public class Comment implements java.io.Serializable {
 	}
 
 	public Integer getToUid() {
-		return this.toUid;
+		return toUid;
 	}
 
 	public void setToUid(Integer toUid) {
@@ -74,11 +48,18 @@ public class Comment implements java.io.Serializable {
 	}
 
 	public String getCdate() {
-		return this.cdate;
+		return cdate;
 	}
 
 	public void setCdate(String cdate) {
 		this.cdate = cdate;
 	}
 
+	public Muser getMuser() {
+		return muser;
+	}
+
+	public void setMuser(Muser muser) {
+		this.muser = muser;
+	}
 }

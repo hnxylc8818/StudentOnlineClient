@@ -1,5 +1,6 @@
 package com.stuonline;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -76,6 +77,10 @@ public class AddTabActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.title_left:
+                    if (MyApp.isMainChange){
+                        Intent intent=new Intent(AddTabActivity.this,MainActivity.class);
+                        startActivity(intent);
+                    }
                     finish();
                     endIntentAnim();
                     break;

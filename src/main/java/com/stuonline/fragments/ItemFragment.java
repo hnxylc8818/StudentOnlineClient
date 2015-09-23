@@ -61,6 +61,7 @@ public class ItemFragment extends Fragment {
     private Bitmap[] bitmaps = new Bitmap[3];
     private int nid;
     private LinearLayout dd;
+    private boolean isLoading=true;
     private List<Map<String, Object>> data = new ArrayList<>();
     private Handler handler = new Handler() {
         @Override
@@ -204,8 +205,10 @@ public class ItemFragment extends Fragment {
         params.addBodyParameter("pageSize", String.valueOf(5));
         params.addBodyParameter("pageIndex", String.valueOf(pageIndex));
         params.addBodyParameter("tid", String.valueOf(tid));
-        if (MyApp.isWelcome) {
-            DialogUtil.showWaitting();
+        if (!MyApp.isWelcome) {
+            isLoading=false;
+        }else{
+            isLoading=true;
         }
         XUtils.send(XUtils.QUERYNEWSES, params, new MyCallBack<Result<List<News>>>(new TypeReference<Result<List<News>>>(){}) {
 
@@ -228,7 +231,7 @@ public class ItemFragment extends Fragment {
                 super.failure();
 
             }
-        },true);
+        },isLoading);
     }
 
     private Map<String, Object> getVpData(int nid, Bitmap bmp) {
@@ -242,17 +245,19 @@ public class ItemFragment extends Fragment {
     private ViewPager.LayoutParams lp = null;
 
     private View getVpView(Bitmap bmp) {
-        ImageView imageView = new ImageView(getActivity());
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageView.setImageBitmap(bmp);
-        if (lp == null) {
-            lp = new ViewPager.LayoutParams();
-            lp.width = ViewPager.LayoutParams.MATCH_PARENT;
-            lp.height = ViewPager.LayoutParams.MATCH_PARENT;
+        if (null != bmp) {
+            ImageView imageView = new ImageView(getActivity());
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setImageBitmap(bmp);
+            if (lp == null) {
+                lp = new ViewPager.LayoutParams();
+                lp.width = ViewPager.LayoutParams.MATCH_PARENT;
+                lp.height = ViewPager.LayoutParams.MATCH_PARENT;
+            }
+            imageView.setLayoutParams(lp);
+            return imageView;
         }
-        imageView.setLayoutParams(lp);
-
-        return imageView;
+        return null;
     }
 
     protected void startIntentAnim() {

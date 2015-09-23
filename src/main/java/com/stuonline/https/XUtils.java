@@ -42,7 +42,7 @@ import java.net.URL;
 public class XUtils {
 
     public static final String BURL = "http://123.56.126.25:8080/StuentOnlineServer/";
-    //            public static final String BURL = "http://192.168.11.178:8080/StuentOnlineServer/";
+    //    public static final String BURL = "http://192.168.11.178:8080/StuentOnlineServer/";
     public static final String LOGIN = "login";
     public static final String REG = "reg";
     public static final String UPHOTO = "updatePhoto";
@@ -58,6 +58,7 @@ public class XUtils {
     public static final String QUERYNEWS = "queryNews";
     public static final String QUERYCOMMENTS = "queryComments";
     public static final String SAVECOMMENT = "saveComment";
+    public static final String QUBUID = "queryUserById";
 
 
     public static HttpUtils httpUtils;
@@ -85,8 +86,8 @@ public class XUtils {
         Toast.makeText(mContext, resId, Toast.LENGTH_SHORT).show();
     }
 
-    public static HttpHandler send(String url, RequestParams params, RequestCallBack callBack,boolean loading) {
-        if (loading){
+    public static HttpHandler send(String url, RequestParams params, RequestCallBack callBack, boolean loading) {
+        if (loading) {
             DialogUtil.showWaitting();
         }
         return httpUtils.send(HttpRequest.HttpMethod.POST, BURL + url, params, callBack);
@@ -102,9 +103,9 @@ public class XUtils {
         return httpUtils.download(BURL + url, path, true, true, callBack);
     }
 
-    public final static Bitmap returnBitMap(final Handler handler,final String url,final int nid) {
+    public final static Bitmap returnBitMap(final Handler handler, final String url, final int nid) {
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 URL myFileUrl = null;
@@ -117,11 +118,11 @@ public class XUtils {
                     conn.connect();
                     InputStream is = conn.getInputStream();
                     bitmap = BitmapFactory.decodeStream(is);
-                    handler.sendMessage(handler.obtainMessage(1,nid,0,bitmap));
+                    handler.sendMessage(handler.obtainMessage(1, nid, 0, bitmap));
                 } catch (MalformedURLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-                }  catch (IOException e) {
+                } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
@@ -145,6 +146,7 @@ public class XUtils {
 
     /**
      * 是否是WIFI网络
+     *
      * @return
      */
     public static boolean isWifiConn() {
