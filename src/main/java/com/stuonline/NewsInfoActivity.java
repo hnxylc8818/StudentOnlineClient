@@ -8,6 +8,7 @@ import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.alibaba.fastjson.TypeReference;
@@ -16,6 +17,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.stuonline.adapters.CommentAdapter;
 import com.stuonline.entity.Comment;
 import com.stuonline.entity.News;
@@ -38,6 +40,8 @@ public class NewsInfoActivity extends BaseActivity {
     private ProgressBar pb;
     @ViewInject(R.id.news_info_lv)
     private PullToRefreshListView lv;
+    @ViewInject(R.id.news_info_share)
+    private ImageView newsInfoShare;
     private Integer pageIndex=1;
 
     private CommentAdapter adapter;
@@ -65,6 +69,11 @@ public class NewsInfoActivity extends BaseActivity {
         adapter=new CommentAdapter(this,null);
         lv.setAdapter(adapter);
         lv.setOnRefreshListener(listener2);
+
+    }
+    @OnClick(R.id.news_info_share)
+    private  void onClick(View v){
+
     }
 
     private PullToRefreshBase.OnRefreshListener2 listener2=new PullToRefreshBase.OnRefreshListener2() {
@@ -89,11 +98,12 @@ public class NewsInfoActivity extends BaseActivity {
         params.addBodyParameter("pageIndex", String.valueOf(pageIndex));
         params.addBodyParameter("pageSize", String.valueOf(5));
         params.addBodyParameter("nid", String.valueOf(nid));
-        httpHandler=XUtils.send(XUtils.QUERYCOMMENTS, params, new MyCallBack<Result<List<Comment>>>(new TypeReference<Result<List<Comment>>>(){}) {
+        httpHandler=XUtils.send(XUtils.QUERYCOMMENTS, params, new MyCallBack<Result<List<Comment>>>(new TypeReference<Result<List<Comment>>>() {
+        }) {
             @Override
             public void success(Result<List<Comment>> result) {
                 lv.onRefreshComplete();
-                if (isFlush){
+                if (isFlush) {
                     adapter.clear();
                 }
                 adapter.addAll(result.data);
@@ -105,7 +115,7 @@ public class NewsInfoActivity extends BaseActivity {
                 lv.onRefreshComplete();
                 super.failure();
             }
-        },true);
+        }, true);
     }
 
     /**
