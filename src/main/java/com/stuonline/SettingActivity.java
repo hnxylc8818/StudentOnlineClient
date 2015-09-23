@@ -183,7 +183,8 @@ public class SettingActivity extends BaseActivity {
 //            Log.i("aaaaa", String.valueOf(info.versionCode));
             RequestParams params = new RequestParams();
             params.addBodyParameter("ver", String.valueOf(info.versionCode));
-            httpHandler = XUtils.send(XUtils.VER, params, new MyCallBack<Result<AppVersion>>(new TypeReference<Result<AppVersion>>(){}) {
+            httpHandler = XUtils.send(XUtils.VER, params, new MyCallBack<Result<AppVersion>>(new TypeReference<Result<AppVersion>>() {
+            }) {
 
                 @Override
                 public void success(Result<AppVersion> result) {
@@ -193,7 +194,7 @@ public class SettingActivity extends BaseActivity {
                         showDownload();
                     }
                 }
-            },true);
+            }, true);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
             XUtils.showToast("更新错误");
@@ -232,6 +233,7 @@ public class SettingActivity extends BaseActivity {
     private CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            MyApp.isNight = isChecked;
             setChange();
             SharedUtil.saveModel(SettingActivity.this, isChecked);
             init();

@@ -10,7 +10,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
 import com.alibaba.fastjson.TypeReference;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -20,7 +19,6 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.stuonline.adapters.CommentAdapter;
 import com.stuonline.entity.Comment;
-import com.stuonline.entity.News;
 import com.stuonline.entity.Result;
 import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
@@ -42,6 +40,8 @@ public class NewsInfoActivity extends BaseActivity {
     private PullToRefreshListView lv;
     @ViewInject(R.id.news_info_share)
     private ImageView newsInfoShare;
+    @ViewInject(R.id.news_info_ping)
+    private ImageView img;
     private Integer pageIndex=1;
 
     private CommentAdapter adapter;
@@ -130,11 +130,17 @@ public class NewsInfoActivity extends BaseActivity {
         // 设置编码格式
         settings.setDefaultTextEncodingName("UTF-8");
         settings.setJavaScriptEnabled(true);
+        if (MyApp.isNight) {
+            webView.setBackgroundColor(Color.parseColor("#FF2B2B2B"));
+        }else{
+            webView.setBackgroundColor(Color.parseColor("#eeeeee"));
+        }
         webView.loadUrl(XUtils.BURL+XUtils.QUERYNEWS+"?nid="+nid);
         // 设置Chrome客户端，主要操作内容
         webView.setWebChromeClient(webChromeClient);
         lv.getRefreshableView().addHeaderView(header);
     }
+
 
 
     private View.OnClickListener leftClis=new View.OnClickListener() {

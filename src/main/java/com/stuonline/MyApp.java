@@ -1,7 +1,6 @@
 package com.stuonline;
 
 import android.app.Application;
-
 import com.stuonline.entity.MeTab;
 import com.stuonline.entity.Muser;
 import com.stuonline.https.XUtils;
@@ -25,7 +24,7 @@ public class MyApp extends Application {
     public static boolean isMainChange = false;
     private static List<MeTab> meTabs;
     private static DBTools dbTools;
-
+    public static boolean isNight = false;
 
 
     @Override
@@ -34,17 +33,18 @@ public class MyApp extends Application {
         super.onCreate();
         XUtils.init(getApplicationContext());
         DialogUtil.init(getApplicationContext());
-        dbTools=new DBTools(getApplicationContext());
+        dbTools = new DBTools(getApplicationContext());
     }
 
     public static void release() {
         user = null;
         meTabs = null;
     }
+
     public static List<MeTab> getMeTabs() {
         if (meTabs == null) {
 
-            meTabs =dbTools.queryAllisMe("1");
+            meTabs = dbTools.queryAllisMe("1");
         }
 
         return meTabs;
