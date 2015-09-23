@@ -54,13 +54,22 @@ public class LoginActivity extends BaseActivity {
         etAccount.setText(new String(Base64.decode(account, Base64.NO_WRAP)));
         etPwd.setText(new String(Base64.decode(pwd, Base64.NO_WRAP)));
         title.setOnRightTextclickListener(onClickListener);
+        title.setOnLeftclickListener(onClickListener);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(LoginActivity.this, ThirdLoginActivity.class);
-            startActivity(intent);
+            switch (v.getId()) {
+                case R.id.title_left:
+                    finish();
+                    endIntentAnim();
+                    break;
+                case R.id.title_right:
+                    Intent intent = new Intent(LoginActivity.this, ThirdLoginActivity.class);
+                    startActivity(intent);
+                    break;
+            }
         }
     };
 
@@ -134,7 +143,8 @@ public class LoginActivity extends BaseActivity {
         RequestParams params = new RequestParams();
         params.addBodyParameter("u.account", account);
         params.addBodyParameter("u.pwd", pwd);
-        httpHandler = XUtils.send(XUtils.LOGIN, params, new MyCallBack<Result<Muser>>(new TypeReference<Result<Muser>>(){}) {
+        httpHandler = XUtils.send(XUtils.LOGIN, params, new MyCallBack<Result<Muser>>(new TypeReference<Result<Muser>>() {
+        }) {
 
             @Override
             public void success(Result<Muser> result) {
@@ -154,7 +164,7 @@ public class LoginActivity extends BaseActivity {
                     startIntentAnim();
                 }
             }
-        },true);
+        }, true);
     }
 
     @Override
