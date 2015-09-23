@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -21,6 +23,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.stuonline.R;
 import com.stuonline.dialog.SpotsDialog;
+import com.stuonline.utils.DialogUtil;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -82,7 +85,10 @@ public class XUtils {
         Toast.makeText(mContext, resId, Toast.LENGTH_SHORT).show();
     }
 
-    public static HttpHandler send(String url, RequestParams params, RequestCallBack callBack) {
+    public static HttpHandler send(String url, RequestParams params, RequestCallBack callBack,boolean loading) {
+        if (loading){
+            DialogUtil.showWaitting();
+        }
         return httpUtils.send(HttpRequest.HttpMethod.POST, BURL + url, params, callBack);
     }
 
@@ -123,5 +129,30 @@ public class XUtils {
         }.start();
 
         return null;
+    }
+
+    /**
+     * 释放资源
+     */
+    public static void release() {
+        if (bitmapUtils != null)
+            bitmapUtils = null;
+        if (httpUtils != null)
+            httpUtils = null;
+        if (mContext != null)
+            mContext = null;
+    }
+
+    /**
+     * 是否是WIFI网络
+     * @return
+     */
+    public static boolean isWifiConn() {
+        ConnectivityManager manager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        if (info.getType() == ConnectivityManager.TYPE_WIFI) {
+            return true;
+        }
+        return false;
     }
 }

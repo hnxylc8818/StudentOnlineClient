@@ -154,27 +154,21 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadTab() {
-        httpHandler = XUtils.send(XUtils.QUERYTABS, null, new MyCallBack<String>() {
+        httpHandler = XUtils.send(XUtils.QUERYTABS, null, new MyCallBack<Result<List<Tab>>>(new TypeReference<Result<List<Tab>>>(){}) {
+
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                if (null != responseInfo) {
-                    JsonUtil<Result<List<Tab>>> jsonUtil = new JsonUtil<Result<List<Tab>>>(new TypeReference<Result<List<Tab>>>() {
-                    });
-                    Result<List<Tab>> result = jsonUtil.parse(responseInfo.result);
-                    if (result.state == Result.STATE_SUC) {
-                        adapter.clear();
-                        if (MyApp.meTabs == null || MyApp.meTabs.size() == 0) {
-                            adapter.addAll(result.data);
-                        } else {
-                            adapter.addAll(conversionTab(MyApp.meTabs));
-                        }
-                        indicator.notifyDataSetChanged();
+            public void success(Result<List<Tab>> result) {
+                if (result.state == Result.STATE_SUC) {
+                    adapter.clear();
+                    if (MyApp.meTabs == null || MyApp.meTabs.size() == 0) {
+                        adapter.addAll(result.data);
+                    } else {
+                        adapter.addAll(conversionTab(MyApp.meTabs));
                     }
-                } else {
-                    XUtils.showToast("发生错误");
+                    indicator.notifyDataSetChanged();
                 }
             }
-        });
+        },false);
     }
 
     /**

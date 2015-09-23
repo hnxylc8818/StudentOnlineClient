@@ -97,24 +97,17 @@ public class RegisterActivity extends BaseActivity {
         params.addBodyParameter("u.account", account);
         params.addBodyParameter("u.pwd", password);
         params.addBodyParameter("u.email", email);
-        DialogUtil.showWaitting(this);
-        httpHandler=XUtils.send(XUtils.REG, params, new MyCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                DialogUtil.hiddenWaitting();
-                if (responseInfo != null) {
-                    JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
-                    });
-                    Result<Boolean> result = jsonUtil.parse(responseInfo.result);
-                    XUtils.showToast(result.desc);
-                    if (result.state == Result.STATE_SUC) {
-                        finish();
-                        endIntentAnim();
-                    }
+        httpHandler=XUtils.send(XUtils.REG, params, new MyCallBack<Result<Boolean>>(new TypeReference<Result<Boolean>>(){}) {
 
+            @Override
+            public void success(Result<Boolean> result) {
+                XUtils.showToast(result.desc);
+                if (result.state == Result.STATE_SUC) {
+                    finish();
+                    endIntentAnim();
                 }
             }
-        });
+        },true);
 
 
     }

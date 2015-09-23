@@ -198,29 +198,21 @@ public class PersonageMessageActivity extends BaseActivity {
             params.addBodyParameter("u.uname", uname);
             params.addBodyParameter("u.nick", nick);
             params.addBodyParameter("u.gender", String.valueOf(sex));
-            DialogUtil.showWaitting(this);
-            httpHandler=XUtils.send(XUtils.UPHOTO, params, new MyCallBack<String>() {
+            httpHandler=XUtils.send(XUtils.UPHOTO, params, new MyCallBack<Result<Muser>>(new TypeReference<Result<Muser>>(){}) {
+
                 @Override
-                public void onSuccess(ResponseInfo<String> responseInfo) {
-                    DialogUtil.hiddenWaitting();
-                    if (null != responseInfo) {
-                        JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
-                        });
-                        Result<Muser> result = jsonUtil.parse(responseInfo.result);
-                        XUtils.showToast(result.desc);
-                        if (result.state == Result.STATE_SUC) {
-                            MyApp.user = result.data;
-                            uname = null;
-                            nick = null;
-                            sex = null;
-                            finish();
-                            endIntentAnim();
-                        }
-                    } else {
-                        XUtils.showToast("发生错误");
+                public void success(Result<Muser> result) {
+                    XUtils.showToast(result.desc);
+                    if (result.state == Result.STATE_SUC) {
+                        MyApp.user = result.data;
+                        uname = null;
+                        nick = null;
+                        sex = null;
+                        finish();
+                        endIntentAnim();
                     }
                 }
-            });
+            },true);
         }
     }
 

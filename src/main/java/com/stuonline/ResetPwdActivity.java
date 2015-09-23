@@ -77,24 +77,18 @@ public class ResetPwdActivity extends BaseActivity {
         }
         RequestParams params = new RequestParams();
         params.addBodyParameter("mailAddr", email);
-        DialogUtil.showWaitting(this);
-        httpHandler=XUtils.send(XUtils.SMAIL, params, new MyCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                DialogUtil.hiddenWaitting();
-                if (responseInfo != null) {
-                    JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
-                    });
-                    Result<Muser> result = jsonUtil.parse(responseInfo.result);
-                    XUtils.showToast(result.desc);
-                    if (result.state == Result.STATE_SUC) {
-                        MyApp.user = result.data;
-                        dialog();
+        httpHandler=XUtils.send(XUtils.SMAIL, params, new MyCallBack<Result<Muser>>(new TypeReference<Result<Muser>>(){}) {
 
-                    }
+            @Override
+            public void success(Result<Muser> result) {
+                XUtils.showToast(result.desc);
+                if (result.state == Result.STATE_SUC) {
+                    MyApp.user = result.data;
+                    dialog();
+
                 }
             }
-        });
+        },true);
 
     }
 

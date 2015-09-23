@@ -86,7 +86,7 @@ public class SchoolSearchActivity extends BaseActivity {
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            DialogUtil.showWaitting(SchoolSearchActivity.this);
+            DialogUtil.showWaitting();
             TextView tvCity = (TextView) view.findViewById(R.id.item_city);
             mCity = tvCity.getText().toString();
             poiSearch = PoiSearch.newInstance();
@@ -127,7 +127,7 @@ public class SchoolSearchActivity extends BaseActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            DialogUtil.showWaitting(SchoolSearchActivity.this);
+            DialogUtil.showWaitting();
             poiSearch = PoiSearch.newInstance();
             PoiCitySearchOption citySearchOption = new PoiCitySearchOption();
             citySearchOption.city(mCity);

@@ -253,21 +253,17 @@ public class PersonalCenterActivity extends BaseActivity {
                     RequestParams params = new RequestParams();
                     params.addBodyParameter("f.content", content);
                     params.addBodyParameter("f.uid", String.valueOf(MyApp.user.getUid()));
-                    httpHandler=XUtils.send(XUtils.SFB, params, new MyCallBack<String>() {
+                    httpHandler=XUtils.send(XUtils.SFB, params, new MyCallBack<Result<Boolean>>(new TypeReference<Result<Boolean>>(){}) {
+
                         @Override
-                        public void onSuccess(ResponseInfo<String> responseInfo) {
-                            if (responseInfo != null) {
-                                JsonUtil<Result<Boolean>> jsonUtil = new JsonUtil<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
-                                });
-                                Result<Boolean> result = jsonUtil.parse(responseInfo.result);
-                                XUtils.showToast(result.desc);
-                                if (result.data) {
-                                    dialog.dismiss();
-                                    etContent.getText().clear();
-                                }
+                        public void success(Result<Boolean> result) {
+                            XUtils.showToast(result.desc);
+                            if (result.data) {
+                                dialog.dismiss();
+                                etContent.getText().clear();
                             }
                         }
-                    });
+                    },true);
                     break;
             }
         }

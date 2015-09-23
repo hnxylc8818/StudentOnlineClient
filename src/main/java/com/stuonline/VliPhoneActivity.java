@@ -123,7 +123,7 @@ public class VliPhoneActivity extends BaseActivity {
     public void onClick(View v) {
         getCode();
         if (account.matches("^1(3|4|5|6|7|8)\\d{9}$")) {
-            DialogUtil.showWaitting(this);
+            DialogUtil.showWaitting();
             SMSSDK.getVerificationCode("86", account);
         } else {
             XUtils.showToast("手机号码格式错误");
@@ -195,26 +195,20 @@ public class VliPhoneActivity extends BaseActivity {
                 account = etAccount.getText().toString().trim();
                 RequestParams params = new RequestParams();
                 params.addBodyParameter("u.account", account);
-                DialogUtil.showWaitting(VliPhoneActivity.this);
-                httpHandler = XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<String>() {
+                httpHandler = XUtils.send(XUtils.QUACCOUNT, params, new MyCallBack<Result<Muser>>(new TypeReference<Result<Muser>>(){}) {
+
                     @Override
-                    public void onSuccess(ResponseInfo<String> responseInfo) {
-                        DialogUtil.hiddenWaitting();
-                        if (responseInfo.result != null) {
-                            JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
-                            });
-                            Result<Muser> result = jsonUtil.parse(responseInfo.result);
-                            if (result.state == Result.STATE_FAIL) {
-                                XUtils.showToast("该账号不存在，请重新输入");
-                                btSendCode.setEnabled(false);
-                            } else {
-                                MyApp.user = result.data;
-                                XUtils.showToast("账号存在请继续验证");
-                                btSendCode.setEnabled(true);
-                            }
+                    public void success(Result<Muser> result) {
+                        if (result.state == Result.STATE_FAIL) {
+                            XUtils.showToast("该账号不存在，请重新输入");
+                            btSendCode.setEnabled(false);
+                        } else {
+                            MyApp.user = result.data;
+                            XUtils.showToast("账号存在请继续验证");
+                            btSendCode.setEnabled(true);
                         }
                     }
-                });
+                },true);
             } else if (s.length() == 11) {
                 XUtils.showToast("账号格式不正确");
                 btSendCode.setEnabled(false);

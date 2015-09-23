@@ -80,21 +80,17 @@ public class UpdatePasswordActivity extends BaseActivity {
         RequestParams params = new RequestParams();
         params.addBodyParameter("u.uid", id);
         params.addBodyParameter("u.pwd", newPwd);
-        httpHandler=XUtils.send(XUtils.UUSER, params, new MyCallBack<String>() {
+        httpHandler=XUtils.send(XUtils.UUSER, params, new MyCallBack<Result<Muser>>(new TypeReference<Result<Muser>>(){}) {
+
             @Override
-            public void onSuccess(final ResponseInfo<String> responseInfo) {
-                if (responseInfo != null) {
-                    JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
-                    });
-                    Result<Muser> result = jsonUtil.parse(responseInfo.result);
-                    XUtils.showToast(result.desc);
-                    if (result.state == Result.STATE_SUC) {
-                        MyApp.user = result.data;
-                        finish();
-                        endIntentAnim();
-                    }
+            public void success(Result<Muser> result) {
+                XUtils.showToast(result.desc);
+                if (result.state == Result.STATE_SUC) {
+                    MyApp.user = result.data;
+                    finish();
+                    endIntentAnim();
                 }
             }
-        });
+        },true);
     }
 }

@@ -16,6 +16,11 @@ import com.stuonline.R;
  */
 public class DialogUtil {
     public static Dialog waitting;
+    private static Context mContext;
+
+    public static void init(Context context) {
+        mContext = context;
+    }
     /**
      * 返回一个列表对话框
      * @param context   上下文
@@ -33,14 +38,16 @@ public class DialogUtil {
     /**
      * 显示进度对话框
      */
-    public static void showWaitting(Context context) {
+    public static void showWaitting() {
         if (waitting == null) {
-            waitting = new AlertDialog.Builder(context).create();
+            waitting = new AlertDialog.Builder(mContext).create();
             waitting.setCanceledOnTouchOutside(false);  // 触摸边缘不消失
-            waitting.show();
             Window window = waitting.getWindow();
-            window.setContentView(R.layout.layout_waitting);
+            window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            waitting.show();
+            window.setContentView(R.layout.layout_waitting);
+
         } else {
             waitting.show();
         }

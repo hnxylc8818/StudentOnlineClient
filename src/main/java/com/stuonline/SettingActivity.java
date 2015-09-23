@@ -183,25 +183,17 @@ public class SettingActivity extends BaseActivity {
 //            Log.i("aaaaa", String.valueOf(info.versionCode));
             RequestParams params = new RequestParams();
             params.addBodyParameter("ver", String.valueOf(info.versionCode));
-            DialogUtil.showWaitting(this);
-            httpHandler = XUtils.send(XUtils.VER, params, new MyCallBack<String>() {
+            httpHandler = XUtils.send(XUtils.VER, params, new MyCallBack<Result<AppVersion>>(new TypeReference<Result<AppVersion>>(){}) {
+
                 @Override
-                public void onSuccess(ResponseInfo<String> responseInfo) {
-                    DialogUtil.hiddenWaitting();
-                    if (null != responseInfo) {
-                        JsonUtil<Result<AppVersion>> jsonUtil = new JsonUtil<Result<AppVersion>>(new TypeReference<Result<AppVersion>>() {
-                        });
-                        Result<AppVersion> result = jsonUtil.parse(responseInfo.result);
-                        XUtils.showToast(result.desc);
-                        if (result.state == Result.STATE_SUC) {
-                            appVersion = result.data;
-                            showDownload();
-                        }
-                    } else {
-                        XUtils.showToast("更新错误");
+                public void success(Result<AppVersion> result) {
+                    XUtils.showToast(result.desc);
+                    if (result.state == Result.STATE_SUC) {
+                        appVersion = result.data;
+                        showDownload();
                     }
                 }
-            });
+            },true);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
             XUtils.showToast("更新错误");

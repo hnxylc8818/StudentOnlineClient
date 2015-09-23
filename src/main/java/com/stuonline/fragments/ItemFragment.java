@@ -33,6 +33,7 @@ import com.stuonline.adapters.ADAdapter;
 import com.stuonline.adapters.NewsAdapter;
 import com.stuonline.entity.News;
 import com.stuonline.entity.Result;
+import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.DialogUtil;
 import com.stuonline.utils.JsonUtil;
@@ -203,41 +204,31 @@ public class ItemFragment extends Fragment {
         params.addBodyParameter("pageSize", String.valueOf(5));
         params.addBodyParameter("pageIndex", String.valueOf(pageIndex));
         params.addBodyParameter("tid", String.valueOf(tid));
-        if (!MyApp.isWelcome) {
-            DialogUtil.showWaitting(getActivity());
+        if (MyApp.isWelcome) {
+            DialogUtil.showWaitting();
         }
-        XUtils.send(XUtils.QUERYNEWSES, params, new RequestCallBack<String>() {
+        XUtils.send(XUtils.QUERYNEWSES, params, new MyCallBack<Result<List<News>>>(new TypeReference<Result<List<News>>>(){}) {
+
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                DialogUtil.hiddenWaitting();
+            public void success(Result<List<News>> result) {
                 lv.onRefreshComplete();
-                if (null != responseInfo) {
-                    JsonUtil<Result<List<News>>> jsonUtil = new JsonUtil<Result<List<News>>>(new TypeReference<Result<List<News>>>() {
-                    });
-                    Result<List<News>> result = jsonUtil.parse(responseInfo.result);
-                    if (result.state == Result.STATE_SUC) {
-                        if (isFlush) {
-                            adapter.clear();
-                        }
-//                        handler.sendMessage(handler.obtainMessage(1,result.data));
-                        loadHeaderVp(result.data);
-                        adapter.addAll(result.data);
-                        pageIndex++;
+                if (result.state == Result.STATE_SUC) {
+                    if (isFlush) {
+                        adapter.clear();
                     }
-                } else {
-                    XUtils.showToast("发生错误");
+                    loadHeaderVp(result.data);
+                    adapter.addAll(result.data);
+                    pageIndex++;
                 }
             }
 
             @Override
-            public void onFailure(HttpException e, String s) {
-                DialogUtil.hiddenWaitting();
+            public void failure() {
                 lv.onRefreshComplete();
-                XUtils.showToast("网络连接错误");
-                Log.e("MainActivity", "====error======" + s);
-                e.printStackTrace();
+                super.failure();
+
             }
-        });
+        },true);
     }
 
     private Map<String, Object> getVpData(int nid, Bitmap bmp) {

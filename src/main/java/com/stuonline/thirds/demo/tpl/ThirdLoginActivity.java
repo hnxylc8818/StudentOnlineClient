@@ -52,39 +52,33 @@ public class ThirdLoginActivity extends BaseActivity {
 
             public boolean onSignUp(UserInfo info) {
                 // 填写处理注册信息的代码，返回true表示数据合法，注册页面可以关闭
-                File photo=new File(info.getUserIcon());
-                int gender=1;
-                if (info.getUserGender()== UserInfo.Gender.BOY){
-                    gender=1;
-                }else if (info.getUserGender()== UserInfo.Gender.GIRL){
-                    gender=0;
+                File photo = new File(info.getUserIcon());
+                int gender = 1;
+                if (info.getUserGender() == UserInfo.Gender.BOY) {
+                    gender = 1;
+                } else if (info.getUserGender() == UserInfo.Gender.GIRL) {
+                    gender = 0;
                 }
-                RequestParams params=new RequestParams();
-                params.addBodyParameter("u.account",info.getUserNote());
-                params.addBodyParameter("u.nick",info.getUserName());
+                RequestParams params = new RequestParams();
+                params.addBodyParameter("u.account", info.getUserNote());
+                params.addBodyParameter("u.nick", info.getUserName());
                 params.addBodyParameter("u.gender", String.valueOf(gender));
                 if (null != photo && photo.exists()) {
                     params.addBodyParameter("photo", photo);
                 }
-                XUtils.send(XUtils.REGTHIRD, params, new MyCallBack<String>() {
+                httpHandler = XUtils.send(XUtils.REGTHIRD, params, new MyCallBack<Result<Muser>>(new TypeReference<Result<Muser>>(){}) {
                     @Override
-                    public void onSuccess(ResponseInfo<String> responseInfo) {
-                        if (null != responseInfo){
-                            JsonUtil<Result<Muser>> jsonUtil=new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>(){});
-                            Result<Muser> result=jsonUtil.parse(responseInfo.result);
-                            XUtils.showToast(result.desc);
-                            if (result.state==Result.STATE_SUC){
-                                MyApp.user=result.data;
-                                Intent intent=new Intent(ThirdLoginActivity.this, PersonalCenterActivity.class);
-                                startActivity(intent);
-                                finish();
-                                startIntentAnim();
-                            }
-                        }else{
-                            XUtils.showToast("发生错误");
+                    public void success(Result<Muser> result) {
+                        XUtils.showToast(result.desc);
+                        if (result.state == Result.STATE_SUC) {
+                            MyApp.user = result.data;
+                            Intent intent = new Intent(ThirdLoginActivity.this, PersonalCenterActivity.class);
+                            startActivity(intent);
+                            finish();
+                            startIntentAnim();
                         }
                     }
-                });
+                }, true);
                 return true;
             }
         });

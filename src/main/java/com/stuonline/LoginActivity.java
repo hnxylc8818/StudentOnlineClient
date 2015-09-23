@@ -134,33 +134,27 @@ public class LoginActivity extends BaseActivity {
         RequestParams params = new RequestParams();
         params.addBodyParameter("u.account", account);
         params.addBodyParameter("u.pwd", pwd);
-        DialogUtil.showWaitting(this);
-        httpHandler = XUtils.send(XUtils.LOGIN, params, new MyCallBack<String>() {
+        httpHandler = XUtils.send(XUtils.LOGIN, params, new MyCallBack<Result<Muser>>(new TypeReference<Result<Muser>>(){}) {
+
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                DialogUtil.hiddenWaitting();
-                if (responseInfo != null) {
-                    JsonUtil<Result<Muser>> jsonUtil = new JsonUtil<Result<Muser>>(new TypeReference<Result<Muser>>() {
-                    });
-                    Result<Muser> result = jsonUtil.parse(responseInfo.result);
-                    XUtils.showToast(result.desc);
-                    if (result.state == Result.STATE_SUC) {
-                        MyApp.user = result.data;
-                        String encodeAccount = Base64.encodeToString(MyApp.user.getAccount().getBytes(), Base64.NO_WRAP);
-                        String encodePwd = Base64.encodeToString(MyApp.user.getPwd().getBytes(), Base64.NO_WRAP);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.clear();//清除之前的数据
-                        editor.putString("account", encodeAccount);
-                        editor.putString("pwd", encodePwd);
-                        editor.commit();
-                        Intent intent = new Intent(LoginActivity.this, PersonalCenterActivity.class);
-                        startActivity(intent);
-                        finish();
-                        startIntentAnim();
-                    }
+            public void success(Result<Muser> result) {
+                XUtils.showToast(result.desc);
+                if (result.state == Result.STATE_SUC) {
+                    MyApp.user = result.data;
+                    String encodeAccount = Base64.encodeToString(MyApp.user.getAccount().getBytes(), Base64.NO_WRAP);
+                    String encodePwd = Base64.encodeToString(MyApp.user.getPwd().getBytes(), Base64.NO_WRAP);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.clear();//清除之前的数据
+                    editor.putString("account", encodeAccount);
+                    editor.putString("pwd", encodePwd);
+                    editor.commit();
+                    Intent intent = new Intent(LoginActivity.this, PersonalCenterActivity.class);
+                    startActivity(intent);
+                    finish();
+                    startIntentAnim();
                 }
             }
-        });
+        },true);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.app.Application;
 import com.stuonline.entity.MeTab;
 import com.stuonline.entity.Muser;
 import com.stuonline.https.XUtils;
+import com.stuonline.utils.DialogUtil;
 
 import java.util.List;
 
@@ -13,24 +14,26 @@ import java.util.List;
  */
 public class MyApp extends Application {
     public static Muser user;
-    public static final int SEX=1;
-    public static final int PHOTO=2;
-    public static final int ROLE=3;
-    public static final int RESET=4;
-    public static int type=0;
-    public static boolean isWelcome=true;   // 是否开启欢迎界面
+    public static final int SEX = 1;
+    public static final int PHOTO = 2;
+    public static final int ROLE = 3;
+    public static final int RESET = 4;
+    public static int type = 0;
+    public static boolean isWelcome = true;   // 是否开启欢迎界面
 
-    public static boolean isMainChange=false;
+    public static boolean isMainChange = false;
     public static List<MeTab> meTabs;
 
     @Override
     public void onCreate() {
         super.onCreate();
         XUtils.init(getApplicationContext());
+        DialogUtil.init(getApplicationContext());
     }
 
     public static void release() {
         user = null;
+        meTabs = null;
     }
 
 }

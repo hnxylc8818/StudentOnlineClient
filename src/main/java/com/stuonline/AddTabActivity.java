@@ -59,10 +59,8 @@ public class AddTabActivity extends BaseActivity {
             strList=new ArrayList<>();
             strListAll=new ArrayList<>();
             strList = dbTools.queryAllisMe(istrue);
-            Log.i("aaaaa","======="+strList.size());
             MyApp.meTabs=strList;
             adapter.AddAll(strList);
-            XUtils.showToast(strList.size() + "");
             strListAll=dbTools.queryAllisMe(isfalse);
             adapter2.AddAll(strListAll);
         }else {
@@ -88,40 +86,30 @@ public class AddTabActivity extends BaseActivity {
     public void initData(){
         strList2 = new ArrayList<Tab>();
         strList=new ArrayList<MeTab>();
-        DialogUtil.showWaitting(this);
-        httpHandler=XUtils.send(XUtils.QUERYTABS, null, new MyCallBack<String>() {
+        httpHandler=XUtils.send(XUtils.QUERYTABS, null, new MyCallBack<Result<List<Tab>>>(new TypeReference<Result<List<Tab>>>(){}) {
+
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                DialogUtil.hiddenWaitting();
-                if (responseInfo != null) {
-                    JsonUtil<Result<List<Tab>>> jsonUtil = new JsonUtil<Result<List<Tab>>>(new TypeReference<Result<List<Tab>>>() {
-                    });
-                    Result<List<Tab>> result = jsonUtil.parse(responseInfo.result);
-                    XUtils.showToast(result.desc);
-                    if (result.state == Result.STATE_SUC) {
-                        strList2 = result.data;
-                        Log.i("aaaaa", strList2.size() + "=========================");
-                        if (strList2 != null && strList2.size() > 0) {
+            public void success(Result<List<Tab>> result) {
+                if (result.state == Result.STATE_SUC) {
+                    strList2 = result.data;
+                    if (strList2 != null && strList2.size() > 0) {
 
-                            for (int i = 0; i < strList2.size(); i++) {
-                                MeTab meTab = new MeTab();
-                                meTab.setT_tabname(strList2.get(i).getTab());
-                                meTab.setT_isMe(true);
-                                dbTools.add(meTab);
+                        for (int i = 0; i < strList2.size(); i++) {
+                            MeTab meTab = new MeTab();
+                            meTab.setT_tabname(strList2.get(i).getTab());
+                            meTab.setT_isMe(true);
+                            dbTools.add(meTab);
 
-                            }
-                            strList = dbTools.queryAllisMe(istrue);
-                            Log.i("aaaaa","======="+strList.size());
-                            MyApp.meTabs=strList;
-                            adapter.AddAll(strList);
-                            XUtils.showToast(strList.size() + "");
-                            strListAll=dbTools.queryAllisMe(isfalse);
-                            adapter2.AddAll(strListAll);
                         }
+                        strList = dbTools.queryAllisMe(istrue);
+                        MyApp.meTabs=strList;
+                        adapter.AddAll(strList);
+                        strListAll=dbTools.queryAllisMe(isfalse);
+                        adapter2.AddAll(strListAll);
                     }
                 }
             }
-        });
+        },true);
 
 
     }
