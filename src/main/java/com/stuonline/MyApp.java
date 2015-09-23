@@ -6,6 +6,7 @@ import com.stuonline.entity.Muser;
 import com.stuonline.https.XUtils;
 import com.stuonline.utils.DBTools;
 import com.stuonline.utils.DialogUtil;
+import com.stuonline.utils.SharedUtil;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class MyApp extends Application {
     public static boolean isMainChange = false;
     private static List<MeTab> meTabs;
     private static DBTools dbTools;
-    public static boolean isNight = false;
+    public static boolean isNight;
 
 
     @Override
@@ -34,6 +35,7 @@ public class MyApp extends Application {
         XUtils.init(getApplicationContext());
         DialogUtil.init(getApplicationContext());
         dbTools = new DBTools(getApplicationContext());
+        isNight=SharedUtil.getModel(getApplicationContext());
     }
 
     public static void release() {
