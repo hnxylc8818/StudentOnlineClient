@@ -152,6 +152,7 @@ public class LoginActivity extends BaseActivity {
             public void success(Result<Muser> result) {
                 XUtils.showToast(result.desc);
                 if (result.state == Result.STATE_SUC) {
+                    MyApp.isMainChange = true;
                     MyApp.user = result.data;
                     String encodeAccount = Base64.encodeToString(MyApp.user.getAccount().getBytes(), Base64.NO_WRAP);
                     String encodePwd = Base64.encodeToString(MyApp.user.getPwd().getBytes(), Base64.NO_WRAP);
@@ -168,7 +169,6 @@ public class LoginActivity extends BaseActivity {
                     }
                     Intent intent = new Intent(LoginActivity.this, PersonalCenterActivity.class);
                     startActivity(intent);
-                    MyApp.isMainChange = true;
                     finish();
                     startIntentAnim();
                 }

@@ -39,8 +39,6 @@ import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.views.TitleView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -64,6 +62,7 @@ public class NewsInfoActivity extends BaseActivity {
     private CommentAdapter adapter;
     private Dialog dialog;
     private EditText etContet;
+    private boolean isSF = false;
 
     @Override
 
@@ -190,13 +189,14 @@ public class NewsInfoActivity extends BaseActivity {
             @Override
             public void success(Result<List<Comment>> result) {
                 lv.onRefreshComplete();
-                if (null != result.data && result.data.size() > 0) {
-                    if (isFlush) {
-                        adapter.clear();
+                if (isFlush || isSF) {
+                    if (isSF) {
+                        isSF = false;
                     }
-                    adapter.addAll(result.data);
-                    pageIndex++;
-                } else {
+                    adapter.clear();
+                }
+                adapter.addAll(result.data);
+                if (pageIndex == 1 && (result.data == null || result.data.size()==0)) {
                     Comment comment = new Comment();
                     Muser muser = new Muser();
                     muser.setPhotoUrl("images/default.png");
@@ -205,7 +205,11 @@ public class NewsInfoActivity extends BaseActivity {
                     comment.setContent("快来抢沙发吧！");
                     adapter.clear();
                     adapter.addAll(comment);
+                    isSF = true;
+                }else {
+                    pageIndex++;
                 }
+
             }
 
             @Override

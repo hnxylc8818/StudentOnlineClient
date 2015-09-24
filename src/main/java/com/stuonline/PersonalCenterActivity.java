@@ -165,6 +165,10 @@ public class PersonalCenterActivity extends BaseActivity {
         map.put("img", R.drawable.feedback);
         map.put("text", "意见反馈");
         data.add(map);
+        map = new HashMap<>();
+        map.put("img",R.drawable.xiaoxi);
+        map.put("text","我的消息");
+        data.add(map);
     }
 
     @OnItemClick(R.id.personal_center_lv)
@@ -191,13 +195,10 @@ public class PersonalCenterActivity extends BaseActivity {
                 // 跳转意见反馈
                 thuInfo();
                 break;
-        }
-    }
+            case 5:
+                // 跳转我的消息
 
-    @OnClick(R.id.personal_center_person_info)
-    private void click(View v) {
-        switch (v.getId()) {
-
+                break;
         }
     }
 
