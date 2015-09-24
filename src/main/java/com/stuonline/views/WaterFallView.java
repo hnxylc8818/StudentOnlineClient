@@ -1,22 +1,14 @@
 package com.stuonline.views;
 
 import java.io.File;
-
-import com.stuonline.AddTabActivity;
-import com.stuonline.MainActivity;
-import com.stuonline.MyApp;
-import com.stuonline.PersonalCenterActivity;
 import com.stuonline.R;
 import com.stuonline.utils.HttpHelper;
 import com.stuonline.utils.ImagerLoader;
 import com.stuonline.utils.Images;
-
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 public class WaterFallView extends ScrollView {
 
