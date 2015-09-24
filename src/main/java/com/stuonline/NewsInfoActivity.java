@@ -137,7 +137,7 @@ public class NewsInfoActivity extends BaseActivity {
                         RequestParams params = new RequestParams();
                         params.addBodyParameter("comment.nid", String.valueOf(nid));
                         params.addBodyParameter("comment.muser.uid", String.valueOf(MyApp.user.getUid()));
-                        params.addBodyParameter("comment.content", "回复:" + adapter.getNick(position)+"：" + content);
+                        params.addBodyParameter("comment.content", "回复" + adapter.getNick(position) + "：" + content);
                         params.addBodyParameter("comment.toUid", String.valueOf(adapter.getUid(position)));
                         httpHandler = XUtils.send(XUtils.SAVECOMMENT, params, new MyCallBack<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
                         }) {
