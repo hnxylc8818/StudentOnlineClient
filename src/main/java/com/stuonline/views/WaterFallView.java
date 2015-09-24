@@ -111,7 +111,7 @@ public class WaterFallView extends ScrollView {
             float y1 = e1.getY();
             float y2 = e2.getY();
             float yDriver = y1 - y2;
-            if (yDriver > 300) {
+            if (yDriver > 200) {
                 page++;
                 loadMoreImage();
             }
