@@ -173,7 +173,8 @@ public class BaseActivity extends FragmentActivity {
             XUtils.showToast("双击Back键退出程序");
             handler.postDelayed(runnable, 1500);
         } else {
-            XUtils.release();
+            MyApp.isWelcome=true;
+//            XUtils.release();
             MyApp.release();
             ActivityController.exit();
         }

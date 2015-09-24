@@ -74,7 +74,9 @@ public class ItemFragment extends Fragment {
                         if (j == 2) {
                             adAdapter = new ADAdapter(getActivity(),data);
                             vp.setAdapter(adAdapter);
-                            loadDD();
+                            if (null != getActivity()) {
+                                loadDD();
+                            }
                         }
                         j++;
                     }
@@ -248,7 +250,7 @@ public class ItemFragment extends Fragment {
     private ViewPager.LayoutParams lp = null;
 
     private View getVpView(Bitmap bmp) {
-        if (null != bmp) {
+        if (null != bmp && null != getActivity()) {
             ImageView imageView = new ImageView(getActivity());
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setImageBitmap(bmp);
