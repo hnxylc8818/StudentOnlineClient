@@ -56,6 +56,7 @@ public class XUtils {
     public static final String QUERYTABS = "queryTabs";
     public static final String QUERYNEWSES = "queryNewses";
     public static final String QUERYNEWS = "queryNews";
+    public static final String LOADNEWS = "loadNews";
     public static final String QUERYCOMMENTS = "queryComments";
     public static final String SAVECOMMENT = "saveComment";
     public static final String QUBUID = "queryUserById";

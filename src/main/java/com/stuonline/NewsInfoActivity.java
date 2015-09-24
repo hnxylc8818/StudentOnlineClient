@@ -3,6 +3,8 @@ package com.stuonline;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.TypeReference;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -39,7 +42,14 @@ import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.views.TitleView;
 
+import java.util.HashMap;
 import java.util.List;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qzone.QZone;
 
 /**
  * Created by Xubin on 2015/9/22.
@@ -63,6 +73,8 @@ public class NewsInfoActivity extends BaseActivity {
     private Dialog dialog;
     private EditText etContet;
     private boolean isSF = false;
+    private Dialog dialogShrea;
+    private News news;
 
     @Override
 
@@ -79,15 +91,18 @@ public class NewsInfoActivity extends BaseActivity {
 
     private void init() {
         setContentView(R.layout.activity_news_info);
+        ShareSDK.initSDK(this);
         ViewUtils.inject(this);
         titleView.setOnLeftclickListener(leftClis);
         lv.getRefreshableView().setCacheColorHint(Color.TRANSPARENT);
         lv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         loadHeader();
+        loadNews();
         loadData(false);
         adapter = new CommentAdapter(this, null);
         lv.setAdapter(adapter);
         lv.setOnRefreshListener(listener2);
+
     }
 
 
@@ -117,7 +132,99 @@ public class NewsInfoActivity extends BaseActivity {
                 }
                 RemarkInfo();
                 break;
+            case R.id.news_info_share:
+                if (MyApp.user == null) {
+                    Intent intent = new Intent(NewsInfoActivity.this, LoginActivity.class);
+                    intent.putExtra("newinfo", 6);
+                    startActivity(intent);
+                    startIntentAnim();
+                    return;
+                }
+                dialogAdd();
+                break;
         }
+    }
+
+    private void loadNews() {
+        RequestParams params=new RequestParams();
+        params.addBodyParameter("nid", String.valueOf(nid));
+        httpHandler=XUtils.send(XUtils.LOADNEWS, params, new MyCallBack<Result<News>>(new TypeReference<Result<News>>(){}) {
+
+            @Override
+            public void success(Result<News> result) {
+                news=result.data;
+            }
+        },true);
+    }
+
+    public View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.quez:
+                    dialogShrea.dismiss();
+                    Platform platformQ = ShareSDK.getPlatform(NewsInfoActivity.this, QZone.NAME);
+                    shearsdk(platformQ);
+                    break;
+                case R.id.sina:
+                    dialogShrea.dismiss();
+                    Platform platformS = ShareSDK.getPlatform(NewsInfoActivity.this, SinaWeibo.NAME);
+                    shearsdk(platformS);
+                    break;
+            }
+        }
+    };
+
+    private void dialogAdd() {
+        if (dialogShrea == null) {
+            View v = LayoutInflater.from(NewsInfoActivity.this).inflate(
+                    R.layout.layout_shearsdk, null);
+            v.setBackgroundColor(Color.TRANSPARENT);
+            TextView quez = (TextView) v.findViewById(R.id.quez);
+            TextView sina = (TextView) v.findViewById(R.id.sina);
+            quez.setOnClickListener(clickListener);
+            sina.setOnClickListener(clickListener);
+            AlertDialog.Builder builder = new AlertDialog.Builder(
+                    NewsInfoActivity.this);
+            dialogShrea = builder.show();
+            dialogShrea.setCanceledOnTouchOutside(true);
+            Window w = dialogShrea.getWindow();
+            w.setContentView(v);
+            w.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+            w.setGravity(Gravity.BOTTOM);
+        } else {
+            dialogShrea.show();
+        }
+    }
+
+    private void shearsdk(Platform platformList) {
+        // 获取已经注册到SDK的平台实例列表
+        platformList.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                // 操作成功的处理代码
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                // 操作失败的处理代码
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                // 操作取消的处理代码
+            }
+        });
+
+        Platform.ShareParams sp = new Platform.ShareParams();
+        sp.setTitle(news.getTitle());
+        sp.setTitleUrl(XUtils.BURL + XUtils.QUERYNEWS + "?nid=" + nid); // 标题的超链接
+        sp.setText(news.getResume());
+        sp.setImageUrl(XUtils.BURL+news.getNewsUrl());
+        sp.setSite("中国大学生在线");
+        sp.setSiteUrl(XUtils.BURL + XUtils.QUERYNEWS + "?nid=" + nid);
+        // 执行图文分享
+        platformList.share(sp);
     }
 
     private void RemarkInfo() {
@@ -237,7 +344,6 @@ public class NewsInfoActivity extends BaseActivity {
         } else {
             webView.setBackgroundColor(Color.parseColor("#eeeeee"));
         }
-        webView.loadUrl(XUtils.BURL + XUtils.QUERYNEWS + "?nid=" + nid);
         webView.loadUrl(XUtils.BURL + XUtils.QUERYNEWS + "?nid=" + nid);
         // 设置Chrome客户端，主要操作内容
         webView.setWebChromeClient(webChromeClient);
