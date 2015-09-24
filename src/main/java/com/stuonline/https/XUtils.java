@@ -60,7 +60,7 @@ public class XUtils {
     public static final String QUERYCOMMENTS = "queryComments";
     public static final String SAVECOMMENT = "saveComment";
     public static final String QUBUID = "queryUserById";
-
+    public static final String QUCOMMENTBUID = "queryCommentsByUid";
 
     public static HttpUtils httpUtils;
     public static BitmapUtils bitmapUtils;

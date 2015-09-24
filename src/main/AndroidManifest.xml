@@ -65,6 +65,7 @@
         <activity android:name=".VliPhoneActivity" />
         <activity android:name=".SchoolSearchActivity" />
         <activity android:name=".AddTabActivity" />
+        <activity android:name=".MyMsgActivity" />
         <activity
             android:name="cn.sharesdk.framework.ShareSDKUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
