@@ -72,7 +72,7 @@ public class ItemFragment extends Fragment {
                         nid = msg.arg1;
                         data.add(getVpData(nid, (Bitmap) msg.obj));
                         if (j == 2) {
-                            adAdapter = new ADAdapter(data);
+                            adAdapter = new ADAdapter(getActivity(),data);
                             vp.setAdapter(adAdapter);
                             loadDD();
                         }

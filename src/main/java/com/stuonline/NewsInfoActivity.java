@@ -27,6 +27,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.stuonline.adapters.CommentAdapter;
 import com.stuonline.entity.Comment;
+import com.stuonline.entity.Muser;
 import com.stuonline.entity.News;
 import com.stuonline.entity.Result;
 import com.stuonline.https.MyCallBack;
@@ -134,7 +135,6 @@ public class NewsInfoActivity extends BaseActivity {
 
     /**
      * 加载评论列表
-     *
      * @param isFlush
      */
     private void loadData(final boolean isFlush) {
@@ -147,11 +147,22 @@ public class NewsInfoActivity extends BaseActivity {
             @Override
             public void success(Result<List<Comment>> result) {
                 lv.onRefreshComplete();
-                if (isFlush) {
+                if (null != result.data && result.data.size()>0) {
+                    if (isFlush) {
+                        adapter.clear();
+                    }
+                    adapter.addAll(result.data);
+                    pageIndex++;
+                }else{
+                    Comment comment=new Comment();
+                    Muser muser=new Muser();
+                    muser.setPhotoUrl("images/default.png");
+                    muser.setNick("还没有人评论");
+                    comment.setMuser(muser);
+                    comment.setContent("快来抢沙发吧！");
                     adapter.clear();
+                    adapter.addAll(comment);
                 }
-                adapter.addAll(result.data);
-                pageIndex++;
             }
 
             @Override

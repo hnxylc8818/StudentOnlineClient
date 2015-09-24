@@ -68,8 +68,10 @@ public class CommentAdapter extends BaseAdapter {
         }
         Comment comment = getItem(position);
         Muser muser = comment.getMuser();
-        XUtils.bitmapUtils.display(holder.photo, XUtils.BURL + muser.getPhotoUrl());
-        holder.nick.setText(muser.getNick()==null?"游客":muser.getNick());
+        if (null != muser) {
+            XUtils.bitmapUtils.display(holder.photo, XUtils.BURL + muser.getPhotoUrl());
+            holder.nick.setText(muser.getNick() == null ? "游客" : muser.getNick());
+        }
         holder.content.setText(comment.getContent());
         holder.date.setText(comment.getCdate());
         return convertView;
@@ -83,6 +85,12 @@ public class CommentAdapter extends BaseAdapter {
     public void addAll(List<Comment> comments) {
         if (null != comments) {
             this.commentList.addAll(comments);
+            notifyDataSetChanged();
+        }
+    }
+    public void addAll(Comment comment){
+        if (null != comment){
+            this.commentList.add(comment);
             notifyDataSetChanged();
         }
     }
