@@ -20,6 +20,7 @@ import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -93,7 +94,7 @@ public class NewsInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_news_info);
         ShareSDK.initSDK(this);
         ViewUtils.inject(this);
-        pageIndex=1;
+        pageIndex = 1;
         titleView.setOnLeftclickListener(leftClis);
         lv.getRefreshableView().setCacheColorHint(Color.TRANSPARENT);
         lv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -106,10 +107,71 @@ public class NewsInfoActivity extends BaseActivity {
         adapter = new CommentAdapter(this, null);
         lv.setAdapter(adapter);
         lv.setOnRefreshListener(listener2);
-
+        lv.setOnItemClickListener(onItemClickListener);
     }
 
-
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+            if (MyApp.user == null) {
+                Intent intent = new Intent(NewsInfoActivity.this, LoginActivity.class);
+                intent.putExtra("newinfo", 6);
+                startActivity(intent);
+                startIntentAnim();
+                return;
+            }
+            if (dialog == null) {
+                View v = LayoutInflater.from(NewsInfoActivity.this).inflate(
+                        R.layout.layout_remar_dialog, null);
+                v.setBackgroundColor(Color.WHITE);
+                Button btEnsure = (Button) v.findViewById(R.id.remar_dialog_bt);
+                etContet = (EditText) v.findViewById(R.id.remar_dialog_edit);
+                btEnsure.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String content = etContet.getText().toString().trim();
+                        if (TextUtils.isEmpty(content)) {
+                            XUtils.showToast("回复内容不能为空");
+                            return;
+                        }
+                        RequestParams params = new RequestParams();
+                        params.addBodyParameter("comment.nid", String.valueOf(nid));
+                        params.addBodyParameter("comment.muser.uid", String.valueOf(MyApp.user.getUid()));
+                        params.addBodyParameter("comment.content", "回复:" + adapter.getNick(position)+"：" + content);
+                        params.addBodyParameter("comment.toUid", String.valueOf(adapter.getUid(position)));
+                        httpHandler = XUtils.send(XUtils.SAVECOMMENT, params, new MyCallBack<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+                        }) {
+                            @Override
+                            public void success(Result<Boolean> result) {
+                                XUtils.showToast(result.desc);
+                                if (result.data) {
+                                    dialog.dismiss();
+                                    pageIndex = 1;
+                                    loadData(true);
+                                    etContet.getText().clear();
+                                }
+                            }
+                        }, true);
+                    }
+                });
+                AlertDialog.Builder builder = new AlertDialog.Builder(
+                        NewsInfoActivity.this);
+                dialog = builder.show();
+                WindowManager windowManager = getWindowManager();
+                Display display = windowManager.getDefaultDisplay();
+                WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+                lp.width = (int) (display.getWidth()); //设置宽度
+                dialog.getWindow().setAttributes(lp);
+                dialog.setCanceledOnTouchOutside(true);
+                Window w = dialog.getWindow();
+                w.setContentView(v);
+                w.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                w.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM);
+            } else {
+                dialog.show();
+            }
+        }
+    };
     private PullToRefreshBase.OnRefreshListener2 listener2 = new PullToRefreshBase.OnRefreshListener2() {
         @Override
         public void onPullDownToRefresh(PullToRefreshBase refreshView) {
@@ -277,7 +339,7 @@ public class NewsInfoActivity extends BaseActivity {
                     XUtils.showToast(result.desc);
                     if (result.data) {
                         dialog.dismiss();
-                        pageIndex=1;
+                        pageIndex = 1;
                         loadData(true);
                         etContet.getText().clear();
                     }
@@ -313,7 +375,7 @@ public class NewsInfoActivity extends BaseActivity {
                     adapter.clear();
                     adapter.addAll(comment);
                     isSF = true;
-                }else {
+                } else {
                     if (isFlush || isSF) {
                         if (isSF) {
                             isSF = false;
