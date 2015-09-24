@@ -54,7 +54,11 @@ public class CommentAdapter extends BaseAdapter {
     }
 
     public String getNick(int position){
-        return commentList.get(position).getMuser().getNick();
+        if (position<commentList.size()) {
+            return commentList.get(position).getMuser().getNick();
+        }else{
+            return "";
+        }
     }
 
     public int getNid(int position){
