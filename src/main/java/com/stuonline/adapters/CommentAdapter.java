@@ -57,6 +57,10 @@ public class CommentAdapter extends BaseAdapter {
         return commentList.get(position).getMuser().getNick();
     }
 
+    public int getNid(int position){
+        return commentList.get(position).getNid();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;

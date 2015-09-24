@@ -1,9 +1,11 @@
 package com.stuonline;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.alibaba.fastjson.TypeReference;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -47,11 +49,24 @@ public class MyMsgActivity extends BaseActivity {
         lv.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载...");
         lv.getLoadingLayoutProxy(false, true).setRefreshingLabel("正在加载...");
         lv.getLoadingLayoutProxy(false, true).setReleaseLabel("松开加载更多...");
+        pageIndex=1;
         loadData(true);
         adapter = new CommentAdapter(this, null);
         lv.setAdapter(adapter);
         lv.setOnRefreshListener(listener2);
+        lv.setOnItemClickListener(itemClickListener);
     }
+
+    private AdapterView.OnItemClickListener itemClickListener=new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            int nid=adapter.getNid(position);
+            Intent intent=new Intent(MyMsgActivity.this, NewsInfoActivity.class);
+            intent.putExtra("nid",nid);
+            startActivity(intent);
+            startIntentAnim();
+        }
+    };
 
     private PullToRefreshBase.OnRefreshListener2 listener2 = new PullToRefreshBase.OnRefreshListener2() {
         @Override
