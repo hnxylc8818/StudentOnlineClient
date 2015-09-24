@@ -2,9 +2,13 @@ package com.stuonline;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -34,6 +39,8 @@ import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
 import com.stuonline.views.TitleView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,12 +59,14 @@ public class NewsInfoActivity extends BaseActivity {
     private ImageView newsInfoShare;
     @ViewInject(R.id.news_info_ping)
     private ImageView img;
-    private Integer pageIndex=1;
+    private Integer pageIndex = 1;
 
     private CommentAdapter adapter;
     private Dialog dialog;
+    private EditText etContet;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         nid = getIntent().getIntExtra("nid", -1);
@@ -80,7 +89,6 @@ public class NewsInfoActivity extends BaseActivity {
         adapter = new CommentAdapter(this, null);
         lv.setAdapter(adapter);
         lv.setOnRefreshListener(listener2);
-
     }
 
 
@@ -97,10 +105,17 @@ public class NewsInfoActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.news_info_share,R.id.news_info_ping})
+    @OnClick({R.id.news_info_share, R.id.news_info_ping})
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.news_info_ping:
+                if (MyApp.user == null) {
+                    Intent intent = new Intent(NewsInfoActivity.this, LoginActivity.class);
+                    intent.putExtra("newinfo", 6);
+                    startActivity(intent);
+                    startIntentAnim();
+                    return;
+                }
                 RemarkInfo();
                 break;
         }
@@ -112,10 +127,16 @@ public class NewsInfoActivity extends BaseActivity {
                     R.layout.layout_remar_dialog, null);
             v.setBackgroundColor(Color.WHITE);
             Button btEnsure = (Button) v.findViewById(R.id.remar_dialog_bt);
+            etContet = (EditText) v.findViewById(R.id.remar_dialog_edit);
             btEnsure.setOnClickListener(onClickListener);
             AlertDialog.Builder builder = new AlertDialog.Builder(
                     NewsInfoActivity.this);
             dialog = builder.show();
+            WindowManager windowManager = getWindowManager();
+            Display display = windowManager.getDefaultDisplay();
+            WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+            lp.width = (int) (display.getWidth()); //设置宽度
+            dialog.getWindow().setAttributes(lp);
             dialog.setCanceledOnTouchOutside(true);
             Window w = dialog.getWindow();
             w.setContentView(v);
@@ -129,12 +150,34 @@ public class NewsInfoActivity extends BaseActivity {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            dialog.dismiss();
+            String content = etContet.getText().toString().trim();
+            if (TextUtils.isEmpty(content)) {
+                XUtils.showToast("评论内容不能为空");
+                return;
+            }
+            RequestParams params = new RequestParams();
+            params.addBodyParameter("comment.nid", String.valueOf(nid));
+            params.addBodyParameter("comment.muser.uid", String.valueOf(MyApp.user.getUid()));
+            params.addBodyParameter("comment.content", content);
+            httpHandler = XUtils.send(XUtils.SAVECOMMENT, params, new MyCallBack<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+            }) {
+                @Override
+                public void success(Result<Boolean> result) {
+                    XUtils.showToast(result.desc);
+                    if (result.data) {
+                        dialog.dismiss();
+                        loadData(false);
+                        etContet.getText().clear();
+                    }
+
+                }
+            }, true);
         }
     };
 
     /**
      * 加载评论列表
+     *
      * @param isFlush
      */
     private void loadData(final boolean isFlush) {
@@ -147,15 +190,15 @@ public class NewsInfoActivity extends BaseActivity {
             @Override
             public void success(Result<List<Comment>> result) {
                 lv.onRefreshComplete();
-                if (null != result.data && result.data.size()>0) {
+                if (null != result.data && result.data.size() > 0) {
                     if (isFlush) {
                         adapter.clear();
                     }
                     adapter.addAll(result.data);
                     pageIndex++;
-                }else{
-                    Comment comment=new Comment();
-                    Muser muser=new Muser();
+                } else {
+                    Comment comment = new Comment();
+                    Muser muser = new Muser();
                     muser.setPhotoUrl("images/default.png");
                     muser.setNick("还没有人评论");
                     comment.setMuser(muser);
@@ -187,16 +230,15 @@ public class NewsInfoActivity extends BaseActivity {
         settings.setJavaScriptEnabled(true);
         if (MyApp.isNight) {
             webView.setBackgroundColor(Color.parseColor("#FF2B2B2B"));
-        }else{
+        } else {
             webView.setBackgroundColor(Color.parseColor("#eeeeee"));
         }
-        webView.loadUrl(XUtils.BURL+XUtils.QUERYNEWS+"?nid="+nid);
+        webView.loadUrl(XUtils.BURL + XUtils.QUERYNEWS + "?nid=" + nid);
         webView.loadUrl(XUtils.BURL + XUtils.QUERYNEWS + "?nid=" + nid);
         // 设置Chrome客户端，主要操作内容
         webView.setWebChromeClient(webChromeClient);
         lv.getRefreshableView().addHeaderView(header);
     }
-
 
 
     private View.OnClickListener leftClis = new View.OnClickListener() {

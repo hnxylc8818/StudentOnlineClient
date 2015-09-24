@@ -38,6 +38,7 @@ public class LoginActivity extends BaseActivity {
     private SharedPreferences sp;
 
     private SelectPicPopupWindow menuWindow;
+    private int newInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class LoginActivity extends BaseActivity {
         etPwd.setText(new String(Base64.decode(pwd, Base64.NO_WRAP)));
         title.setOnRightTextclickListener(onClickListener);
         title.setOnLeftclickListener(onClickListener);
+        newInfo = getIntent().getIntExtra("newinfo", -1);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -158,8 +160,15 @@ public class LoginActivity extends BaseActivity {
                     editor.putString("account", encodeAccount);
                     editor.putString("pwd", encodePwd);
                     editor.commit();
+                    if (newInfo == 6) {
+                        MyApp.user = result.data;
+                        finish();
+                        endIntentAnim();
+                        return;
+                    }
                     Intent intent = new Intent(LoginActivity.this, PersonalCenterActivity.class);
                     startActivity(intent);
+                    MyApp.isMainChange = true;
                     finish();
                     startIntentAnim();
                 }
