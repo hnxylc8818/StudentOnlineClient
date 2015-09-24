@@ -17,6 +17,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.stuonline.entity.MeTab;
 import com.stuonline.entity.Result;
 import com.stuonline.entity.Tab;
+import com.stuonline.fragments.ImageFragment;
 import com.stuonline.fragments.ItemFragment;
 import com.stuonline.https.MyCallBack;
 import com.stuonline.https.XUtils;
@@ -197,6 +198,10 @@ public class MainActivity extends BaseActivity {
             Bundle args = new Bundle();
             args.putString("tid", String.valueOf(tabs.get(position).getTid()));
             fragment.setArguments(args);
+            if (tabs.get(position).getTid() == 9){
+                Fragment imgFrag=new ImageFragment();
+                return imgFrag;
+            }
             return fragment;
         }
 
