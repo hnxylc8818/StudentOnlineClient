@@ -218,6 +218,8 @@ public class ThirdPartyLogin extends FakeActivity implements OnClickListener, Ca
 					signupPage.setPlatform(platform);
 					signupPage.show(activity, null);
 				}
+				finish();
+				startIntentAnim();
 			} break;
 			case MSG_SMSSDK_CALLBACK: {
 				if (msg.arg2 == SMSSDK.RESULT_ERROR) {
@@ -269,5 +271,8 @@ public class ThirdPartyLogin extends FakeActivity implements OnClickListener, Ca
 		//注册短信验证的监听
 		SMSSDK.registerEventHandler(eh);
 	}
-	
+
+	protected void startIntentAnim() {
+		activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+	}
 }

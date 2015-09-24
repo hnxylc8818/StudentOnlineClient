@@ -70,6 +70,8 @@ public class LoginActivity extends BaseActivity {
                 case R.id.title_right:
                     Intent intent = new Intent(LoginActivity.this, ThirdLoginActivity.class);
                     startActivity(intent);
+                    finish();
+                    startIntentAnim();
                     break;
             }
         }
@@ -152,7 +154,6 @@ public class LoginActivity extends BaseActivity {
             public void success(Result<Muser> result) {
                 XUtils.showToast(result.desc);
                 if (result.state == Result.STATE_SUC) {
-                    MyApp.isMainChange = true;
                     MyApp.user = result.data;
                     String encodeAccount = Base64.encodeToString(MyApp.user.getAccount().getBytes(), Base64.NO_WRAP);
                     String encodePwd = Base64.encodeToString(MyApp.user.getPwd().getBytes(), Base64.NO_WRAP);
@@ -161,16 +162,8 @@ public class LoginActivity extends BaseActivity {
                     editor.putString("account", encodeAccount);
                     editor.putString("pwd", encodePwd);
                     editor.commit();
-                    if (newInfo == 6) {
-                        MyApp.user = result.data;
-                        finish();
-                        endIntentAnim();
-                        return;
-                    }
-                    Intent intent = new Intent(LoginActivity.this, PersonalCenterActivity.class);
-                    startActivity(intent);
                     finish();
-                    startIntentAnim();
+                    endIntentAnim();
                 }
             }
         }, true);

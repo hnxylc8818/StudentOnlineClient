@@ -72,10 +72,8 @@ public class ThirdLoginActivity extends BaseActivity {
                         XUtils.showToast(result.desc);
                         if (result.state == Result.STATE_SUC) {
                             MyApp.user = result.data;
-                            Intent intent = new Intent(ThirdLoginActivity.this, PersonalCenterActivity.class);
-                            startActivity(intent);
                             finish();
-                            startIntentAnim();
+                            endIntentAnim();
                         }
                     }
                 }, true);

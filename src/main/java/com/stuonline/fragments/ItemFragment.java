@@ -97,6 +97,9 @@ public class ItemFragment extends Fragment {
             lv.getRefreshableView().setCacheColorHint(Color.TRANSPARENT);
             lv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
             adapter = new NewsAdapter(getActivity(), null);
+            lv.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载...");
+            lv.getLoadingLayoutProxy(false, true).setRefreshingLabel("正在加载...");
+            lv.getLoadingLayoutProxy(false, true).setReleaseLabel("松开加载更多...");
             lv.setAdapter(adapter);
             lv.setOnRefreshListener(listener2);
             //获取Activity传递过来的参数

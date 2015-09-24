@@ -93,12 +93,16 @@ public class NewsInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_news_info);
         ShareSDK.initSDK(this);
         ViewUtils.inject(this);
+        pageIndex=1;
         titleView.setOnLeftclickListener(leftClis);
         lv.getRefreshableView().setCacheColorHint(Color.TRANSPARENT);
         lv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+        lv.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载...");
+        lv.getLoadingLayoutProxy(false, true).setRefreshingLabel("正在加载...");
+        lv.getLoadingLayoutProxy(false, true).setReleaseLabel("松开加载更多...");
         loadHeader();
         loadNews();
-        loadData(false);
+        loadData(true);
         adapter = new CommentAdapter(this, null);
         lv.setAdapter(adapter);
         lv.setOnRefreshListener(listener2);
@@ -146,15 +150,16 @@ public class NewsInfoActivity extends BaseActivity {
     }
 
     private void loadNews() {
-        RequestParams params=new RequestParams();
+        RequestParams params = new RequestParams();
         params.addBodyParameter("nid", String.valueOf(nid));
-        httpHandler=XUtils.send(XUtils.LOADNEWS, params, new MyCallBack<Result<News>>(new TypeReference<Result<News>>(){}) {
+        httpHandler = XUtils.send(XUtils.LOADNEWS, params, new MyCallBack<Result<News>>(new TypeReference<Result<News>>() {
+        }) {
 
             @Override
             public void success(Result<News> result) {
-                news=result.data;
+                news = result.data;
             }
-        },true);
+        }, true);
     }
 
     public View.OnClickListener clickListener = new View.OnClickListener() {
@@ -220,7 +225,7 @@ public class NewsInfoActivity extends BaseActivity {
         sp.setTitle(news.getTitle());
         sp.setTitleUrl(XUtils.BURL + XUtils.QUERYNEWS + "?nid=" + nid); // 标题的超链接
         sp.setText(news.getResume());
-        sp.setImageUrl(XUtils.BURL+news.getNewsUrl());
+        sp.setImageUrl(XUtils.BURL + news.getNewsUrl());
         sp.setSite("中国大学生在线");
         sp.setSiteUrl(XUtils.BURL + XUtils.QUERYNEWS + "?nid=" + nid);
         // 执行图文分享
@@ -272,7 +277,8 @@ public class NewsInfoActivity extends BaseActivity {
                     XUtils.showToast(result.desc);
                     if (result.data) {
                         dialog.dismiss();
-                        loadData(false);
+                        pageIndex=1;
+                        loadData(true);
                         etContet.getText().clear();
                     }
 
@@ -296,14 +302,8 @@ public class NewsInfoActivity extends BaseActivity {
             @Override
             public void success(Result<List<Comment>> result) {
                 lv.onRefreshComplete();
-                if (isFlush || isSF) {
-                    if (isSF) {
-                        isSF = false;
-                    }
-                    adapter.clear();
-                }
-                adapter.addAll(result.data);
-                if (pageIndex == 1 && (result.data == null || result.data.size()==0)) {
+
+                if (pageIndex == 1 && (result.data == null || result.data.size() == 0)) {
                     Comment comment = new Comment();
                     Muser muser = new Muser();
                     muser.setPhotoUrl("images/default.png");
@@ -314,9 +314,15 @@ public class NewsInfoActivity extends BaseActivity {
                     adapter.addAll(comment);
                     isSF = true;
                 }else {
+                    if (isFlush || isSF) {
+                        if (isSF) {
+                            isSF = false;
+                        }
+                        adapter.clear();
+                    }
+                    adapter.addAll(result.data);
                     pageIndex++;
                 }
-
             }
 
             @Override
@@ -364,11 +370,15 @@ public class NewsInfoActivity extends BaseActivity {
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
             pb.setProgress(newProgress);
+            if (newProgress == pb.getMax()) {
+                pb.setVisibility(View.GONE);
+            }
         }
 
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
             return true;
         }
+
     };
 }

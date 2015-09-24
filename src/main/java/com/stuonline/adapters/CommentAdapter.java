@@ -12,6 +12,7 @@ import com.stuonline.R;
 import com.stuonline.entity.Comment;
 import com.stuonline.entity.Muser;
 import com.stuonline.https.XUtils;
+import com.stuonline.views.CircleImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,7 @@ public class CommentAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = lif.inflate(R.layout.layout_comment_item, null);
             holder = new ViewHolder();
-            holder.photo = (ImageView) convertView.findViewById(R.id.comment_item_photo);
+            holder.photo = (CircleImage) convertView.findViewById(R.id.comment_item_photo);
             holder.nick = (TextView) convertView.findViewById(R.id.comment_item_nick);
             holder.content = (TextView) convertView.findViewById(R.id.comment_item_content);
             holder.date = (TextView) convertView.findViewById(R.id.comment_item_date);
@@ -79,7 +80,6 @@ public class CommentAdapter extends BaseAdapter {
 
     public void clear() {
         this.commentList.clear();
-        notifyDataSetChanged();
     }
 
     public void addAll(List<Comment> comments) {
@@ -96,7 +96,7 @@ public class CommentAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        ImageView photo;
+        CircleImage photo;
         TextView nick;
         TextView content;
         TextView date;

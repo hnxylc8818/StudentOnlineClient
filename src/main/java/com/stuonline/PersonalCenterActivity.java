@@ -118,8 +118,8 @@ public class PersonalCenterActivity extends BaseActivity {
         personTitle.setOnLeftclickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (MyApp.isMainChange){
-                    Intent intent=new Intent(PersonalCenterActivity.this,MainActivity.class);
+                if (MyApp.isMainChange) {
+                    Intent intent = new Intent(PersonalCenterActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
                 finish();
@@ -166,8 +166,8 @@ public class PersonalCenterActivity extends BaseActivity {
         map.put("text", "意见反馈");
         data.add(map);
         map = new HashMap<>();
-        map.put("img",R.drawable.xiaoxi);
-        map.put("text","我的消息");
+        map.put("img", R.drawable.xiaoxi);
+        map.put("text", "我的消息");
         data.add(map);
     }
 
@@ -239,6 +239,7 @@ public class PersonalCenterActivity extends BaseActivity {
                 case R.id.title_right:
                     // 退出登录，跳转登录页面,并注销当前账号
                     MyApp.release();
+                    MyApp.isMainChange = true;
                     intent = new Intent(PersonalCenterActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
@@ -254,7 +255,8 @@ public class PersonalCenterActivity extends BaseActivity {
                     RequestParams params = new RequestParams();
                     params.addBodyParameter("f.content", content);
                     params.addBodyParameter("f.uid", String.valueOf(MyApp.user.getUid()));
-                    httpHandler=XUtils.send(XUtils.SFB, params, new MyCallBack<Result<Boolean>>(new TypeReference<Result<Boolean>>(){}) {
+                    httpHandler = XUtils.send(XUtils.SFB, params, new MyCallBack<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
+                    }) {
 
                         @Override
                         public void success(Result<Boolean> result) {
@@ -264,7 +266,7 @@ public class PersonalCenterActivity extends BaseActivity {
                                 etContent.getText().clear();
                             }
                         }
-                    },true);
+                    }, true);
                     break;
             }
         }

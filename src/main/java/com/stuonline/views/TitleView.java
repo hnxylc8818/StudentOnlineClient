@@ -165,4 +165,8 @@ public class TitleView extends RelativeLayout {
     public void setTitleRightImgSrc(String imgPath){
         XUtils.bitmapUtils.display(mRightimg,imgPath);
     }
+
+    public void setTitleRightImgSrc(int resId){
+        mRightimg.setImageResource(resId);
+    }
 }

@@ -10,6 +10,7 @@
         android:id="@+id/news_lv"
         ptr:ptrMode="both"
         ptr:ptrAnimationStyle="flip"
+        ptr:ptrHeaderTextColor="@color/text_color"
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

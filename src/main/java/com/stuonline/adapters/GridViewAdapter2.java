@@ -5,8 +5,10 @@ import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.stuonline.R;
@@ -49,12 +51,12 @@ public class GridViewAdapter2 extends BaseAdapter {
         TextView view;
         if (convertView == null) {
             view = new TextView(context);
-            view.setTextColor(Color.RED);
+            view.setTextColor(Color.parseColor("#df3333"));
             view.setBackgroundResource(R.drawable.seletor_item_tab);
             view.setGravity(Gravity.CENTER);
         } else {
             view = (TextView) convertView;
-            view.setTextColor(Color.RED);
+            view.setTextColor(Color.parseColor("#df3333"));
             view.setBackgroundResource(R.drawable.seletor_item_tab);
             view.setGravity(Gravity.CENTER);
         }

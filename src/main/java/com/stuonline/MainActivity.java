@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity {
         // 帧布局
         frameLayout = new FrameLayout(this);
 
-        if (mainView == null || MyApp.isMainChange) {
+        if (mainView == null) {
             MyApp.isMainChange = false;
             // 主布局
             mainView = getLayoutInflater().inflate(R.layout.activity_main, null);
@@ -60,7 +60,6 @@ public class MainActivity extends BaseActivity {
             adapter = new TabPageIndicatorAdapter(getSupportFragmentManager(),conversionTab(MyApp.getMeTabs()));
             ViewPager pager = (ViewPager) mainView.findViewById(R.id.vp);
             pager.setAdapter(adapter);
-            pager.setCurrentItem(1);
 
             //实例化TabPageIndicator然后设置ViewPager与之关联
             indicator = (TabPageIndicator) mainView.findViewById(R.id.indicator);
@@ -84,10 +83,6 @@ public class MainActivity extends BaseActivity {
 
                 }
             });
-            if (MyApp.user != null) {
-                titleView.setTitleRightImgSrc(XUtils.BURL + MyApp.user.getPhotoUrl());
-            }
-
             titleView.setOnRightImgclickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -103,6 +98,12 @@ public class MainActivity extends BaseActivity {
                 }
             });
         }
+        if (MyApp.user != null) {
+            titleView.setTitleRightImgSrc(XUtils.BURL + MyApp.user.getPhotoUrl());
+        }else{
+            titleView.setTitleRightImgSrc(R.drawable.default_photo);
+        }
+        indicator.notifyDataSetChanged();
         addTab = (ImageView) mainView.findViewById(R.id.add_tab);
         addTab.setOnClickListener(l);
 
