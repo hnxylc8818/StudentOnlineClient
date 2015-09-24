@@ -197,7 +197,9 @@ public class PersonalCenterActivity extends BaseActivity {
                 break;
             case 5:
                 // 跳转我的消息
-
+                intent=new Intent(PersonalCenterActivity.this,MyMsgActivity.class);
+                startActivity(intent);
+                startIntentAnim();
                 break;
         }
     }
