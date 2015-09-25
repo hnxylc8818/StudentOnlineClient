@@ -10,6 +10,8 @@ import com.stuonline.utils.SharedUtil;
 
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by Xubin on 2015/9/8.
  */
@@ -36,6 +38,8 @@ public class MyApp extends Application {
         DialogUtil.init(getApplicationContext());
         dbTools = new DBTools(getApplicationContext());
         isNight=SharedUtil.getModel(getApplicationContext());
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     public static void release() {

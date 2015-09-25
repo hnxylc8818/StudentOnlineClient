@@ -30,6 +30,8 @@ import com.stuonline.vpi.TabPageIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class MainActivity extends BaseActivity {
 
     private FrameLayout frameLayout;
@@ -234,7 +236,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        JPushInterface.onResume(this);
         init();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
     }
 
     @Override
