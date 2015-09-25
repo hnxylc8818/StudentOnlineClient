@@ -108,9 +108,12 @@ public class BaseActivity extends FragmentActivity {
                 return true;
             }
         }
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (BaseActivity.this instanceof MainActivity && keyCode == KeyEvent.KEYCODE_BACK) {
             exit();
             return true;
+        }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            endIntentAnim();
         }
         return super.onKeyDown(keyCode, event);
     }

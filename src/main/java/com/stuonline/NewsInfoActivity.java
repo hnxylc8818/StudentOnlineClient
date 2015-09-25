@@ -110,10 +110,9 @@ public class NewsInfoActivity extends BaseActivity {
         lv.setOnItemClickListener(onItemClickListener);
     }
 
-    private int mPosition;
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
             if (null != adapter.getCommentList() && adapter.getCommentList().get(0).getCid()!=-1) {
                 if (MyApp.user == null) {
                     Intent intent = new Intent(NewsInfoActivity.this, LoginActivity.class);
@@ -122,14 +121,13 @@ public class NewsInfoActivity extends BaseActivity {
                     startIntentAnim();
                     return;
                 }
-                mPosition = position;
                 if (dialog == null) {
                     View v = LayoutInflater.from(NewsInfoActivity.this).inflate(
                             R.layout.layout_remar_dialog, null);
                     v.setBackgroundColor(Color.WHITE);
                     Button btEnsure = (Button) v.findViewById(R.id.remar_dialog_bt);
                     etContet = (EditText) v.findViewById(R.id.remar_dialog_edit);
-                    etContet.setHint("回复" + adapter.getNick(position) + "：");
+                    etContet.setHint("回复：");
                     btEnsure.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -141,8 +139,8 @@ public class NewsInfoActivity extends BaseActivity {
                             RequestParams params = new RequestParams();
                             params.addBodyParameter("comment.nid", String.valueOf(nid));
                             params.addBodyParameter("comment.muser.uid", String.valueOf(MyApp.user.getUid()));
-                            params.addBodyParameter("comment.content", "回复" + adapter.getNick(mPosition) + "：" + content);
-                            params.addBodyParameter("comment.toUid", String.valueOf(adapter.getUid(mPosition)));
+                            params.addBodyParameter("comment.content", "回复" + adapter.getNick(position) + "：" + content);
+                            params.addBodyParameter("comment.toUid", String.valueOf(adapter.getUid(position)));
                             httpHandler = XUtils.send(XUtils.SAVECOMMENT, params, new MyCallBack<Result<Boolean>>(new TypeReference<Result<Boolean>>() {
                             }) {
                                 @Override
