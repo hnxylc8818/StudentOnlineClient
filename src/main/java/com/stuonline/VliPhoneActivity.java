@@ -80,6 +80,7 @@ public class VliPhoneActivity extends BaseActivity {
                     break;
                 case R.id.title_right:
                     if (code.length() == 4) {
+                        DialogUtil.showWaitting();
                         SMSSDK.submitVerificationCode("86", account, code);
                     }
                     break;
@@ -99,6 +100,7 @@ public class VliPhoneActivity extends BaseActivity {
                 } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                     Log.e("aaaaaaa", MyApp.type + "========");
                     if (MyApp.type == 2) {
+                        DialogUtil.hiddenWaitting();
                         Log.e("bbbbbbbb", MyApp.type + "========");
                         Intent intent = new Intent(VliPhoneActivity.this, SmsRePwdActivity.class);
                         intent.putExtra("account", account);
@@ -110,6 +112,7 @@ public class VliPhoneActivity extends BaseActivity {
                     }
                 }
             } else {
+                DialogUtil.hiddenWaitting();
                 if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                     msghandler.sendMessage(msghandler.obtainMessage(1, R.string.code_send_fail, 0));
                 } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
