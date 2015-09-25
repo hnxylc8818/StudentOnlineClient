@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -60,11 +61,13 @@ public class MyMsgActivity extends BaseActivity {
     private AdapterView.OnItemClickListener itemClickListener=new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            int nid=adapter.getNid(position);
-            Intent intent=new Intent(MyMsgActivity.this, NewsInfoActivity.class);
-            intent.putExtra("nid",nid);
-            startActivity(intent);
-            startIntentAnim();
+            if (null != adapter.getCommentList() && adapter.getCommentList().get(0).getCid()!=-1) {
+                int nid = adapter.getNid(position);
+                Intent intent = new Intent(MyMsgActivity.this, NewsInfoActivity.class);
+                intent.putExtra("nid", nid);
+                startActivity(intent);
+                startIntentAnim();
+            }
         }
     };
 
@@ -101,6 +104,7 @@ public class MyMsgActivity extends BaseActivity {
                     Comment comment = new Comment();
                     Muser muser = new Muser();
                     muser.setPhotoUrl("images/default.png");
+                    comment.setCid(-1);
                     comment.setMuser(muser);
                     comment.setContent("您还没有消息，快去评论吧！");
                     adapter.clear();

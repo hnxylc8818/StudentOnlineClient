@@ -20,5 +20,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/progress_margin"/>
+    <ProgressBar
+        android:id="@+id/download_pb"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:focusable="false"
+        />
 
 </LinearLayout>

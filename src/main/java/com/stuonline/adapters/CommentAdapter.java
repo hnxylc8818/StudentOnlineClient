@@ -107,6 +107,10 @@ public class CommentAdapter extends BaseAdapter {
         }
     }
 
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
     class ViewHolder {
         CircleImage photo;
         TextView nick;

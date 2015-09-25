@@ -107,7 +107,6 @@ public class BaseActivity extends FragmentActivity {
                 httpHandler = null;
                 return true;
             }
-
         }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             exit();

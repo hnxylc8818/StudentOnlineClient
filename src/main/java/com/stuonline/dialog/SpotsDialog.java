@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.stuonline.R;
@@ -23,6 +24,7 @@ public class SpotsDialog extends AlertDialog {
     private AnimatedView[] spots;
     private AnimatorPlayer animator;
     private CharSequence message;
+    public ProgressBar pb;
 
     public SpotsDialog(Context context) {
         this(context, R.style.SpotsDialogDefault);
@@ -76,6 +78,7 @@ public class SpotsDialog extends AlertDialog {
     }
 
     private void initProgress() {
+        pb= (ProgressBar) findViewById(R.id.download_pb);
         ProgressLayout progress = (ProgressLayout) findViewById(R.id.progress);
         size = progress.getSpotsCount();
 

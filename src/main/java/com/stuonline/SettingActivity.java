@@ -2,6 +2,7 @@ package com.stuonline;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -164,11 +166,13 @@ public class SettingActivity extends BaseActivity {
     };
 
     private void download() {
+        XUtils.showToast("双击返回键可以取消后台下载");
         downloadDialog = new SpotsDialog(SettingActivity.this, "下载中...");
         downloadDialog.show();
         httpHandler = XUtils.download(appVersion.getAppUrl(), new RequestCallBack<File>() {
             @Override
             public void onSuccess(ResponseInfo<File> responseInfo) {
+                downloadDialog.dismiss();
                 if (null != responseInfo) {
                     File file = responseInfo.result;
                     Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -186,12 +190,14 @@ public class SettingActivity extends BaseActivity {
                 Log.e("MainActivity", "===loading====" + current);
                 if (current >= total) {
                     downloadDialog.dismiss();
-
                 }
+                downloadDialog.pb.setMax((int) (total/10000));
+                downloadDialog.pb.setProgress((int) (current/10000));
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
+                downloadDialog.dismiss();
                 XUtils.showToast("下载失败");
                 Log.e("MainActivity", "====download error====" + s);
                 e.printStackTrace();
@@ -307,6 +313,17 @@ public class SettingActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         init();
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            if (null != httpHandler && !httpHandler.isCancelled()) {
+                httpHandler.cancel();
+                httpHandler = null;
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
