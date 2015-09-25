@@ -66,6 +66,8 @@ public class SettingActivity extends BaseActivity {
     private TextView dialogContent;
     private Button btOk;
     private Button btCancel;
+    private TextView settingVersion;
+    private boolean isNoWifi = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +120,16 @@ public class SettingActivity extends BaseActivity {
                 init();
             }
         });
+        settingVersion = (TextView) findViewById(R.id.setting_version);
+        PackageManager m = this.getPackageManager();
+        try {
+            PackageInfo info = m.getPackageInfo(this.getPackageName(), 0);
+            settingVersion.setText("V" + info.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -137,45 +149,55 @@ public class SettingActivity extends BaseActivity {
                 case R.id.check_update_dialog_ensure:
                     if (XUtils.isWifiConn()) {
                         dialog.dismiss();
-                        downloadDialog = new SpotsDialog(SettingActivity.this, "下载中...");
-                        downloadDialog.show();
-                        httpHandler = XUtils.download(appVersion.getAppUrl(), new RequestCallBack<File>() {
-                            @Override
-                            public void onSuccess(ResponseInfo<File> responseInfo) {
-                                if (null != responseInfo) {
-                                    File file = responseInfo.result;
-                                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                                    intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                } else {
-                                    XUtils.showToast("下载错误");
-                                }
-                            }
-
-                            @Override
-                            public void onLoading(long total, long current, boolean isUploading) {
-                                super.onLoading(total, current, isUploading);
-                                Log.e("MainActivity", "===loading====" + current);
-                                if (current >= total) {
-                                    downloadDialog.dismiss();
-
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(HttpException e, String s) {
-                                XUtils.showToast("下载失败");
-                                Log.e("MainActivity", "====download error====" + s);
-                                e.printStackTrace();
-                            }
-                        });
+                        if (XUtils.hasNetwork()) {
+                            download();
+                        }
+                    } else {
+                        dialog.dismiss();
+                        dialog = null;
+                        showDownloadNoWifi();
                     }
                     break;
             }
 
         }
     };
+
+    private void download() {
+        downloadDialog = new SpotsDialog(SettingActivity.this, "下载中...");
+        downloadDialog.show();
+        httpHandler = XUtils.download(appVersion.getAppUrl(), new RequestCallBack<File>() {
+            @Override
+            public void onSuccess(ResponseInfo<File> responseInfo) {
+                if (null != responseInfo) {
+                    File file = responseInfo.result;
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } else {
+                    XUtils.showToast("下载错误");
+                }
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isUploading) {
+                super.onLoading(total, current, isUploading);
+                Log.e("MainActivity", "===loading====" + current);
+                if (current >= total) {
+                    downloadDialog.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                XUtils.showToast("下载失败");
+                Log.e("MainActivity", "====download error====" + s);
+                e.printStackTrace();
+            }
+        });
+    }
 
     public boolean getUpdate() {
         try {
@@ -206,6 +228,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     public void showDownload() {
+        isNoWifi = false;
         if (dialog == null) {
             View v = LayoutInflater.from(SettingActivity.this).inflate(
                     R.layout.layout_check_update, null);
@@ -229,6 +252,40 @@ public class SettingActivity extends BaseActivity {
             dialog.show();
         }
     }
+
+    public void showDownloadNoWifi() {
+        isNoWifi = true;
+        if (dialog == null) {
+            View v = LayoutInflater.from(SettingActivity.this).inflate(
+                    R.layout.layout_check_update, null);
+            v.setBackgroundColor(Color.WHITE);
+            dialogTitle = (TextView) v.findViewById(R.id.check_update_title);
+            dialogContent = (TextView) v.findViewById(R.id.check_update_content);
+            btOk = (Button) v.findViewById(R.id.check_update_dialog_ensure);
+            btCancel = (Button) v.findViewById(R.id.check_update_dialog_cancel);
+            dialogTitle.setText("警告");
+            dialogContent.setText("当前是非WIFI网络环境下，是否继续更新？");
+            btOk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (XUtils.hasNetwork()){
+                        download();
+                    }
+                }
+            });
+            btCancel.setOnClickListener(onClickListener);
+            AlertDialog.Builder builder = new AlertDialog.Builder(
+                    SettingActivity.this);
+            dialog = builder.show();
+            dialog.setCanceledOnTouchOutside(true);
+            Window w = dialog.getWindow();
+            w.setContentView(v);
+            w.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        } else {
+            dialog.show();
+        }
+    }
+
 
     private SpotsDialog downloadDialog;
 

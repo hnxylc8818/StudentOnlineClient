@@ -153,14 +153,19 @@ public class XUtils {
     public static boolean isWifiConn() {
         ConnectivityManager manager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = manager.getActiveNetworkInfo();
+        if (null != info && info.getType() == ConnectivityManager.TYPE_WIFI) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean hasNetwork(){
+        ConnectivityManager manager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
         if (info == null){
             showToast("当前没有网络");
             return false;
         }
-        if (info.getType() == ConnectivityManager.TYPE_WIFI) {
-            return true;
-        }
-        showToast("为避免流量损失，请在WIFI环境下更新");
-        return false;
+        return true;
     }
 }
