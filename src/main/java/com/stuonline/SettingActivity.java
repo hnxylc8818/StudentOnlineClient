@@ -135,40 +135,42 @@ public class SettingActivity extends BaseActivity {
                     dialog.dismiss();
                     break;
                 case R.id.check_update_dialog_ensure:
-                    dialog.dismiss();
-                    downloadDialog = new SpotsDialog(SettingActivity.this, "下载中...");
-                    downloadDialog.show();
-                    httpHandler = XUtils.download(appVersion.getAppUrl(), new RequestCallBack<File>() {
-                        @Override
-                        public void onSuccess(ResponseInfo<File> responseInfo) {
-                            if (null != responseInfo) {
-                                File file = responseInfo.result;
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            } else {
-                                XUtils.showToast("下载错误");
+                    if (XUtils.isWifiConn()) {
+                        dialog.dismiss();
+                        downloadDialog = new SpotsDialog(SettingActivity.this, "下载中...");
+                        downloadDialog.show();
+                        httpHandler = XUtils.download(appVersion.getAppUrl(), new RequestCallBack<File>() {
+                            @Override
+                            public void onSuccess(ResponseInfo<File> responseInfo) {
+                                if (null != responseInfo) {
+                                    File file = responseInfo.result;
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                } else {
+                                    XUtils.showToast("下载错误");
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onLoading(long total, long current, boolean isUploading) {
-                            super.onLoading(total, current, isUploading);
-                            Log.e("MainActivity", "===loading====" + current);
-                            if (current >= total) {
-                                downloadDialog.dismiss();
+                            @Override
+                            public void onLoading(long total, long current, boolean isUploading) {
+                                super.onLoading(total, current, isUploading);
+                                Log.e("MainActivity", "===loading====" + current);
+                                if (current >= total) {
+                                    downloadDialog.dismiss();
 
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(HttpException e, String s) {
-                            XUtils.showToast("下载失败");
-                            Log.e("MainActivity", "====download error====" + s);
-                            e.printStackTrace();
-                        }
-                    });
+                            @Override
+                            public void onFailure(HttpException e, String s) {
+                                XUtils.showToast("下载失败");
+                                Log.e("MainActivity", "====download error====" + s);
+                                e.printStackTrace();
+                            }
+                        });
+                    }
                     break;
             }
 
